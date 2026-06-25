@@ -439,12 +439,12 @@ footer{background:#040405;border-top:1px solid rgba(201,168,76,.08);padding:5rem
 
     <!-- GRADE DE ARTISTAS -->
     <style>
-      .artistas-wrap{margin-top:5rem;}
+      .artistas-wrap{margin-top:5rem;max-width:1200px;margin-left:auto;margin-right:auto;padding:0 2rem;}
       .artistas-eyebrow{font-size:.62rem;letter-spacing:.4em;color:var(--g);text-transform:uppercase;text-align:center;display:block;margin-bottom:1rem;}
       .artistas-title{font-family:"Cormorant Garamond",serif;font-size:clamp(2rem,4vw,3.2rem);font-weight:200;color:var(--w);text-align:center;margin-bottom:.5rem;}
       .artistas-title em{color:var(--g);font-style:italic;}
       .artistas-sub{text-align:center;font-size:.78rem;color:var(--wd);margin-bottom:3rem;}
-      .artistas-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:3px;max-width:1200px;margin:0 auto;}
+      .artistas-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:3px;}
       .artista-card{position:relative;background:rgba(12,12,16,.9);border:1px solid rgba(201,168,76,.08);padding:2rem 1.2rem 1.5rem;text-align:center;transition:all .4s;overflow:hidden;cursor:pointer;}
       .artista-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--g),transparent);transform:scaleX(0);transition:transform .4s;}
       .artista-card:hover::before{transform:scaleX(1);}
