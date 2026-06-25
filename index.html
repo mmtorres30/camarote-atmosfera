@@ -665,41 +665,41 @@ footer{background:#040405;border-top:1px solid rgba(201,168,76,.08);padding:5rem
 
       <div class="grow-a">
         <div class="gfoto g-tall reveal">
-          <img src="images/foto1.jpeg" alt="Reservado VIP">
+          <img src="images/nova1.jpeg" alt="Reservado VIP">
           
           
         </div>
         <div class="gfoto g-reg reveal">
-          <img src="images/foto2.jpeg" alt="Vista Sapucaí">
+          <img src="images/nova2.jpeg" alt="Vista Sapucaí">
           
         </div>
         <div class="gfoto g-reg reveal">
-          <img src="images/foto10.jpeg" alt="Open Bar">
+          <img src="images/nova3.jpeg" alt="Open Bar">
           
           
         </div>
         <div class="gfoto g-reg reveal">
-          <img src="images/foto3.jpeg" alt="Bar">
+          <img src="images/nova4.jpeg" alt="Bar">
           
         </div>
         <div class="gfoto g-reg reveal">
-          <img src="images/foto8.jpeg" alt="Open Bar 2">
+          <img src="images/nova5.jpeg" alt="Open Bar 2">
           
         </div>
       </div>
 
       <div class="grow-b">
         <div class="gfoto g-reg reveal">
-          <img src="images/foto6.jpeg" alt="Churrasco">
+          <img src="images/nova6.jpeg" alt="Churrasco">
           
         </div>
         <div class="gfoto g-reg reveal">
-          <img src="images/foto5.jpeg" alt="Gastronomia">
+          <img src="images/nova7.jpeg" alt="Gastronomia">
           
           
         </div>
         <div class="gfoto g-wide reveal">
-          <img src="images/foto4.jpeg" alt="Sushi Bar">
+          <img src="images/nova8.jpeg" alt="Sushi Bar">
           
           
         </div>
@@ -815,6 +815,130 @@ const ro=new IntersectionObserver(entries=>entries.forEach(e=>{
   if(e.isIntersecting){e.target.classList.add('in');ro.unobserve(e.target);}
 }),{threshold:.08});
 document.querySelectorAll('.reveal').forEach(el=>ro.observe(el));
+</script>
+
+<style>
+/* ══ 3D TILT ══ */
+.tilt3d{transform-style:preserve-3d;transition:transform .15s ease,box-shadow .15s ease;}
+.tilt3d:hover{box-shadow:0 20px 60px rgba(201,168,76,.2);}
+
+/* ══ CARNAVAL HERO ══ */
+.carnaval-pluma{position:absolute;font-size:1.8rem;animation:plumaFloat linear infinite;pointer-events:none;z-index:1;opacity:0;}
+@keyframes plumaFloat{
+  0%{transform:translateY(100vh) rotate(0deg) translateX(0);opacity:0;}
+  5%{opacity:.6;}
+  95%{opacity:.4;}
+  100%{transform:translateY(-10vh) rotate(360deg) translateX(40px);opacity:0;}
+}
+
+/* ══ BRILHO NOS CARDS ══ */
+.exp-glass,.ic,.tp-card,.res-card{overflow:hidden;}
+.exp-glass::after,.ic::after,.tp-card::after{
+  content:'';position:absolute;top:-50%;left:-60%;
+  width:40%;height:200%;
+  background:linear-gradient(to right,transparent,rgba(201,168,76,.08),transparent);
+  transform:skewX(-20deg);
+  animation:cardShine 6s ease-in-out infinite;
+}
+@keyframes cardShine{
+  0%,100%{left:-60%;}
+  50%{left:120%;}
+}
+
+/* ══ NÚMEROS PULSANDO ══ */
+.stat-val{animation:statPulse 3s ease-in-out infinite;}
+@keyframes statPulse{0%,100%{text-shadow:0 0 20px rgba(201,168,76,.3);}50%{text-shadow:0 0 40px rgba(201,168,76,.7);}}
+
+/* ══ COUNTDOWN GLOW ══ */
+.cd-block{animation:cdGlow 2s ease-in-out infinite alternate;}
+@keyframes cdGlow{from{box-shadow:0 0 10px rgba(201,168,76,.1);}to{box-shadow:0 0 30px rgba(201,168,76,.3);}}
+
+/* ══ HERO TITLE SHIMMER ══ */
+#heroTitle{
+  background:linear-gradient(90deg,#8B6914 0%,#E8C97A 25%,#ffffff 50%,#E8C97A 75%,#8B6914 100%);
+  background-size:200% auto;
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+  animation:titleShimmer 4s linear infinite;
+}
+@keyframes titleShimmer{to{background-position:200% center;}}
+
+/* ══ SCROLL REVEAL MELHORADO ══ */
+.reveal-left{opacity:0;transform:translateX(-30px);transition:opacity .8s ease,transform .8s ease;}
+.reveal-left.in{opacity:1;transform:translateX(0);}
+.reveal-right{opacity:0;transform:translateX(30px);transition:opacity .8s ease,transform .8s ease;}
+.reveal-right.in{opacity:1;transform:translateX(0);}
+
+/* ══ LINHA DOURADA ANIMADA ══ */
+.gold-line{height:1px;background:linear-gradient(90deg,transparent,var(--g),transparent);animation:goldLine 3s ease-in-out infinite;}
+@keyframes goldLine{0%,100%{opacity:.3;}50%{opacity:1;}}
+
+/* ══ BOTÃO PULSE ══ */
+.btn-p.gold{animation:btnPulse 3s ease-in-out infinite;}
+@keyframes btnPulse{0%,100%{box-shadow:0 0 0 0 rgba(201,168,76,.4);}50%{box-shadow:0 0 0 12px rgba(201,168,76,0);}}
+</style>
+
+<script>
+// ══ 3D TILT NAS FOTOS ══
+document.querySelectorAll('.gfoto').forEach(el => {
+  el.classList.add('tilt3d');
+  el.addEventListener('mousemove', e => {
+    const r = el.getBoundingClientRect();
+    const x = (e.clientX - r.left) / r.width - .5;
+    const y = (e.clientY - r.top) / r.height - .5;
+    el.style.transform = `perspective(600px) rotateY(${x*10}deg) rotateX(${-y*10}deg) scale(1.02)`;
+  });
+  el.addEventListener('mouseleave', () => {
+    el.style.transform = 'perspective(600px) rotateY(0) rotateX(0) scale(1)';
+  });
+});
+
+// ══ 3D TILT NOS CARDS ══
+document.querySelectorAll('.exp-glass,.ic,.stat').forEach(el => {
+  el.classList.add('tilt3d');
+  el.addEventListener('mousemove', e => {
+    const r = el.getBoundingClientRect();
+    const x = (e.clientX - r.left) / r.width - .5;
+    const y = (e.clientY - r.top) / r.height - .5;
+    el.style.transform = `perspective(800px) rotateY(${x*6}deg) rotateX(${-y*6}deg) translateZ(8px)`;
+  });
+  el.addEventListener('mouseleave', () => {
+    el.style.transform = 'perspective(800px) rotateY(0) rotateX(0) translateZ(0)';
+  });
+});
+
+// ══ PLUMAS DE CARNAVAL NO HERO ══
+const hero = document.getElementById('hero');
+const plumas = ['🪶','✨','🌟','💫','🎭','🎪','🎊','🎉','⭐'];
+if(hero){
+  for(let i=0;i<12;i++){
+    const p = document.createElement('div');
+    p.className = 'carnaval-pluma';
+    p.textContent = plumas[Math.floor(Math.random()*plumas.length)];
+    p.style.cssText = `
+      left:${Math.random()*100}%;
+      font-size:${1+Math.random()*1.5}rem;
+      animation-duration:${8+Math.random()*8}s;
+      animation-delay:${Math.random()*8}s;
+    `;
+    hero.appendChild(p);
+  }
+}
+
+// ══ REVEAL LATERAL ══
+const obsLR = new IntersectionObserver(entries => entries.forEach(e => {
+  if(e.isIntersecting){e.target.classList.add('in');obsLR.unobserve(e.target);}
+}),{threshold:.1});
+
+document.querySelectorAll('.boate-text,.mkt-text,.res-text').forEach((el,i) => {
+  el.classList.add(i%2===0?'reveal-left':'reveal-right');
+  obsLR.observe(el);
+});
+document.querySelectorAll('.boate-viz,.mkt-quote,.res-card').forEach((el,i) => {
+  el.classList.add(i%2===0?'reveal-right':'reveal-left');
+  obsLR.observe(el);
+});
 </script>
 </body>
 </html>
