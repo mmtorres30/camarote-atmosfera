@@ -522,7 +522,7 @@ footer{background:#040405;border-top:1px solid rgba(201,168,76,.08);padding:5rem
             <span class="artista-nome artista-tba">A confirmar</span>
             <span class="artista-tipo">✦ Noite Especial</span>
           </div>
-          <div class="artista-card destaque reveal" style="grid-column:2/4;">
+          <div class="artista-card destaque reveal">
             <span class="artista-dia">Terça · Campeãs</span>
             <span class="artista-data">13</span>
             <span class="artista-mes">Fev 2027</span>
@@ -952,15 +952,15 @@ document.querySelectorAll('.reveal').forEach(el=>ro.observe(el));
 
 /* ══ HERO TITLE SHIMMER ══ */
 #heroTitle{
-  background:linear-gradient(135deg,#8B6914 0%,#E8C97A 30%,#FFD700 50%,#E8C97A 70%,#8B6914 100%);
-  background-size:300% auto;
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-  background-clip:text;
-  animation:titleShimmer 5s linear infinite;
+  color:#E8C97A;
+  text-shadow:0 0 80px rgba(201,168,76,.4),0 0 160px rgba(201,168,76,.15);
+  animation:titleGlow 3s ease-in-out infinite alternate;
   display:block;
 }
-@keyframes titleShimmer{to{background-position:300% center;}}
+@keyframes titleGlow{
+  from{text-shadow:0 0 40px rgba(201,168,76,.3),0 0 80px rgba(201,168,76,.1);}
+  to{text-shadow:0 0 80px rgba(201,168,76,.6),0 0 160px rgba(201,168,76,.3);}
+}
 
 /* ══ SCROLL REVEAL MELHORADO ══ */
 .reveal-left{opacity:0;transform:translateX(-30px);transition:opacity .8s ease,transform .8s ease;}
