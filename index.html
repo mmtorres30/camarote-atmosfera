@@ -1,368 +1,726 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Camarote Atmosfera – Sapucaí · Carnaval 2027</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css">
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Camarote Atmosfera — Sapucaí · Carnaval 2027</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--gold:#C9A84C;--gold2:#E8C97A;--black:#080808;--black2:#0f0f0f;--black3:#161616;--black4:#1e1e1e;--white:#F5F0E8;--wdim:rgba(245,240,232,.7);--wfaint:rgba(245,240,232,.08);--fd:'Cormorant Garamond',serif;--fb:'Montserrat',sans-serif;--tr:.4s cubic-bezier(.25,.46,.45,.94);}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--black);color:var(--white);font-family:var(--fb);overflow-x:hidden;}
+a{color:inherit;text-decoration:none;}ul{list-style:none;}
+/* PARTÍCULAS */
+#particles{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
+.p{position:absolute;border-radius:50%;animation:fall linear infinite;}
+@keyframes fall{0%{transform:translateY(-20px) rotate(0);opacity:0;}10%{opacity:1;}90%{opacity:.6;}100%{transform:translateY(110vh) rotate(720deg);opacity:0;}}
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:1.5rem 3rem;display:flex;align-items:center;justify-content:space-between;transition:var(--tr);}
+nav.scrolled{background:rgba(8,8,8,.95);backdrop-filter:blur(20px);border-bottom:1px solid rgba(201,168,76,.15);padding:1rem 3rem;}
+.logo{display:flex;flex-direction:column;line-height:1;}
+.logo span:first-child{font-size:.55rem;letter-spacing:.35em;color:var(--gold);font-weight:500;}
+.logo span:last-child{font-family:var(--fd);font-size:1.4rem;font-weight:600;letter-spacing:.15em;}
+.nav-links{display:flex;align-items:center;gap:2rem;}
+.nav-links a{font-size:.65rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--wdim);transition:color .2s;}
+.nav-links a:hover{color:var(--gold);}
+.nav-cta{border:1px solid var(--gold)!important;color:var(--gold)!important;padding:.5rem 1.5rem;}
+.nav-cta:hover{background:var(--gold)!important;color:var(--black)!important;}
+.hbg{display:none;background:none;border:none;color:var(--white);font-size:1.5rem;cursor:pointer;}
+/* HERO */
+#hero{position:relative;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;overflow:hidden;background:radial-gradient(ellipse at 50% 80%,#1a0e00 0%,#080808 60%);}
+.hero-lines{position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 80px,rgba(201,168,76,.02) 80px,rgba(201,168,76,.02) 81px);pointer-events:none;}
+.hero-glow{position:absolute;width:600px;height:600px;background:radial-gradient(circle,rgba(201,168,76,.08) 0%,transparent 70%);top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;animation:pulse 4s ease-in-out infinite;}
+@keyframes pulse{0%,100%{transform:translate(-50%,-50%) scale(1);}50%{transform:translate(-50%,-50%) scale(1.2);}}
+.hero-content{position:relative;z-index:2;}
+.hero-eyebrow{font-size:.7rem;letter-spacing:.5em;color:var(--gold);font-weight:500;margin-bottom:2rem;display:flex;align-items:center;gap:1rem;justify-content:center;}
+.hero-eyebrow::before,.hero-eyebrow::after{content:'';width:40px;height:1px;background:var(--gold);opacity:.5;}
+.hero-title{font-family:var(--fd);font-size:clamp(5rem,18vw,14rem);font-weight:300;line-height:.85;letter-spacing:.05em;color:var(--white);margin-bottom:2rem;background:linear-gradient(135deg,#fff5e0,#C9A84C,#fff5e0,#8B6914);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:shimmerText 4s ease-in-out infinite;}
+@keyframes shimmerText{0%,100%{background-position:0% 50%;}50%{background-position:100% 50%;}}
+.hero-sub{font-size:1.1rem;font-weight:300;color:var(--wdim);margin-bottom:1rem;letter-spacing:.08em;}
+.hero-tag{display:inline-block;font-size:.65rem;font-weight:700;letter-spacing:.3em;color:var(--gold);border:1px solid rgba(201,168,76,.3);padding:.6rem 2rem;margin-bottom:3rem;text-transform:uppercase;}
+.hero-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;}
+.btn-gold{display:inline-block;padding:1rem 2.5rem;background:var(--gold);color:var(--black);font-size:.72rem;font-weight:800;letter-spacing:.2em;text-transform:uppercase;border:2px solid var(--gold);transition:var(--tr);position:relative;overflow:hidden;}
+.btn-gold::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,transparent 40%,rgba(255,255,255,.2) 50%,transparent 60%);transform:translateX(-100%);transition:.5s;}
+.btn-gold:hover::before{transform:translateX(100%);}
+.btn-gold:hover{background:transparent;color:var(--gold);}
+.btn-ghost{display:inline-block;padding:1rem 2.5rem;background:transparent;color:var(--white);font-size:.72rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;border:1px solid rgba(245,240,232,.3);transition:var(--tr);}
+.btn-ghost:hover{border-color:var(--gold);color:var(--gold);}
+.hero-scroll{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:.5rem;color:var(--wdim);font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;animation:scrollBounce 2s ease infinite;}
+.hero-scroll::after{content:'';width:1px;height:40px;background:linear-gradient(to bottom,var(--gold),transparent);}
+@keyframes scrollBounce{0%,100%{transform:translateX(-50%) translateY(0);}50%{transform:translateX(-50%) translateY(8px);}}
+/* NÚMEROS IMPACTANTES */
+#numeros{background:var(--black2);border-top:1px solid rgba(201,168,76,.1);border-bottom:1px solid rgba(201,168,76,.1);padding:5rem 2rem;position:relative;z-index:1;}
+.numeros-grid{max-width:1000px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:0;}
+.num-item{text-align:center;padding:2rem;border-right:1px solid rgba(201,168,76,.1);}
+.num-item:last-child{border-right:none;}
+.num-val{font-family:var(--fd);font-size:clamp(3rem,6vw,5rem);font-weight:300;color:var(--gold);line-height:1;display:block;}
+.num-label{font-size:.65rem;letter-spacing:.2em;color:var(--wdim);text-transform:uppercase;margin-top:.5rem;display:block;}
+/* COUNTDOWN */
+#countdown{padding:5rem 2rem;text-align:center;position:relative;z-index:1;background:linear-gradient(to bottom,var(--black2),var(--black));}
+.cd-eyebrow{font-size:.65rem;letter-spacing:.4em;color:var(--gold);text-transform:uppercase;margin-bottom:2.5rem;display:block;}
+.cd-grid{display:flex;align-items:center;justify-content:center;gap:1rem;flex-wrap:wrap;margin-bottom:1.5rem;}
+.cd-item{text-align:center;}
+.cd-item span{display:block;font-family:var(--fd);font-size:clamp(4rem,10vw,8rem);font-weight:300;color:var(--white);line-height:1;min-width:2ch;text-shadow:0 0 40px rgba(201,168,76,.3);}
+.cd-item label{font-size:.6rem;letter-spacing:.25em;color:var(--gold);text-transform:uppercase;}
+.cd-sep{font-family:var(--fd);font-size:clamp(3rem,7vw,6rem);color:var(--gold);opacity:.3;line-height:1;padding-bottom:1.5rem;}
+.cd-sub{font-size:.8rem;color:var(--wdim);letter-spacing:.1em;}
+/* SEÇÃO TITULO */
+.sec-title{text-align:center;padding:6rem 2rem 3rem;position:relative;z-index:1;}
+.sec-eyebrow{font-size:.65rem;font-weight:600;letter-spacing:.35em;color:var(--gold);text-transform:uppercase;margin-bottom:1.2rem;display:block;}
+.sec-h2{font-family:var(--fd);font-size:clamp(2.5rem,5vw,4rem);font-weight:300;line-height:1.1;color:var(--white);}
+.sec-h2 em{color:var(--gold);font-style:italic;}
+.sec-line{width:60px;height:1px;background:var(--gold);margin:1.5rem auto 0;opacity:.5;}
+/* EXPERIÊNCIAS */
+#experiencias{padding:0 2rem 6rem;position:relative;z-index:1;}
+.exp-grid{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:2px;}
+.exp-card{background:var(--black3);padding:3rem 2.5rem;position:relative;overflow:hidden;transition:var(--tr);cursor:default;}
+.exp-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(201,168,76,.06) 0%,transparent 60%);opacity:0;transition:var(--tr);}
+.exp-card:hover::before{opacity:1;}
+.exp-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);transform:scaleX(0);transition:var(--tr);}
+.exp-card:hover::after{transform:scaleX(1);}
+.exp-num{font-family:var(--fd);font-size:5rem;font-weight:300;color:rgba(201,168,76,.08);line-height:1;margin-bottom:.5rem;transition:var(--tr);}
+.exp-card:hover .exp-num{color:rgba(201,168,76,.15);}
+.exp-floor{font-size:.6rem;letter-spacing:.25em;color:var(--gold);text-transform:uppercase;margin-bottom:.8rem;}
+.exp-card h3{font-family:var(--fd);font-size:1.8rem;font-weight:300;color:var(--white);margin-bottom:1.5rem;}
+.exp-card ul li{font-size:.8rem;color:var(--wdim);padding:.4rem 0;border-bottom:1px solid var(--wfaint);display:flex;gap:.6rem;align-items:flex-start;}
+.exp-card ul li::before{content:'◆';color:var(--gold);font-size:.4rem;margin-top:.4rem;flex-shrink:0;}
+.exp-card ul li:last-child{border-bottom:none;}
+/* BOATE */
+#boate{position:relative;z-index:1;overflow:hidden;background:var(--black);}
+.boate-inner{max-width:1200px;margin:0 auto;padding:6rem 2rem;display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:center;}
+.boate-visual{position:relative;aspect-ratio:16/10;background:linear-gradient(135deg,#0d0d2b,#1a0a2e,#0d0d0d);border:1px solid rgba(201,168,76,.1);overflow:hidden;}
+.boate-lights{position:absolute;inset:0;}
+.light{position:absolute;border-radius:50%;filter:blur(40px);animation:lightAnim ease-in-out infinite;}
+@keyframes lightAnim{0%,100%{opacity:.4;transform:scale(1);}50%{opacity:.8;transform:scale(1.3);}}
+.boate-stage{position:absolute;bottom:0;left:0;right:0;height:30%;background:linear-gradient(to top,rgba(201,168,76,.15),transparent);}
+.boate-text .sec-eyebrow{text-align:left;}
+.boate-text h2{font-family:var(--fd);font-size:clamp(2.5rem,5vw,4rem);font-weight:300;color:var(--white);line-height:1.1;margin-bottom:1.5rem;}
+.boate-text h2 em{color:var(--gold);font-style:italic;}
+.boate-text p{font-size:.85rem;color:var(--wdim);line-height:1.8;margin-bottom:1.5rem;}
+.boate-specs{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;margin-top:2rem;}
+.spec{padding:.8rem 1rem;background:var(--black3);border-left:2px solid var(--gold);font-size:.75rem;color:var(--wdim);}
+/* RESERVADOS */
+#reservados{position:relative;z-index:1;background:var(--black2);}
+.reservados-inner{max-width:1200px;margin:0 auto;padding:6rem 2rem;}
+.reservados-hero{display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:center;margin-bottom:5rem;}
+.res-text .sec-eyebrow{text-align:left;}
+.res-text h2{font-family:var(--fd);font-size:clamp(2.5rem,5vw,4.5rem);font-weight:300;line-height:1.1;margin-bottom:.5rem;}
+.res-text h2 strong{color:var(--gold);font-weight:300;}
+.res-tagline{font-family:var(--fd);font-size:1.5rem;font-style:italic;color:var(--gold);margin-bottom:2rem;display:block;}
+.res-text p{font-size:.85rem;color:var(--wdim);line-height:1.8;margin-bottom:2rem;}
+.res-price{display:inline-flex;align-items:baseline;gap:.5rem;margin-bottom:2rem;}
+.res-price-label{font-size:.65rem;letter-spacing:.2em;color:var(--wdim);text-transform:uppercase;}
+.res-price-val{font-family:var(--fd);font-size:4rem;font-weight:300;color:var(--gold);line-height:1;}
+.res-price-info{font-size:.75rem;color:var(--wdim);}
+.res-visual{position:relative;background:var(--black3);border:1px solid rgba(201,168,76,.15);padding:3rem;text-align:center;}
+.res-visual::before{content:'RESERVADO EXCLUSIVO';position:absolute;top:-1px;left:50%;transform:translateX(-50%);background:var(--gold);color:var(--black);font-size:.55rem;font-weight:800;letter-spacing:.2em;padding:.4rem 1.2rem;white-space:nowrap;}
+.res-capacity{font-family:var(--fd);font-size:6rem;font-weight:300;color:var(--gold);line-height:1;display:block;}
+.res-capacity-label{font-size:.7rem;letter-spacing:.2em;color:var(--wdim);text-transform:uppercase;}
+.res-divider{width:40px;height:1px;background:var(--gold);margin:1.5rem auto;opacity:.4;}
+.res-includes{display:grid;grid-template-columns:1fr;gap:.5rem;text-align:left;}
+.res-includes li{font-size:.75rem;color:var(--wdim);padding:.4rem 0;border-bottom:1px solid var(--wfaint);display:flex;gap:.6rem;}
+.res-includes li::before{content:'✓';color:var(--gold);font-weight:700;flex-shrink:0;}
+.res-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;}
+.res-feature{background:var(--black3);padding:2rem;text-align:center;transition:var(--tr);}
+.res-feature:hover{background:var(--black4);}
+.res-feature-icon{font-size:2rem;margin-bottom:1rem;}
+.res-feature h4{font-family:var(--fd);font-size:1.2rem;font-weight:400;color:var(--white);margin-bottom:.5rem;}
+.res-feature p{font-size:.75rem;color:var(--wdim);line-height:1.6;}
+/* INGRESSOS */
+#ingressos{position:relative;z-index:1;padding:6rem 2rem;}
+.ing-grid{max-width:1000px;margin:0 auto;display:grid;grid-template-columns:repeat(2,1fr);gap:2px;}
+.ing-card{background:var(--black3);padding:3rem;position:relative;transition:var(--tr);border:1px solid transparent;}
+.ing-card:hover{border-color:rgba(201,168,76,.2);}
+.ing-card--vip{background:linear-gradient(135deg,#1a1000,var(--black3));border:1px solid var(--gold);transform:scale(1.02);}
+.ing-badge{position:absolute;top:-1px;right:2rem;background:var(--gold);color:var(--black);font-size:.55rem;font-weight:800;letter-spacing:.15em;padding:.4rem .9rem;text-transform:uppercase;}
+.ing-noite{font-size:.6rem;letter-spacing:.25em;color:var(--gold);text-transform:uppercase;margin-bottom:.5rem;}
+.ing-card h3{font-family:var(--fd);font-size:2rem;font-weight:300;color:var(--white);margin-bottom:1.5rem;}
+.ing-price{display:flex;align-items:flex-start;gap:.3rem;margin-bottom:2rem;padding-bottom:2rem;border-bottom:1px solid var(--wfaint);}
+.ing-cur{font-size:.85rem;font-weight:600;color:var(--gold);margin-top:.4rem;}
+.ing-val{font-family:var(--fd);font-size:3.5rem;font-weight:300;color:var(--gold);line-height:1;}
+.ing-list{margin-bottom:2rem;}
+.ing-list li{font-size:.78rem;color:var(--wdim);padding:.4rem 0;border-bottom:1px solid var(--wfaint);display:flex;gap:.5rem;}
+.ing-list li::before{content:'✓';color:var(--gold);}
+.ing-btn{display:block;text-align:center;padding:1rem;background:var(--gold);color:var(--black);font-size:.7rem;font-weight:800;letter-spacing:.2em;text-transform:uppercase;transition:var(--tr);border:2px solid var(--gold);}
+.ing-btn:hover{background:transparent;color:var(--gold);}
+.ing-btn--ghost{background:transparent;color:var(--white);border-color:rgba(245,240,232,.2);}
+.ing-btn--ghost:hover{border-color:var(--gold);color:var(--gold);}
+/* TRANSPORTE */
+#transporte{background:var(--black2);position:relative;z-index:1;padding:6rem 2rem;}
+.transp-grid{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:2px;}
+.transp-card{background:var(--black3);padding:2.5rem;border-top:2px solid var(--gold);}
+.transp-icon{font-size:2.5rem;margin-bottom:1rem;}
+.transp-card h3{font-family:var(--fd);font-size:1.5rem;font-weight:300;margin-bottom:1.5rem;color:var(--white);}
+.stop{display:flex;gap:1rem;padding:.7rem 0;border-bottom:1px solid var(--wfaint);align-items:baseline;}
+.stop-time{font-family:var(--fd);font-size:1.2rem;font-weight:300;color:var(--gold);min-width:3.5rem;}
+.stop-name{font-size:.78rem;color:var(--wdim);}
+.stop--arr .stop-name{color:var(--gold);font-weight:500;}
+.transp-info{background:var(--black4);padding:2.5rem;border:1px solid rgba(201,168,76,.1);}
+.transp-info h3{font-family:var(--fd);font-size:1.5rem;font-weight:300;margin-bottom:1.5rem;color:var(--white);}
+.transp-info p{font-size:.8rem;color:var(--wdim);margin-bottom:.8rem;line-height:1.7;}
+.transp-info strong{color:var(--gold);}
+.transp-note{margin-top:1.5rem;padding:1rem;border-left:2px solid var(--gold);background:rgba(201,168,76,.04);font-size:.75rem;color:var(--wdim);}
+/* CREDENCIAMENTO */
+#credenciamento{position:relative;z-index:1;padding:6rem 2rem;background:var(--black);}
+.cred-local{max-width:1200px;margin:0 auto 3rem;display:flex;align-items:center;gap:2rem;background:var(--black3);border-left:3px solid var(--gold);padding:2rem 2.5rem;}
+.cred-local-icon{font-size:2.5rem;}
+.cred-local-label{font-size:.6rem;letter-spacing:.25em;color:var(--gold);text-transform:uppercase;margin-bottom:.3rem;}
+.cred-local-address{font-family:var(--fd);font-size:1.5rem;color:var(--white);}
+.cred-local-sub{font-size:.78rem;color:var(--wdim);margin-top:.2rem;}
+.cred-grid{max-width:1200px;margin:0 auto 2rem;display:grid;grid-template-columns:repeat(4,1fr);gap:2px;}
+.cred-card{background:var(--black3);padding:2rem 1.8rem;border-top:2px solid transparent;transition:var(--tr);}
+.cred-card:hover,.cred-card--gold{border-top-color:var(--gold);}
+.cred-card--gold{background:linear-gradient(135deg,#1a1200,var(--black3));}
+.cred-icon{font-size:1.8rem;margin-bottom:.8rem;}
+.cred-card h3{font-family:var(--fd);font-size:1.2rem;font-weight:400;color:var(--white);margin-bottom:1.2rem;}
+.cred-day{display:flex;justify-content:space-between;padding:.55rem 0;border-bottom:1px solid var(--wfaint);gap:.5rem;}
+.cred-date{font-size:.72rem;color:var(--gold);font-weight:500;white-space:nowrap;}
+.cred-time{font-size:.72rem;color:var(--wdim);text-align:right;}
+.cred-note{font-size:.68rem;color:var(--wdim);padding:.5rem .8rem;background:rgba(201,168,76,.04);border-left:2px solid rgba(201,168,76,.3);margin-top:.8rem;}
+.cred-alert{max-width:1200px;margin:0 auto;padding:1.2rem 2rem;background:rgba(201,168,76,.05);border:1px solid rgba(201,168,76,.15);font-size:.8rem;color:var(--wdim);}
+.cred-alert strong{color:var(--gold);}
+/* GALERIA */
+#galeria{position:relative;z-index:1;padding:6rem 2rem;background:var(--black2);}
+.gal-grid{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);grid-auto-rows:240px;gap:4px;}
+.gal-item{overflow:hidden;position:relative;background:var(--black3);}
+.gal-item.tall{grid-row:span 2;}
+.gal-item.wide{grid-column:span 2;}
+.gal-placeholder{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.5rem;color:rgba(245,240,232,.2);font-size:.75rem;border:1px dashed rgba(201,168,76,.15);}
+.gal-placeholder span{font-size:2.5rem;}
+/* MARKETING */
+#marketing{position:relative;z-index:1;padding:6rem 2rem;background:var(--black);}
+.mkt-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:center;}
+.mkt-text .sec-eyebrow{text-align:left;}
+.mkt-text h2{font-family:var(--fd);font-size:clamp(2.5rem,5vw,4rem);font-weight:300;line-height:1.1;margin-bottom:1.5rem;}
+.mkt-text h2 em{color:var(--gold);font-style:italic;}
+.mkt-text p{font-size:.85rem;color:var(--wdim);line-height:1.8;margin-bottom:2rem;}
+.mkt-stat{padding:1.5rem;background:var(--black3);border-left:2px solid var(--gold);margin-bottom:1rem;}
+.mkt-stat strong{font-family:var(--fd);font-size:2rem;color:var(--gold);display:block;font-weight:300;}
+.mkt-stat span{font-size:.75rem;color:var(--wdim);}
+.mkt-quote{background:linear-gradient(135deg,#1a0e00,var(--black3));padding:4rem;border:1px solid rgba(201,168,76,.15);position:relative;}
+.mkt-quote::before{content:'"';font-family:var(--fd);font-size:8rem;color:var(--gold);opacity:.1;position:absolute;top:0;left:1.5rem;line-height:1;}
+.mkt-quote p{font-family:var(--fd);font-size:clamp(1.5rem,3vw,2.2rem);font-style:italic;font-weight:300;color:var(--white);line-height:1.4;position:relative;z-index:1;}
+.mkt-quote cite{display:block;margin-top:1.5rem;font-size:.7rem;letter-spacing:.2em;color:var(--gold);text-transform:uppercase;font-style:normal;}
+/* CTA FINAL */
+#cta-final{position:relative;z-index:1;padding:10rem 2rem;text-align:center;background:radial-gradient(ellipse at center,#1a0e00 0%,var(--black) 70%);overflow:hidden;}
+#cta-final::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(45deg,transparent,transparent 100px,rgba(201,168,76,.01) 100px,rgba(201,168,76,.01) 101px);pointer-events:none;}
+.cta-eyebrow{font-size:.65rem;letter-spacing:.5em;color:var(--gold);text-transform:uppercase;margin-bottom:2rem;display:flex;align-items:center;gap:1.5rem;justify-content:center;}
+.cta-eyebrow::before,.cta-eyebrow::after{content:'';width:60px;height:1px;background:var(--gold);opacity:.4;}
+.cta-title{font-family:var(--fd);font-size:clamp(3.5rem,8vw,7rem);font-weight:300;color:var(--white);line-height:1;margin-bottom:1rem;}
+.cta-title span{color:var(--gold);}
+.cta-sub{font-size:1rem;color:var(--wdim);margin-bottom:3.5rem;letter-spacing:.05em;}
+/* FOOTER */
+footer{background:#050505;border-top:1px solid rgba(201,168,76,.08);padding:4rem 2rem 2rem;position:relative;z-index:1;}
+.footer-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 2fr 1fr;gap:3rem;align-items:start;margin-bottom:3rem;}
+.footer-logo .logo{margin-bottom:1rem;}
+.footer-logo p{font-size:.75rem;color:var(--wdim);line-height:1.7;}
+.footer-links h4{font-size:.6rem;letter-spacing:.25em;color:var(--gold);text-transform:uppercase;margin-bottom:1rem;}
+.footer-links ul{display:grid;grid-template-columns:1fr 1fr;gap:.4rem;}
+.footer-links ul a{font-size:.75rem;color:var(--wdim);transition:color .2s;}
+.footer-links ul a:hover{color:var(--gold);}
+.footer-contact h4{font-size:.6rem;letter-spacing:.25em;color:var(--gold);text-transform:uppercase;margin-bottom:1rem;}
+.footer-contact p{font-size:.78rem;color:var(--wdim);margin-bottom:.5rem;}
+.footer-contact a{color:var(--wdim);transition:color .2s;}
+.footer-contact a:hover{color:var(--gold);}
+.footer-bottom{max-width:1200px;margin:0 auto;padding-top:2rem;border-top:1px solid rgba(245,240,232,.05);display:flex;justify-content:space-between;align-items:center;}
+.footer-bottom p{font-size:.65rem;color:rgba(245,240,232,.2);letter-spacing:.08em;}
+/* RESPONSIVO */
+@media(max-width:900px){
+  nav{padding:1rem 1.5rem;}
+  .nav-links{display:none;}.hbg{display:block;}
+  .nav-links.open{display:flex;flex-direction:column;position:fixed;inset:0;background:rgba(8,8,8,.98);align-items:center;justify-content:center;gap:2.5rem;z-index:999;}
+  .nav-links.open a{font-size:1.1rem;}
+  .numeros-grid{grid-template-columns:repeat(2,1fr);}
+  .num-item:nth-child(2){border-right:none;}
+  .exp-grid,.res-grid,.cred-grid{grid-template-columns:1fr;}
+  .boate-inner,.reservados-hero,.mkt-inner{grid-template-columns:1fr;gap:3rem;}
+  .ing-grid{grid-template-columns:1fr;}
+  .ing-card--vip{transform:none;}
+  .transp-grid{grid-template-columns:1fr;}
+  .gal-grid{grid-template-columns:1fr 1fr;}
+  .gal-item.wide{grid-column:span 1;}
+  .footer-inner{grid-template-columns:1fr;}
+  .footer-bottom{flex-direction:column;gap:1rem;text-align:center;}
+}
+@media(max-width:600px){
+  .numeros-grid{grid-template-columns:1fr 1fr;}
+  .gal-grid{grid-template-columns:1fr;}
+  .gal-item.tall{grid-row:span 1;}
+  .cred-grid{grid-template-columns:1fr 1fr;}
+}
+</style>
 </head>
 <body>
 
-<!-- ══════════════════════════════════════════════
-     NAV
-══════════════════════════════════════════════ -->
+<!-- PARTÍCULAS -->
+<div id="particles"></div>
+
+<!-- NAV -->
 <nav id="navbar">
-  <div class="nav-logo">
-    <span class="nav-logo-camarote">CAMAROTE</span>
-    <span class="nav-logo-main">ATMOSFERA</span>
+  <div class="logo">
+    <span>CAMAROTE</span>
+    <span>ATMOSFERA</span>
   </div>
-  <ul class="nav-links">
-    <li><a href="#countdown">Contagem</a></li>
-    <li><a href="#about">O Camarote</a></li>
-    <li><a href="#areas">Áreas</a></li>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#numeros">O Camarote</a></li>
+    <li><a href="#experiencias">Experiências</a></li>
+    <li><a href="#reservados">Reservados</a></li>
     <li><a href="#ingressos">Ingressos</a></li>
-    <li><a href="#transporte">Transporte</a></li>
-    <li><a href="#galeria">Galeria</a></li>
-    <li><a href="#ingressos" class="nav-cta">Comprar</a></li>
+    <li><a href="#transporte">Transfer</a></li>
+    <li><a href="#credenciamento">Credenciamento</a></li>
+    <li><a href="#ingressos" class="nav-cta">Garantir Vaga</a></li>
   </ul>
-  <button class="hamburger" id="hamburger">&#9776;</button>
+  <button class="hbg" id="hbg">☰</button>
 </nav>
 
-<!-- ══════════════════════════════════════════════
-     HERO
-══════════════════════════════════════════════ -->
+<!-- HERO -->
 <section id="hero">
-  <div class="hero-overlay"></div>
-  <video class="hero-bg" autoplay muted loop playsinline poster="images/hero-poster.jpg">
-    <!-- Substitua pelo seu vídeo: <source src="images/hero.mp4" type="video/mp4"> -->
-  </video>
+  <div class="hero-lines"></div>
+  <div class="hero-glow"></div>
   <div class="hero-content">
-    <p class="hero-eyebrow">SAPUCAÍ · CARNAVAL 2027</p>
+    <div class="hero-eyebrow">SAPUCAÍ · CARNAVAL 2027</div>
     <h1 class="hero-title">ATMOSFERA</h1>
     <p class="hero-sub">O maior espetáculo da Terra. Viva por dentro.</p>
+    <div class="hero-tag">Setor 8 · Meio da Avenida · Vista Panorâmica</div>
     <div class="hero-btns">
       <a href="#ingressos" class="btn-gold">Garantir meu ingresso</a>
-      <a href="#about" class="btn-ghost">Conhecer o camarote</a>
+      <a href="#reservados" class="btn-ghost">Reservados Corporativos</a>
     </div>
   </div>
-  <div class="hero-scroll">↓</div>
+  <div class="hero-scroll">Role para ver</div>
 </section>
 
-<!-- ══════════════════════════════════════════════
-     COUNTDOWN
-══════════════════════════════════════════════ -->
-<section id="countdown">
-  <p class="section-eyebrow">FALTAM APENAS</p>
-  <div class="countdown-grid">
-    <div class="countdown-item"><span id="cd-days">00</span><label>dias</label></div>
-    <div class="countdown-sep">:</div>
-    <div class="countdown-item"><span id="cd-hours">00</span><label>horas</label></div>
-    <div class="countdown-sep">:</div>
-    <div class="countdown-item"><span id="cd-min">00</span><label>minutos</label></div>
-    <div class="countdown-sep">:</div>
-    <div class="countdown-item"><span id="cd-sec">00</span><label>segundos</label></div>
+<!-- NÚMEROS -->
+<section id="numeros">
+  <div class="numeros-grid">
+    <div class="num-item">
+      <span class="num-val">3.000</span>
+      <span class="num-label">m² de experiência</span>
+    </div>
+    <div class="num-item">
+      <span class="num-val">3</span>
+      <span class="num-label">andares integrados</span>
+    </div>
+    <div class="num-item">
+      <span class="num-val">Setor 8</span>
+      <span class="num-label">Meio da Avenida</span>
+    </div>
+    <div class="num-item">
+      <span class="num-val">2027</span>
+      <span class="num-label">Carnaval da Sapucaí</span>
+    </div>
   </div>
-  <p class="countdown-label">para o Carnaval 2027 na Sapucaí</p>
 </section>
 
-<!-- ══════════════════════════════════════════════
-     ABOUT
-══════════════════════════════════════════════ -->
-<section id="about">
-  <div class="container two-col">
-    <div class="about-text">
-      <p class="section-eyebrow">NOSSA HISTÓRIA</p>
-      <h2>Onde a experiência<br><em>encontra o espetáculo</em></h2>
-      <p>O ATMOSFERA nasce com a proposta de oferecer uma experiência verdadeiramente premium no maior espetáculo a céu aberto do mundo: o Carnaval da Sapucaí.</p>
-      <p>Com mais de <strong>3.000m²</strong> distribuídos por três andares e diversos ambientes integrados, o camarote combina entretenimento, gastronomia, bem-estar e ativações de marca em um único lugar.</p>
-      <p>Localizado estrategicamente no <strong>Setor 8</strong>, bem no meio da Avenida, próximo ao segundo recuo da bateria e em frente a uma das cabines de jurados — o ponto mais privilegiado da Sapucaí.</p>
-      <ul class="about-list">
-        <li>✦ Open bar premium</li>
-        <li>✦ Open food com curadoria gastronômica</li>
-        <li>✦ Boate exclusiva com shows e DJs</li>
-        <li>✦ Spa de relaxamento e espaço beauty</li>
-        <li>✦ Acessibilidade total para PCD</li>
-        <li>✦ Ações e medidas sustentáveis</li>
+<!-- COUNTDOWN -->
+<section id="countdown">
+  <span class="cd-eyebrow">Faltam apenas</span>
+  <div class="cd-grid">
+    <div class="cd-item"><span id="cd-days">00</span><label>dias</label></div>
+    <div class="cd-sep">:</div>
+    <div class="cd-item"><span id="cd-hours">00</span><label>horas</label></div>
+    <div class="cd-sep">:</div>
+    <div class="cd-item"><span id="cd-min">00</span><label>min</label></div>
+    <div class="cd-sep">:</div>
+    <div class="cd-item"><span id="cd-sec">00</span><label>seg</label></div>
+  </div>
+  <p class="cd-sub">para o Carnaval 2027 na Sapucaí</p>
+</section>
+
+<!-- EXPERIÊNCIAS -->
+<section id="experiencias">
+  <div class="sec-title">
+    <span class="sec-eyebrow">Estrutura</span>
+    <h2 class="sec-h2">Três andares de<br><em>experiências únicas</em></h2>
+    <div class="sec-line"></div>
+  </div>
+  <div class="exp-grid">
+    <div class="exp-card">
+      <div class="exp-num">01</div>
+      <div class="exp-floor">1º Piso · Nível da Pista</div>
+      <h3>Frisas & Gastronomia</h3>
+      <ul>
+        <li>Frisas Open — desfiles bem de pertinho</li>
+        <li>Pizzaria e buffet de massas</li>
+        <li>Bares com bebidas quentes e frias</li>
+        <li>Chopeiras artesanais</li>
+        <li>Banheiros modernos e climatizados</li>
       </ul>
     </div>
-    <div class="about-image">
-      <div class="about-img-placeholder">
-        <span>📸</span>
-        <p>Adicione sua foto aqui<br><small>Substitua em <code>images/about.jpg</code></small></p>
-      </div>
-      <div class="about-badge">Setor 8 · Meio da Avenida</div>
+    <div class="exp-card">
+      <div class="exp-num">02</div>
+      <div class="exp-floor">2º Piso · Bem-estar</div>
+      <h3>Relax & Beleza</h3>
+      <ul>
+        <li>Espaço Relax: reflexologia e massagem</li>
+        <li>Espaço Beauty: maquiagem e penteados</li>
+        <li>Barbearia Express: barba e cabelo</li>
+        <li>Ambientes instagramáveis</li>
+      </ul>
+    </div>
+    <div class="exp-card">
+      <div class="exp-num">03</div>
+      <div class="exp-floor">3º Piso · Vista Panorâmica</div>
+      <h3>Boate & Buffet</h3>
+      <ul>
+        <li>Varandão com vista panorâmica</li>
+        <li>Boate com shows e DJs nacionais/internacionais</li>
+        <li>Buffet: jantar, japonesa e hamburgueria</li>
+        <li>Reservados corporativos exclusivos</li>
+      </ul>
     </div>
   </div>
 </section>
 
-<!-- ══════════════════════════════════════════════
-     AREAS
-══════════════════════════════════════════════ -->
-<section id="areas">
-  <div class="container">
-    <p class="section-eyebrow center">ESTRUTURA</p>
-    <h2 class="center">Três andares de<br><em>experiências únicas</em></h2>
-    <div class="areas-grid">
-
-      <div class="area-card">
-        <div class="area-num">01</div>
-        <h3>1º Piso</h3>
-        <p class="area-tag">Nível da Pista</p>
-        <ul>
-          <li>Frisas Open — veja os desfiles de pertinho</li>
-          <li>Pizzaria e buffet de massas</li>
-          <li>Bares com bebidas quentes e frias</li>
-          <li>Chopeiras</li>
-          <li>Banheiros modernos e climatizados</li>
-        </ul>
+<!-- BOATE -->
+<section id="boate">
+  <div class="boate-inner">
+    <div class="boate-visual">
+      <div class="boate-lights">
+        <div class="light" style="width:200px;height:200px;background:#4040ff;top:10%;left:10%;animation-duration:3s;animation-delay:0s;"></div>
+        <div class="light" style="width:180px;height:180px;background:#ff4080;top:20%;right:15%;animation-duration:4s;animation-delay:1s;"></div>
+        <div class="light" style="width:150px;height:150px;background:#C9A84C;bottom:30%;left:40%;animation-duration:3.5s;animation-delay:.5s;"></div>
+        <div class="light" style="width:120px;height:120px;background:#40ffff;top:50%;right:10%;animation-duration:5s;animation-delay:2s;"></div>
       </div>
-
-      <div class="area-card area-card--gold">
-        <div class="area-num">02</div>
-        <h3>2º Piso</h3>
-        <p class="area-tag">Bem-estar & Beleza</p>
-        <ul>
-          <li>Espaço Relax: reflexologia e cadeiras de massagem</li>
-          <li>Espaço Beauty: maquiagem e penteados rápidos</li>
-          <li>Barbearia Express: barba e cabelo</li>
-        </ul>
+      <div class="boate-stage"></div>
+      <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:.5rem;">
+        <span style="font-family:var(--fd);font-size:.6rem;letter-spacing:.3em;color:var(--gold);text-transform:uppercase;">Boate</span>
+        <span style="font-family:var(--fd);font-size:3rem;font-weight:300;color:var(--white);">ATMOSFERA</span>
+        <span style="font-size:.7rem;color:var(--wdim);">400m² · Som e Iluminação de Ponta</span>
       </div>
-
-      <div class="area-card">
-        <div class="area-num">03</div>
-        <h3>3º Piso</h3>
-        <p class="area-tag">Vista Panorâmica</p>
-        <ul>
-          <li>Varandão com vista panorâmica dos desfiles</li>
-          <li>Boate Atmosfera: shows e DJs nacionais/internacionais</li>
-          <li>Buffet completo: jantar, japonesa e hamburgueria</li>
-          <li>Reservados corporativos (consultar disponibilidade)</li>
-        </ul>
+    </div>
+    <div class="boate-text">
+      <span class="sec-eyebrow">Novidade 2027</span>
+      <h2>A primeira boate da<br><em>Sapucaí com vista panorâmica</em></h2>
+      <p>O novo espaço de 400m² será a primeira boate da Sapucaí com vista panorâmica para os desfiles — uma experiência única no mundo.</p>
+      <p>Shows de artistas e DJs nacionais e internacionais em um ambiente com isolamento acústico, projetos de som e iluminação de ponta.</p>
+      <div class="boate-specs">
+        <div class="spec">Isolamento acústico total</div>
+        <div class="spec">Som e luz de ponta</div>
+        <div class="spec">Camarotes internos VIP</div>
+        <div class="spec">Vista panorâmica única</div>
+        <div class="spec">Shows e DJs de renome</div>
+        <div class="spec">Camarins exclusivos</div>
       </div>
-
     </div>
   </div>
 </section>
 
-<!-- ══════════════════════════════════════════════
-     INGRESSOS
-══════════════════════════════════════════════ -->
+<!-- RESERVADOS -->
+<section id="reservados">
+  <div class="reservados-inner">
+    <div class="reservados-hero">
+      <div class="res-text">
+        <span class="sec-eyebrow">Corporativo</span>
+        <h2>Traga sua empresa<br><strong>para a Avenida!</strong></h2>
+        <span class="res-tagline">Sua marca no coração do Carnaval</span>
+        <p>Espaços privados para 20 pessoas com vista panorâmica dos desfiles, além de estrutura e montagem personalizadas para a sua marca.</p>
+        <p>Ao patrocinar o Camarote Atmosfera, sua empresa se conecta a um público altamente qualificado em um dos eventos mais assistidos do planeta.</p>
+        <div class="res-price">
+          <div>
+            <span class="res-price-label">Investimento</span>
+            <div style="display:flex;align-items:flex-start;gap:.3rem;">
+              <span style="font-size:.9rem;color:var(--gold);margin-top:.8rem;font-weight:600;">R$</span>
+              <span class="res-price-val">500 mil</span>
+            </div>
+            <span class="res-price-info">por noite · 20 convidados</span>
+          </div>
+        </div>
+        <a href="https://wa.me/5521999999999" target="_blank" class="btn-gold">Solicitar proposta agora</a>
+      </div>
+      <div class="res-visual">
+        <span class="res-capacity">20</span>
+        <span class="res-capacity-label">pessoas por reservado</span>
+        <div class="res-divider"></div>
+        <ul class="res-includes">
+          <li>Garçom, barman e segurança exclusivos</li>
+          <li>TV 42", Wi-Fi e chopeira privativa</li>
+          <li>Van exclusiva ida e volta</li>
+          <li>Pulseiras personalizadas para convidados</li>
+          <li>Estrutura com identidade da sua marca</li>
+          <li>Buffet e open bar exclusivos</li>
+          <li>Sofás, pufes e mesas privativos</li>
+        </ul>
+      </div>
+    </div>
+    <div class="res-grid">
+      <div class="res-feature">
+        <div class="res-feature-icon">🎯</div>
+        <h4>Visibilidade de Marca</h4>
+        <p>Sua marca presente no maior espetáculo a céu aberto da Terra, vista por milhares de pessoas.</p>
+      </div>
+      <div class="res-feature">
+        <div class="res-feature-icon">🤝</div>
+        <h4>Networking VIP</h4>
+        <p>Ambiente premium para conectar sua empresa a um público altamente qualificado.</p>
+      </div>
+      <div class="res-feature">
+        <div class="res-feature-icon">⭐</div>
+        <h4>Experiência Exclusiva</h4>
+        <p>Uma experiência personalizada que seus clientes e parceiros jamais esquecerão.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INGRESSOS -->
 <section id="ingressos">
-  <div class="container">
-    <p class="section-eyebrow center">INGRESSOS</p>
-    <h2 class="center">Escolha sua<br><em>experiência</em></h2>
-    <div class="tickets-grid" id="tickets-grid">
-
-      <!-- ✏️ EDITE AQUI: duplique um bloco .ticket-card para adicionar mais ingressos -->
-
-      <div class="ticket-card">
-        <div class="ticket-header">
-          <p class="ticket-type">INDIVIDUAL</p>
-          <p class="ticket-night">Sexta-feira</p>
-        </div>
-        <div class="ticket-price">
-          <span class="ticket-currency">R$</span>
-          <span class="ticket-value" data-price="1500">1.500</span>
-        </div>
-        <ul class="ticket-includes">
-          <li>✓ Open bar premium</li>
-          <li>✓ Open food curadoria gastronômica</li>
-          <li>✓ Transfer Zona Sul / Barra</li>
-          <li>✓ Acesso a todos os pisos</li>
-        </ul>
-        <a href="#" class="btn-gold ticket-btn">Comprar ingresso</a>
+  <div class="sec-title">
+    <span class="sec-eyebrow">Ingressos</span>
+    <h2 class="sec-h2">Escolha sua<br><em>experiência</em></h2>
+    <div class="sec-line"></div>
+  </div>
+  <div class="ing-grid" style="max-width:1000px;margin:0 auto;">
+    <div class="ing-card">
+      <div class="ing-noite">Individual · Sexta-feira</div>
+      <h3>Noite de Abertura</h3>
+      <div class="ing-price">
+        <span class="ing-cur">R$</span>
+        <span class="ing-val">1.500</span>
       </div>
-
-      <div class="ticket-card ticket-card--featured">
-        <div class="ticket-badge">MAIS VENDIDO</div>
-        <div class="ticket-header">
-          <p class="ticket-type">INDIVIDUAL</p>
-          <p class="ticket-night">Sábado</p>
-        </div>
-        <div class="ticket-price">
-          <span class="ticket-currency">R$</span>
-          <span class="ticket-value" data-price="1800">1.800</span>
-        </div>
-        <ul class="ticket-includes">
-          <li>✓ Open bar premium</li>
-          <li>✓ Open food curadoria gastronômica</li>
-          <li>✓ Transfer Zona Sul / Barra</li>
-          <li>✓ Acesso a todos os pisos</li>
-          <li>✓ Acesso à Boate Atmosfera</li>
-        </ul>
-        <a href="#" class="btn-gold ticket-btn">Comprar ingresso</a>
+      <ul class="ing-list">
+        <li>Open bar premium</li>
+        <li>Open food com curadoria gastronômica</li>
+        <li>Transfer Zona Sul / Barra</li>
+        <li>Acesso a todos os pisos</li>
+        <li>Espaço Beauty e Relax</li>
+      </ul>
+      <a href="#" class="ing-btn">Comprar ingresso</a>
+    </div>
+    <div class="ing-card ing-card--vip">
+      <div class="ing-badge">Mais Vendido</div>
+      <div class="ing-noite">Individual · Sábado</div>
+      <h3>A Grande Noite</h3>
+      <div class="ing-price">
+        <span class="ing-cur">R$</span>
+        <span class="ing-val">1.800</span>
       </div>
-
-      <div class="ticket-card">
-        <div class="ticket-header">
-          <p class="ticket-type">RESERVADO CORP.</p>
-          <p class="ticket-night">20 pessoas · Qualquer noite</p>
-        </div>
-        <div class="ticket-price">
-          <span class="ticket-currency">R$</span>
-          <span class="ticket-value" data-price="500000">500.000</span>
-        </div>
-        <ul class="ticket-includes">
-          <li>✓ Espaço privado com vista panorâmica</li>
-          <li>✓ Equipe exclusiva: garçom, barman, segurança</li>
-          <li>✓ TV 42", Wi-Fi, geladeira e chopeira</li>
-          <li>✓ Van exclusiva ida e volta</li>
-          <li>✓ Pulseiras personalizadas para convidados</li>
-          <li>✓ Estrutura com identidade de marca</li>
-        </ul>
-        <a href="mailto:contato@camaroteatmosfera.com.br" class="btn-ghost ticket-btn">Solicitar proposta</a>
-      </div>
-
+      <ul class="ing-list">
+        <li>Open bar premium</li>
+        <li>Open food com curadoria gastronômica</li>
+        <li>Transfer Zona Sul / Barra</li>
+        <li>Acesso a todos os pisos</li>
+        <li>Acesso à Boate Atmosfera</li>
+        <li>Espaço Beauty e Relax</li>
+      </ul>
+      <a href="#" class="ing-btn">Comprar ingresso</a>
     </div>
   </div>
 </section>
 
-<!-- ══════════════════════════════════════════════
-     TRANSPORTE
-══════════════════════════════════════════════ -->
+<!-- TRANSPORTE -->
 <section id="transporte">
-  <div class="container">
-    <p class="section-eyebrow center">TRANSFER VIP</p>
-    <h2 class="center">Chegue em estilo,<br><em>sem preocupações</em></h2>
-    <div class="transport-grid" id="transport-grid">
-
-      <!-- ✏️ EDITE AQUI: altere horários e pontos de encontro -->
-
-      <div class="transport-card">
-        <div class="transport-icon">🚌</div>
-        <h3>Zona Sul</h3>
-        <div class="transport-stops">
-          <div class="stop">
-            <span class="stop-time">20:00</span>
-            <span class="stop-name">Copacabana — Posto 5</span>
-          </div>
-          <div class="stop">
-            <span class="stop-time">20:20</span>
-            <span class="stop-name">Ipanema — Praça Nossa Sra. da Paz</span>
-          </div>
-          <div class="stop">
-            <span class="stop-time">20:40</span>
-            <span class="stop-name">Leblon — Av. Ataulfo de Paiva</span>
-          </div>
-          <div class="stop stop--arrival">
-            <span class="stop-time">21:30</span>
-            <span class="stop-name">✦ Chegada na Sapucaí</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="transport-card">
-        <div class="transport-icon">🚌</div>
-        <h3>Barra da Tijuca</h3>
-        <div class="transport-stops">
-          <div class="stop">
-            <span class="stop-time">19:30</span>
-            <span class="stop-name">Barra Shopping</span>
-          </div>
-          <div class="stop">
-            <span class="stop-time">19:50</span>
-            <span class="stop-name">Downtown — Estacionamento</span>
-          </div>
-          <div class="stop">
-            <span class="stop-time">20:10</span>
-            <span class="stop-name">Via Parque</span>
-          </div>
-          <div class="stop stop--arrival">
-            <span class="stop-time">21:30</span>
-            <span class="stop-name">✦ Chegada na Sapucaí</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="transport-info">
-        <h3>Retorno</h3>
-        <p>O transfer de retorno sai da Sapucaí com destino aos mesmos pontos de embarque após o encerramento dos desfiles.</p>
-        <p><strong>Incluso</strong> em todos os ingressos individuais.</p>
-        <p><strong>Van exclusiva</strong> para reservados corporativos.</p>
-        <div class="transport-note">
-          📍 Confirme seu assento antecipadamente no momento da compra.
-        </div>
-      </div>
-
+  <div class="sec-title">
+    <span class="sec-eyebrow">Transfer VIP</span>
+    <h2 class="sec-h2">Chegue em estilo,<br><em>sem preocupações</em></h2>
+    <div class="sec-line"></div>
+  </div>
+  <div class="transp-grid" style="max-width:1200px;margin:0 auto;">
+    <div class="transp-card">
+      <div class="transp-icon">🚌</div>
+      <h3>Zona Sul</h3>
+      <div class="stop"><span class="stop-time">20:00</span><span class="stop-name">Copacabana — Posto 5</span></div>
+      <div class="stop"><span class="stop-time">20:20</span><span class="stop-name">Ipanema — Praça Nossa Sra. da Paz</span></div>
+      <div class="stop"><span class="stop-time">20:40</span><span class="stop-name">Leblon — Av. Ataulfo de Paiva</span></div>
+      <div class="stop stop--arr"><span class="stop-time">21:30</span><span class="stop-name">✦ Chegada na Sapucaí</span></div>
+    </div>
+    <div class="transp-card">
+      <div class="transp-icon">🚌</div>
+      <h3>Barra da Tijuca</h3>
+      <div class="stop"><span class="stop-time">19:30</span><span class="stop-name">Barra Shopping</span></div>
+      <div class="stop"><span class="stop-time">19:50</span><span class="stop-name">Downtown — Estacionamento</span></div>
+      <div class="stop"><span class="stop-time">20:10</span><span class="stop-name">Via Parque</span></div>
+      <div class="stop stop--arr"><span class="stop-time">21:30</span><span class="stop-name">✦ Chegada na Sapucaí</span></div>
+    </div>
+    <div class="transp-info">
+      <h3>Retorno</h3>
+      <p>Transfer de retorno após o encerramento dos desfiles, retornando aos mesmos pontos de embarque.</p>
+      <p><strong>Incluso</strong> em todos os ingressos individuais.</p>
+      <p><strong>Van exclusiva</strong> para reservados corporativos.</p>
+      <div class="transp-note">📍 Confirme seu assento no momento da compra.</div>
     </div>
   </div>
 </section>
 
-<!-- ══════════════════════════════════════════════
-     GALERIA
-══════════════════════════════════════════════ -->
+<!-- CREDENCIAMENTO -->
+<section id="credenciamento">
+  <div class="sec-title">
+    <span class="sec-eyebrow">Acesso & Credenciamento</span>
+    <h2 class="sec-h2">Informações para<br><em>entrada e acesso</em></h2>
+    <div class="sec-line"></div>
+  </div>
+  <div class="cred-local">
+    <div class="cred-local-icon">📍</div>
+    <div>
+      <div class="cred-local-label">Local do Credenciamento</div>
+      <div class="cred-local-address">Sambódromo Marquês de Sapucaí — Portão 8</div>
+      <div class="cred-local-sub">Rua Marquês de Sapucaí, s/n — Centro, Rio de Janeiro</div>
+    </div>
+  </div>
+  <div class="cred-grid">
+    <div class="cred-card">
+      <div class="cred-icon">🎟️</div>
+      <h3>Clientes VIP</h3>
+      <div class="cred-day"><span class="cred-date">Sex, 19/02</span><span class="cred-time">A partir das 20h</span></div>
+      <div class="cred-day"><span class="cred-date">Sáb, 20/02</span><span class="cred-time">A partir das 20h</span></div>
+      <div class="cred-day"><span class="cred-date">Dom, 21/02</span><span class="cred-time">A partir das 20h</span></div>
+      <div class="cred-note">Ingresso + documento com foto</div>
+    </div>
+    <div class="cred-card cred-card--gold">
+      <div class="cred-icon">⭐</div>
+      <h3>Patrocinadores</h3>
+      <div class="cred-day"><span class="cred-date">Sex, 19/02</span><span class="cred-time">A partir das 18h</span></div>
+      <div class="cred-day"><span class="cred-date">Sáb, 20/02</span><span class="cred-time">A partir das 18h</span></div>
+      <div class="cred-day"><span class="cred-date">Dom, 21/02</span><span class="cred-time">A partir das 18h</span></div>
+      <div class="cred-note">Credencial prévia + documento</div>
+    </div>
+    <div class="cred-card">
+      <div class="cred-icon">🚚</div>
+      <h3>Fornecedores</h3>
+      <div class="cred-day"><span class="cred-date">Sex, 19/02</span><span class="cred-time">08h às 16h</span></div>
+      <div class="cred-day"><span class="cred-date">Sáb, 20/02</span><span class="cred-time">08h às 16h</span></div>
+      <div class="cred-day"><span class="cred-date">Dom, 21/02</span><span class="cred-time">08h às 16h</span></div>
+      <div class="cred-note">NF + credencial obrigatórios</div>
+    </div>
+    <div class="cred-card">
+      <div class="cred-icon">🎤</div>
+      <h3>Artistas & Staff</h3>
+      <div class="cred-day"><span class="cred-date">Sex, 19/02</span><span class="cred-time">17h às 19h</span></div>
+      <div class="cred-day"><span class="cred-date">Sáb, 20/02</span><span class="cred-time">17h às 19h</span></div>
+      <div class="cred-day"><span class="cred-date">Dom, 21/02</span><span class="cred-time">17h às 19h</span></div>
+      <div class="cred-note">Lista confirmada com produção</div>
+    </div>
+  </div>
+  <div class="cred-alert">⚠️ <strong>Atenção:</strong> Credenciamento obrigatório para todos. Após o horário indicado, acesso sujeito à equipe de segurança. Dúvidas pelo WhatsApp.</div>
+</section>
+
+<!-- GALERIA -->
 <section id="galeria">
-  <div class="container">
-    <p class="section-eyebrow center">GALERIA</p>
-    <h2 class="center">Momentos que<br><em>ficam para sempre</em></h2>
+  <div class="sec-title">
+    <span class="sec-eyebrow">Galeria</span>
+    <h2 class="sec-h2">Momentos que<br><em>ficam para sempre</em></h2>
+    <div class="sec-line"></div>
+  </div>
+  <div class="gal-grid" style="max-width:1200px;margin:0 auto;">
+    <div class="gal-item tall"><div class="gal-placeholder"><span>📸</span><small>foto-1.jpg</small></div></div>
+    <div class="gal-item"><div class="gal-placeholder"><span>📸</span><small>foto-2.jpg</small></div></div>
+    <div class="gal-item"><div class="gal-placeholder"><span>📸</span><small>foto-3.jpg</small></div></div>
+    <div class="gal-item wide"><div class="gal-placeholder"><span>📸</span><small>foto-4.jpg</small></div></div>
+    <div class="gal-item"><div class="gal-placeholder"><span>📸</span><small>foto-5.jpg</small></div></div>
+  </div>
+</section>
 
-    <div class="gallery-grid" id="gallery-grid">
-      <!-- ✏️ COMO ADICIONAR FOTOS:
-           1. Coloque suas fotos na pasta /images/
-           2. Duplique um <div class="gallery-item"> abaixo
-           3. Substitua o src da <img> pelo nome da sua foto
-      -->
-      <div class="gallery-item tall">
-        <div class="gallery-placeholder"><span>📸</span><small>foto-1.jpg</small></div>
+<!-- MARKETING -->
+<section id="marketing">
+  <div class="mkt-inner">
+    <div class="mkt-text">
+      <span class="sec-eyebrow">Oportunidades de Marketing</span>
+      <h2>Aqui, onde a magia acontece,<br><em>sua marca é vista por milhares</em></h2>
+      <p>Considerado o maior espetáculo a céu aberto da Terra, o Carnaval do Rio é um dos eventos mais assistidos do mundo, com ampla cobertura televisiva, digital e presencial.</p>
+      <div class="mkt-stat">
+        <strong>200M+</strong>
+        <span>Audiência global do Carnaval do Rio</span>
       </div>
-      <div class="gallery-item">
-        <div class="gallery-placeholder"><span>📸</span><small>foto-2.jpg</small></div>
-      </div>
-      <div class="gallery-item">
-        <div class="gallery-placeholder"><span>📸</span><small>foto-3.jpg</small></div>
-      </div>
-      <div class="gallery-item wide">
-        <div class="gallery-placeholder"><span>📸</span><small>foto-4.jpg</small></div>
-      </div>
-      <div class="gallery-item">
-        <div class="gallery-placeholder"><span>📸</span><small>foto-5.jpg</small></div>
+      <div class="mkt-stat">
+        <strong>190+</strong>
+        <span>Países com cobertura televisiva</span>
       </div>
     </div>
-
-    <p class="gallery-hint">✏️ <em>Para adicionar fotos: substitua os placeholders por <code>&lt;img src="images/sua-foto.jpg"&gt;</code></em></p>
+    <div class="mkt-quote">
+      <p>"Ao patrocinar o Camarote Atmosfera, sua empresa se conecta a um público altamente qualificado, em um ambiente de grande visibilidade."</p>
+      <cite>Camarote Atmosfera · Sapucaí 2027</cite>
+    </div>
   </div>
 </section>
 
-<!-- ══════════════════════════════════════════════
-     CTA FINAL
-══════════════════════════════════════════════ -->
+<!-- CTA FINAL -->
 <section id="cta-final">
-  <div class="cta-inner">
-    <p class="section-eyebrow">CARNAVAL 2027</p>
-    <h2>Entre. Sinta. Viva.</h2>
-    <p>Não fique de fora do maior espetáculo da Terra.</p>
-    <a href="#ingressos" class="btn-gold btn-large">Garantir meu ingresso agora</a>
+  <div class="cta-eyebrow">Carnaval 2027</div>
+  <h2 class="cta-title">Entre. <span>Sinta.</span> Viva.</h2>
+  <p class="cta-sub">Não fique de fora do maior espetáculo da Terra.</p>
+  <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
+    <a href="#ingressos" class="btn-gold">Garantir meu ingresso</a>
+    <a href="https://wa.me/5521999999999" target="_blank" class="btn-ghost">Falar no WhatsApp</a>
   </div>
 </section>
 
-<!-- ══════════════════════════════════════════════
-     FOOTER
-══════════════════════════════════════════════ -->
+<!-- FOOTER -->
 <footer>
   <div class="footer-inner">
     <div class="footer-logo">
-      <span class="nav-logo-camarote">CAMAROTE</span>
-      <span class="nav-logo-main">ATMOSFERA</span>
+      <div class="logo" style="margin-bottom:1rem;"><span>CAMAROTE</span><span>ATMOSFERA</span></div>
+      <p>A experiência premium no maior espetáculo a céu aberto do mundo.</p>
     </div>
     <div class="footer-links">
-      <a href="#about">O Camarote</a>
-      <a href="#areas">Áreas</a>
-      <a href="#ingressos">Ingressos</a>
-      <a href="#transporte">Transporte</a>
-      <a href="#galeria">Galeria</a>
+      <h4>Navegação</h4>
+      <ul>
+        <li><a href="#experiencias">Experiências</a></li>
+        <li><a href="#boate">Boate</a></li>
+        <li><a href="#reservados">Reservados</a></li>
+        <li><a href="#ingressos">Ingressos</a></li>
+        <li><a href="#transporte">Transfer</a></li>
+        <li><a href="#credenciamento">Credenciamento</a></li>
+        <li><a href="#galeria">Galeria</a></li>
+        <li><a href="#marketing">Marketing</a></li>
+      </ul>
     </div>
     <div class="footer-contact">
-      <!-- ✏️ EDITE seu contato aqui -->
+      <h4>Contato</h4>
       <p>📧 <a href="mailto:contato@camaroteatmosfera.com.br">contato@camaroteatmosfera.com.br</a></p>
-      <p>📱 <a href="https://wa.me/5521999999999">WhatsApp: (21) 99999-9999</a></p>
-      <p>📍 Sambódromo da Marquês de Sapucaí · Setor 8 · Rio de Janeiro</p>
+      <p>📱 <a href="https://wa.me/5521999999999">(21) 99999-9999</a></p>
+      <p>📍 Sambódromo · Setor 8 · Rio de Janeiro</p>
     </div>
-    <p class="footer-copy">© 2025 Camarote Atmosfera. Todos os direitos reservados.</p>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 Camarote Atmosfera. Todos os direitos reservados.</p>
+    <p>Sapucaí · Rio de Janeiro · Brasil</p>
   </div>
 </footer>
 
-<script src="js/main.js"></script>
+<script>
+const CONFIG={carnavalDate:new Date('2027-02-20T21:00:00-03:00'),whatsapp:'5521999999999'};
+// NAV
+const nav=document.getElementById('navbar');
+window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>60));
+document.getElementById('hbg').addEventListener('click',()=>{
+  const nl=document.getElementById('navLinks');
+  nl.classList.toggle('open');
+  document.getElementById('hbg').textContent=nl.classList.contains('open')?'✕':'☰';
+});
+document.querySelectorAll('#navLinks a').forEach(a=>a.addEventListener('click',()=>{
+  document.getElementById('navLinks').classList.remove('open');
+  document.getElementById('hbg').textContent='☰';
+}));
+// COUNTDOWN
+function tick(){
+  const d=CONFIG.carnavalDate-new Date();
+  if(d<=0)return;
+  const p=n=>String(Math.floor(n)).padStart(2,'0');
+  document.getElementById('cd-days').textContent=p(d/86400000);
+  document.getElementById('cd-hours').textContent=p((d%86400000)/3600000);
+  document.getElementById('cd-min').textContent=p((d%3600000)/60000);
+  document.getElementById('cd-sec').textContent=p((d%60000)/1000);
+}
+tick();setInterval(tick,1000);
+// PARTÍCULAS
+const pc=document.getElementById('particles');
+const COLS=['#C9A84C','#E8C97A','#FFD700','#ffffff','#FFF5CC','#B8860B'];
+for(let i=0;i<80;i++){
+  const p=document.createElement('div');
+  const s=Math.random()*6+2;
+  p.className='p';
+  p.style.cssText=`width:${s}px;height:${s}px;background:${COLS[Math.floor(Math.random()*COLS.length)]};left:${Math.random()*100}%;top:${Math.random()*100}%;opacity:${Math.random()*.4+.1};animation-duration:${8+Math.random()*12}s;animation-delay:${Math.random()*10}s;border-radius:${Math.random()>0.5?'50%':'2px'};`;
+  pc.appendChild(p);
+}
+// SCROLL REVEAL
+const obs=new IntersectionObserver(entries=>entries.forEach(e=>{
+  if(e.isIntersecting){e.target.style.opacity='1';e.target.style.transform='translateY(0)';obs.unobserve(e.target);}
+}),{threshold:.08});
+document.querySelectorAll('.exp-card,.ing-card,.transp-card,.transp-info,.gal-item,.cred-card,.res-feature,.mkt-stat,.boate-specs .spec,.num-item').forEach(el=>{
+  el.style.cssText+='opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease;';
+  obs.observe(el);
+});
+</script>
 </body>
 </html>
