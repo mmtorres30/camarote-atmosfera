@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Admin · Camarote Atmosfera</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:#060608;color:#F5F0E8;font-family:"Montserrat",sans-serif;min-height:100vh;}
+:root{--g:#C9A84C;--b:#060608;--b2:#0f0f0f;--b3:#1a1a1a;--w:#F5F0E8;}
+
+/* LOGIN */
+#login-screen{display:flex;align-items:center;justify-content:center;min-height:100vh;background:radial-gradient(ellipse at center,#1a0e00,#060608);}
+.login-box{background:rgba(18,18,18,.95);border:1px solid rgba(201,168,76,.2);padding:3rem;width:100%;max-width:420px;}
+.login-logo{text-align:center;margin-bottom:2rem;}
+.login-logo p:first-child{font-size:.55rem;letter-spacing:.4em;color:var(--g);}
+.login-logo p:last-child{font-family:Georgia,serif;font-size:2rem;color:var(--w);letter-spacing:.15em;}
+.login-box h2{font-size:.7rem;letter-spacing:.25em;color:var(--g);text-transform:uppercase;margin-bottom:1.5rem;text-align:center;}
+.form-group{margin-bottom:1rem;}
+.form-group label{font-size:.65rem;letter-spacing:.15em;color:rgba(245,240,232,.6);text-transform:uppercase;display:block;margin-bottom:.4rem;}
+.form-group input{width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(201,168,76,.2);color:var(--w);padding:.8rem 1rem;font-family:"Montserrat",sans-serif;font-size:.85rem;outline:none;transition:.3s;}
+.form-group input:focus{border-color:var(--g);}
+.btn-login{width:100%;background:var(--g);color:#060608;padding:.9rem;font-weight:700;font-size:.75rem;letter-spacing:.2em;text-transform:uppercase;border:none;cursor:pointer;margin-top:1rem;transition:.3s;}
+.btn-login:hover{background:#E8C97A;}
+.login-error{color:#ff6b6b;font-size:.75rem;text-align:center;margin-top:.8rem;display:none;}
+
+/* ADMIN PANEL */
+#admin-panel{display:none;min-height:100vh;}
+.admin-header{background:rgba(12,12,12,.95);border-bottom:1px solid rgba(201,168,76,.15);padding:1rem 2rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
+.admin-header-logo p:first-child{font-size:.45rem;letter-spacing:.3em;color:var(--g);}
+.admin-header-logo p:last-child{font-family:Georgia,serif;font-size:1.1rem;color:var(--w);letter-spacing:.1em;}
+.admin-user{display:flex;align-items:center;gap:1rem;}
+.admin-user span{font-size:.7rem;color:rgba(245,240,232,.6);}
+.btn-logout{background:transparent;border:1px solid rgba(201,168,76,.3);color:var(--g);padding:.4rem 1rem;font-size:.65rem;letter-spacing:.1em;cursor:pointer;transition:.3s;}
+.btn-logout:hover{background:var(--g);color:#060608;}
+.admin-content{max-width:1100px;margin:0 auto;padding:2rem;}
+
+/* TABS */
+.tabs{display:flex;gap:3px;margin-bottom:2rem;border-bottom:1px solid rgba(201,168,76,.1);}
+.tab{padding:.8rem 1.5rem;font-size:.68rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;cursor:pointer;color:rgba(245,240,232,.5);border-bottom:2px solid transparent;transition:.3s;}
+.tab.active{color:var(--g);border-bottom-color:var(--g);}
+.tab-content{display:none;}
+.tab-content.active{display:block;}
+
+/* CARDS */
+.admin-section-title{font-size:.65rem;letter-spacing:.25em;color:var(--g);text-transform:uppercase;margin-bottom:1.5rem;padding-bottom:.5rem;border-bottom:1px solid rgba(201,168,76,.1);}
+.artista-row{background:rgba(18,18,18,.8);border:1px solid rgba(201,168,76,.1);padding:1.2rem 1.5rem;margin-bottom:.5rem;display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:1rem;align-items:center;}
+.artista-row input,.artista-row select{background:rgba(255,255,255,.05);border:1px solid rgba(201,168,76,.15);color:var(--w);padding:.5rem .8rem;font-family:"Montserrat",sans-serif;font-size:.8rem;width:100%;outline:none;}
+.artista-row input:focus,.artista-row select:focus{border-color:var(--g);}
+.btn-save{background:var(--g);color:#060608;border:none;padding:.5rem 1.2rem;font-size:.65rem;font-weight:700;letter-spacing:.1em;cursor:pointer;white-space:nowrap;}
+.btn-save:hover{background:#E8C97A;}
+.artista-info{font-size:.7rem;color:rgba(245,240,232,.4);}
+
+/* FOTOS */
+.fotos-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:2rem;}
+.foto-card{background:rgba(18,18,18,.8);border:1px solid rgba(201,168,76,.1);overflow:hidden;}
+.foto-card img{width:100%;height:150px;object-fit:cover;display:block;}
+.foto-card-info{padding:.8rem;}
+.foto-card-info input{width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(201,168,76,.15);color:var(--w);padding:.4rem .6rem;font-size:.72rem;margin-bottom:.5rem;outline:none;}
+.foto-card-actions{display:flex;gap:.4rem;}
+.btn-sm{padding:.35rem .8rem;font-size:.6rem;font-weight:600;letter-spacing:.08em;border:none;cursor:pointer;}
+.btn-sm.save{background:var(--g);color:#060608;}
+.btn-sm.del{background:rgba(255,80,80,.15);color:#ff6b6b;border:1px solid rgba(255,80,80,.2);}
+
+/* UPLOAD */
+.upload-area{border:2px dashed rgba(201,168,76,.25);padding:3rem;text-align:center;cursor:pointer;transition:.3s;margin-bottom:1.5rem;}
+.upload-area:hover{border-color:var(--g);background:rgba(201,168,76,.03);}
+.upload-area p{font-size:.8rem;color:rgba(245,240,232,.5);}
+.upload-area span{font-size:.65rem;letter-spacing:.15em;color:var(--g);text-transform:uppercase;}
+#file-input{display:none;}
+
+/* LOGS */
+.log-row{padding:.8rem 1rem;border-bottom:1px solid rgba(245,240,232,.05);display:grid;grid-template-columns:160px 1fr auto;gap:1rem;align-items:start;}
+.log-row:last-child{border-bottom:none;}
+.log-time{font-size:.65rem;color:rgba(245,240,232,.35);}
+.log-acao{font-size:.75rem;color:var(--w);}
+.log-user{font-size:.65rem;color:var(--g);}
+
+/* ALERTS */
+.alert{padding:.8rem 1rem;font-size:.75rem;margin-bottom:1rem;display:none;}
+.alert.success{background:rgba(50,200,100,.1);border:1px solid rgba(50,200,100,.3);color:#50c864;}
+.alert.error{background:rgba(255,80,80,.1);border:1px solid rgba(255,80,80,.3);color:#ff6b6b;}
+
+@media(max-width:768px){
+  .artista-row{grid-template-columns:1fr;}
+  .fotos-grid{grid-template-columns:1fr 1fr;}
+  .log-row{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="login-screen">
+  <div class="login-box">
+    <div class="login-logo">
+      <p>CAMAROTE</p>
+      <p>ATMOSFERA</p>
+    </div>
+    <h2>Painel Administrativo</h2>
+    <div class="form-group">
+      <label>E-mail</label>
+      <input type="email" id="login-email" placeholder="seu@email.com">
+    </div>
+    <div class="form-group">
+      <label>Senha</label>
+      <input type="password" id="login-password" placeholder="••••••••">
+    </div>
+    <button class="btn-login" onclick="fazerLogin()">Entrar</button>
+    <p class="login-error" id="login-error">E-mail ou senha incorretos</p>
+  </div>
+</div>
+
+<!-- ADMIN PANEL -->
+<div id="admin-panel">
+  <div class="admin-header">
+    <div class="admin-header-logo">
+      <p>CAMAROTE</p>
+      <p>ATMOSFERA</p>
+    </div>
+    <div class="admin-user">
+      <span id="admin-email-display"></span>
+      <button class="btn-logout" onclick="fazerLogout()">Sair</button>
+    </div>
+  </div>
+
+  <div class="admin-content">
+    <div class="alert" id="alert-box"></div>
+
+    <div class="tabs">
+      <div class="tab active" onclick="mudarTab('artistas')">🎤 Artistas</div>
+      <div class="tab" onclick="mudarTab('fotos')">📸 Fotos</div>
+      <div class="tab" onclick="mudarTab('logs')">📋 Logs</div>
+    </div>
+
+    <!-- ARTISTAS -->
+    <div class="tab-content active" id="tab-artistas">
+      <div style="margin-bottom:2rem;">
+        <p class="admin-section-title">🥇 Série Ouro</p>
+        <div id="artistas-ouro"></div>
+      </div>
+      <div>
+        <p class="admin-section-title">⭐ Grupo Especial</p>
+        <div id="artistas-especial"></div>
+      </div>
+    </div>
+
+    <!-- FOTOS -->
+    <div class="tab-content" id="tab-fotos">
+      <p class="admin-section-title">📸 Gerenciar Fotos da Galeria</p>
+      <div class="upload-area" onclick="document.getElementById('file-input').click()">
+        <p>Arraste fotos aqui ou clique para selecionar</p>
+        <span>JPG, PNG, WEBP · Máx 5MB cada</span>
+      </div>
+      <input type="file" id="file-input" multiple accept="image/*" onchange="uploadFotos(this.files)">
+      <div class="fotos-grid" id="fotos-grid"></div>
+    </div>
+
+    <!-- LOGS -->
+    <div class="tab-content" id="tab-logs">
+      <p class="admin-section-title">📋 Histórico de Alterações</p>
+      <div id="logs-container" style="background:rgba(12,12,12,.8);border:1px solid rgba(201,168,76,.1);"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+const SUPABASE_URL = 'https://igeatakyqxndohaviwpm.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlnZWF0YWt5cXhuZG9oYXZpd3BtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDI2NTczNTgsImV4cCI6MjA1ODIzMzM1OH0.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlnZWF0YWt5cXhuZG9oYXZpd3BtIiwicm9sZSI6ImFub24ifQ';
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+let userAtual = null;
+
+// LOGIN
+async function fazerLogin() {
+  const email = document.getElementById('login-email').value;
+  const pass = document.getElementById('login-password').value;
+  const {data, error} = await sb.auth.signInWithPassword({email, password: pass});
+  if (error) {
+    document.getElementById('login-error').style.display = 'block';
+    return;
+  }
+  userAtual = data.user;
+  document.getElementById('login-screen').style.display = 'none';
+  document.getElementById('admin-panel').style.display = 'block';
+  document.getElementById('admin-email-display').textContent = email;
+  carregarArtistas();
+  carregarFotos();
+}
+
+async function fazerLogout() {
+  await sb.auth.signOut();
+  location.reload();
+}
+
+// TABS
+function mudarTab(tab) {
+  document.querySelectorAll('.tab').forEach((t,i) => t.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  const tabs = ['artistas','fotos','logs'];
+  const idx = tabs.indexOf(tab);
+  document.querySelectorAll('.tab')[idx].classList.add('active');
+  document.getElementById('tab-'+tab).classList.add('active');
+  if(tab === 'logs') carregarLogs();
+}
+
+// ALERT
+function mostrarAlert(msg, tipo='success') {
+  const el = document.getElementById('alert-box');
+  el.textContent = msg;
+  el.className = 'alert ' + tipo;
+  el.style.display = 'block';
+  setTimeout(() => el.style.display = 'none', 4000);
+}
+
+// ARTISTAS
+async function carregarArtistas() {
+  const {data} = await sb.from('camarote_artistas').select('*').eq('ativo', true).order('data_evento');
+  if(!data) return;
+  const ouro = data.filter(a => a.grupo === 'serie_ouro');
+  const esp = data.filter(a => a.grupo === 'grupo_especial');
+  renderArtistas(ouro, 'artistas-ouro');
+  renderArtistas(esp, 'artistas-especial');
+}
+
+function renderArtistas(artistas, containerId) {
+  const el = document.getElementById(containerId);
+  el.innerHTML = artistas.map(a => `
+    <div class="artista-row">
+      <div>
+        <div class="artista-info">${a.dia} · ${a.data_evento}</div>
+        <input type="text" id="nome-${a.id}" value="${a.nome_artista}" placeholder="Nome do artista">
+      </div>
+      <input type="text" id="tipo-${a.id}" value="${a.tipo}" placeholder="Tipo (ex: DJ, Show)">
+      <div class="artista-info" style="font-size:.6rem;">Atualizado por:<br>${a.atualizado_por || '—'}</div>
+      <button class="btn-save" onclick="salvarArtista('${a.id}')">Salvar</button>
+    </div>
+  `).join('');
+}
+
+async function salvarArtista(id) {
+  const nome = document.getElementById('nome-'+id).value;
+  const tipo = document.getElementById('tipo-'+id).value;
+  const {error} = await sb.from('camarote_artistas').update({
+    nome_artista: nome,
+    tipo: tipo,
+    atualizado_por: userAtual.email,
+    updated_at: new Date().toISOString()
+  }).eq('id', id);
+  if(error) { mostrarAlert('Erro ao salvar!', 'error'); return; }
+  await sb.from('camarote_logs').insert({
+    admin_email: userAtual.email,
+    acao: 'Artista atualizado',
+    detalhes: `Nome: ${nome}`
+  });
+  mostrarAlert('Artista salvo com sucesso!');
+}
+
+// FOTOS
+async function carregarFotos() {
+  const {data} = await sb.from('camarote_fotos').select('*').eq('ativo', true).order('ordem');
+  if(!data) return;
+  const el = document.getElementById('fotos-grid');
+  el.innerHTML = data.map(f => `
+    <div class="foto-card">
+      <img src="${f.url}" alt="${f.legenda||''}">
+      <div class="foto-card-info">
+        <input type="text" id="leg-${f.id}" value="${f.legenda||''}" placeholder="Legenda">
+        <div class="foto-card-actions">
+          <button class="btn-sm save" onclick="salvarLegenda('${f.id}')">Salvar</button>
+          <button class="btn-sm del" onclick="deletarFoto('${f.id}')">Remover</button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+async function uploadFotos(files) {
+  for(const file of files) {
+    const nome = Date.now() + '_' + file.name.replace(/\s/g,'_');
+    const {data, error} = await sb.storage.from('camarote-fotos').upload(nome, file);
+    if(error) { mostrarAlert('Erro no upload: '+error.message, 'error'); continue; }
+    const url = sb.storage.from('camarote-fotos').getPublicUrl(nome).data.publicUrl;
+    await sb.from('camarote_fotos').insert({url, enviado_por: userAtual.email});
+    await sb.from('camarote_logs').insert({
+      admin_email: userAtual.email,
+      acao: 'Foto enviada',
+      detalhes: nome
+    });
+  }
+  mostrarAlert('Fotos enviadas!');
+  carregarFotos();
+}
+
+async function salvarLegenda(id) {
+  const leg = document.getElementById('leg-'+id).value;
+  await sb.from('camarote_fotos').update({legenda: leg}).eq('id', id);
+  mostrarAlert('Legenda salva!');
+}
+
+async function deletarFoto(id) {
+  if(!confirm('Remover foto?')) return;
+  await sb.from('camarote_fotos').update({ativo: false}).eq('id', id);
+  await sb.from('camarote_logs').insert({
+    admin_email: userAtual.email,
+    acao: 'Foto removida',
+    detalhes: id
+  });
+  mostrarAlert('Foto removida!');
+  carregarFotos();
+}
+
+// LOGS
+async function carregarLogs() {
+  const {data} = await sb.from('camarote_logs').select('*').order('created_at', {ascending: false}).limit(50);
+  if(!data) return;
+  document.getElementById('logs-container').innerHTML = data.map(l => `
+    <div class="log-row">
+      <span class="log-time">${new Date(l.created_at).toLocaleString('pt-BR')}</span>
+      <span class="log-acao">${l.acao}${l.detalhes ? ' · '+l.detalhes : ''}</span>
+      <span class="log-user">${l.admin_email}</span>
+    </div>
+  `).join('');
+}
+
+// Verificar sessão ao carregar
+sb.auth.getSession().then(({data}) => {
+  if(data.session) {
+    userAtual = data.session.user;
+    document.getElementById('login-screen').style.display = 'none';
+    document.getElementById('admin-panel').style.display = 'block';
+    document.getElementById('admin-email-display').textContent = userAtual.email;
+    carregarArtistas();
+    carregarFotos();
+  }
+});
+</script>
+</body>
+</html>
