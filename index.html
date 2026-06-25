@@ -501,7 +501,7 @@ footer{background:#040405;border-top:1px solid rgba(201,168,76,.08);padding:5rem
           <span style="font-size:.6rem;letter-spacing:.3em;color:var(--g);text-transform:uppercase;font-weight:600;">⭐ Grupo Especial</span>
           <div style="flex:1;height:1px;background:rgba(201,168,76,.15);"></div>
         </div>
-        <div style="display:inline-grid;grid-template-columns:repeat(4,240px);gap:3px;">
+        <div id="grid-grupo-especial" style="display:inline-grid;grid-template-columns:repeat(4,240px);gap:3px;">
           <div class="artista-card destaque reveal">
             <span class="artista-dia">Domingo</span>
             <span class="artista-data">07</span>
@@ -1056,10 +1056,11 @@ async function carregarArtistasNoSite() {
 
   // Atualizar grid Série Ouro
   // Encontrar todos os grids de artistas
-  const todosGrids = document.querySelectorAll('.artistas-grid');
-  console.log('Grids encontrados:', todosGrids.length);
-  if(todosGrids[0]) todosGrids[0].innerHTML = ouro.map(renderCard).join('');
-  if(todosGrids[1]) todosGrids[1].innerHTML = esp.map(renderCard).join('');
+  const gridOuro = document.getElementById('grid-serie-ouro');
+  const gridEsp = document.getElementById('grid-grupo-especial');
+  console.log('Grid ouro:', gridOuro, 'Grid esp:', gridEsp);
+  if(gridOuro) gridOuro.innerHTML = ouro.map(renderCard).join('');
+  if(gridEsp) gridEsp.innerHTML = esp.map(renderCard).join('');
   
   // Reativar reveal nos novos elementos
   document.querySelectorAll('.artista-card.reveal:not(.in)').forEach(el => {
