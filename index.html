@@ -1032,7 +1032,7 @@ const SB_URL = 'https://igeatakyqxndohaviwpm.supabase.co';
 const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlnZWF0YWt5cXhuZG9oYXZpd3BtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIyMzcwNzYsImV4cCI6MjA5NzgxMzA3Nn0.Tg3EOXlrdSFVozVZE0ofeQ3hj6rjfp7mJr0iU2Lta9Q';
 const sbSite = supabase.createClient(SB_URL, SB_KEY);
 
-async function carregarArtistasNoSite() {
+async async function carregarArtistasNoSite() {
   const {data} = await sbSite.from('camarote_artistas').select('*').eq('ativo', true).order('data_evento');
   if(!data || !data.length) return;
 
