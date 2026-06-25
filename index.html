@@ -436,6 +436,91 @@ footer{background:#040405;border-top:1px solid rgba(201,168,76,.08);padding:5rem
         </div>
       </div>
     </div>
+
+    <!-- GRADE DE ARTISTAS -->
+    <style>
+      .artistas-wrap{margin-top:5rem;}
+      .artistas-eyebrow{font-size:.62rem;letter-spacing:.4em;color:var(--g);text-transform:uppercase;text-align:center;display:block;margin-bottom:1rem;}
+      .artistas-title{font-family:"Cormorant Garamond",serif;font-size:clamp(2rem,4vw,3.2rem);font-weight:200;color:var(--w);text-align:center;margin-bottom:.5rem;}
+      .artistas-title em{color:var(--g);font-style:italic;}
+      .artistas-sub{text-align:center;font-size:.78rem;color:var(--wd);margin-bottom:3rem;}
+      .artistas-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:3px;}
+      .artista-card{position:relative;background:rgba(12,12,16,.9);border:1px solid rgba(201,168,76,.08);padding:2rem 1.2rem 1.5rem;text-align:center;transition:all .4s;overflow:hidden;cursor:pointer;}
+      .artista-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--g),transparent);transform:scaleX(0);transition:transform .4s;}
+      .artista-card:hover::before{transform:scaleX(1);}
+      .artista-card::after{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 0%,rgba(201,168,76,.06),transparent 70%);opacity:0;transition:opacity .4s;}
+      .artista-card:hover::after{opacity:1;}
+      .artista-card:hover{border-color:rgba(201,168,76,.25);transform:translateY(-4px);}
+      .artista-dia{font-size:.55rem;font-weight:700;letter-spacing:.25em;color:var(--g);text-transform:uppercase;margin-bottom:.8rem;display:block;}
+      .artista-data{font-family:"Cormorant Garamond",serif;font-size:2.5rem;font-weight:200;color:var(--w);line-height:1;display:block;margin-bottom:.3rem;}
+      .artista-mes{font-size:.6rem;letter-spacing:.15em;color:var(--wd);text-transform:uppercase;margin-bottom:1.2rem;display:block;}
+      .artista-nome{font-family:"Cormorant Garamond",serif;font-size:1.3rem;font-weight:300;color:var(--w);margin-bottom:.3rem;display:block;}
+      .artista-tipo{font-size:.6rem;letter-spacing:.15em;color:var(--g);text-transform:uppercase;}
+      .artista-card.destaque{background:linear-gradient(135deg,rgba(26,16,0,.95),rgba(12,12,16,.9));border-color:rgba(201,168,76,.25);}
+      .artista-card.destaque .artista-nome{font-size:1.5rem;color:var(--g);}
+      .artista-tba{font-family:"Cormorant Garamond",serif;font-size:1.1rem;font-style:italic;color:rgba(245,240,232,.3);}
+      @media(max-width:900px){.artistas-grid{grid-template-columns:repeat(3,1fr);}}
+      @media(max-width:600px){.artistas-grid{grid-template-columns:repeat(2,1fr);}}
+    </style>
+
+    <div class="artistas-wrap">
+      <span class="artistas-eyebrow">Line-up 2027</span>
+      <h2 class="artistas-title">Shows & <em>Atrações</em></h2>
+      <p class="artistas-sub">Boate Atmosfera · 400m² · Primeira boate com vista panorâmica da Sapucaí</p>
+
+      <div class="artistas-grid">
+
+        <div class="artista-card reveal">
+          <span class="artista-dia">Sexta-feira</span>
+          <span class="artista-data">05</span>
+          <span class="artista-mes">Fevereiro 2027</span>
+          <span class="artista-nome artista-tba">A confirmar</span>
+          <span class="artista-tipo">Atração Principal</span>
+        </div>
+
+        <div class="artista-card reveal">
+          <span class="artista-dia">Sábado</span>
+          <span class="artista-data">06</span>
+          <span class="artista-mes">Fevereiro 2027</span>
+          <span class="artista-nome artista-tba">A confirmar</span>
+          <span class="artista-tipo">Atração Principal</span>
+        </div>
+
+        <div class="artista-card destaque reveal">
+          <span class="artista-dia">Domingo</span>
+          <span class="artista-data">07</span>
+          <span class="artista-mes">Fevereiro 2027</span>
+          <span class="artista-nome artista-tba">A confirmar</span>
+          <span class="artista-tipo">✦ Noite Especial</span>
+        </div>
+
+        <div class="artista-card destaque reveal">
+          <span class="artista-dia">Segunda</span>
+          <span class="artista-data">08</span>
+          <span class="artista-mes">Fevereiro 2027</span>
+          <span class="artista-nome artista-tba">A confirmar</span>
+          <span class="artista-tipo">✦ Noite Especial</span>
+        </div>
+
+        <div class="artista-card destaque reveal">
+          <span class="artista-dia">Terça</span>
+          <span class="artista-data">09</span>
+          <span class="artista-mes">Fevereiro 2027</span>
+          <span class="artista-nome artista-tba">A confirmar</span>
+          <span class="artista-tipo">✦ Noite Especial</span>
+        </div>
+
+        <div class="artista-card reveal" style="grid-column:2/4;">
+          <span class="artista-dia">Terça · Campeãs</span>
+          <span class="artista-data">13</span>
+          <span class="artista-mes">Fevereiro 2027</span>
+          <span class="artista-nome artista-tba">A confirmar</span>
+          <span class="artista-tipo">✦ Grande Final · Noite das Campeãs</span>
+        </div>
+
+      </div>
+    </div>
+
   </div>
 </section>
 
@@ -910,21 +995,47 @@ document.querySelectorAll('.exp-glass,.ic,.stat').forEach(el => {
 
 // ══ PLUMAS DE CARNAVAL NO HERO ══
 const hero = document.getElementById('hero');
-const plumas = ['🪶','✨','🌟','💫','🎭','🎪','🎊','🎉','⭐'];
-if(hero){
-  for(let i=0;i<12;i++){
-    const p = document.createElement('div');
-    p.className = 'carnaval-pluma';
-    p.textContent = plumas[Math.floor(Math.random()*plumas.length)];
-    p.style.cssText = `
-      left:${Math.random()*100}%;
-      font-size:${1+Math.random()*1.5}rem;
-      animation-duration:${8+Math.random()*8}s;
-      animation-delay:${Math.random()*8}s;
-    `;
-    hero.appendChild(p);
-  }
+// CHUVA DE PRATA
+const chuvaCanvas = document.createElement('canvas');
+chuvaCanvas.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:1;opacity:0.4;';
+document.body.appendChild(chuvaCanvas);
+const chuvaCtx = chuvaCanvas.getContext('2d');
+chuvaCanvas.width = window.innerWidth;
+chuvaCanvas.height = window.innerHeight;
+window.addEventListener('resize', () => {
+  chuvaCanvas.width = window.innerWidth;
+  chuvaCanvas.height = window.innerHeight;
+});
+
+const gotas = Array.from({length:120}, () => ({
+  x: Math.random() * window.innerWidth,
+  y: Math.random() * window.innerHeight,
+  len: Math.random() * 15 + 5,
+  speed: Math.random() * 3 + 1,
+  opacity: Math.random() * 0.6 + 0.1,
+  width: Math.random() * 1.5 + 0.3,
+  silver: Math.floor(Math.random() * 55 + 200),
+}));
+
+function animateChuva() {
+  chuvaCtx.clearRect(0, 0, chuvaCanvas.width, chuvaCanvas.height);
+  gotas.forEach(g => {
+    chuvaCtx.beginPath();
+    chuvaCtx.strokeStyle = `rgba(${g.silver},${g.silver},${g.silver},${g.opacity})`;
+    chuvaCtx.lineWidth = g.width;
+    chuvaCtx.moveTo(g.x, g.y);
+    chuvaCtx.lineTo(g.x - g.len * 0.2, g.y + g.len);
+    chuvaCtx.stroke();
+    g.y += g.speed;
+    g.x -= g.speed * 0.1;
+    if (g.y > chuvaCanvas.height + 20) {
+      g.y = -20;
+      g.x = Math.random() * chuvaCanvas.width;
+    }
+  });
+  requestAnimationFrame(animateChuva);
 }
+animateChuva();
 
 // ══ REVEAL LATERAL ══
 const obsLR = new IntersectionObserver(entries => entries.forEach(e => {
