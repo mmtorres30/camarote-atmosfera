@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>Camarote Atmosfera — Sapucaí · Carnaval 2027</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,200;0,300;0,400;0,600;1,200;1,300&family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 :root{
@@ -1023,6 +1024,44 @@ document.querySelectorAll('.boate-viz,.mkt-quote,.res-card').forEach((el,i) => {
   el.classList.add(i%2===0?'reveal-right':'reveal-left');
   obsLR.observe(el);
 });
+</script>
+
+<script>
+// Carregar artistas do Supabase no site
+const SB_URL = 'https://igeatakyqxndohaviwpm.supabase.co';
+const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlnZWF0YWt5cXhuZG9oYXZpd3BtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIyMzcwNzYsImV4cCI6MjA5NzgxMzA3Nn0.Tg3EOXlrdSFVozVZE0ofeQ3hj6rjfp7mJr0iU2Lta9Q';
+const sbSite = supabase.createClient(SB_URL, SB_KEY);
+
+async function carregarArtistasNoSite() {
+  const {data} = await sbSite.from('camarote_artistas').select('*').eq('ativo', true).order('data_evento');
+  if(!data || !data.length) return;
+
+  const ouro = data.filter(a => a.grupo === 'serie_ouro');
+  const esp = data.filter(a => a.grupo === 'grupo_especial');
+
+  function renderCard(a) {
+    const img = a.imagem_url
+      ? `<img src="${a.imagem_url}" style="width:100%;height:180px;object-fit:cover;display:block;">`
+      : `<div style="width:100%;height:180px;background:rgba(201,168,76,.05);display:flex;align-items:center;justify-content:center;font-size:3rem;">🎤</div>`;
+    return `
+      <div class="artista-card ${a.grupo==='grupo_especial'?'destaque':''} reveal">
+        ${img}
+        <span class="artista-dia">${a.dia}</span>
+        <span class="artista-data">${a.data_evento.split('/')[0]}</span>
+        <span class="artista-mes">${a.data_evento.split('/')[1]}/${a.data_evento.split('/')[2]}</span>
+        <span class="artista-nome ${a.nome_artista==='A confirmar'?'artista-tba':''}">${a.nome_artista}</span>
+        <span class="artista-tipo">${a.tipo}</span>
+      </div>`;
+  }
+
+  // Atualizar grid Série Ouro
+  const ouroGrid = document.querySelector('#boate .artistas-grid');
+  const espGrid = document.querySelectorAll('#boate .artistas-grid')[1];
+  if(ouroGrid) ouroGrid.innerHTML = ouro.map(renderCard).join('');
+  if(espGrid) espGrid.innerHTML = esp.map(renderCard).join('');
+}
+
+document.addEventListener('DOMContentLoaded', carregarArtistasNoSite);
 </script>
 </body>
 </html>
