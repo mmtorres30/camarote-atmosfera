@@ -612,59 +612,130 @@ footer{background:#040405;border-top:1px solid rgba(201,168,76,.08);padding:5rem
       <h2>Momentos que<br><em>ficam para sempre</em></h2>
       <div class="line"></div>
     </div>
-    <style>
-    .gal3d{max-width:1200px;margin:0 auto;columns:3;gap:8px;column-fill:balance;}
-    .gal3d-item{break-inside:avoid;margin-bottom:8px;position:relative;overflow:hidden;cursor:pointer;display:block;}
-    .gal3d-item img{width:100%;display:block;transition:transform .6s cubic-bezier(.25,.46,.45,.94),filter .6s;}
-    .gal3d-item:hover img{transform:scale(1.06);filter:brightness(1.1);}
-    .gal3d-item::before{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,transparent 50%,rgba(6,6,8,.7) 100%);opacity:0;transition:opacity .4s;z-index:1;}
-    .gal3d-item:hover::before{opacity:1;}
-    .gal3d-item .gal-label{position:absolute;bottom:1rem;left:1rem;font-family:"Cormorant Garamond",serif;font-size:1rem;font-weight:300;color:#F5F0E8;letter-spacing:.1em;z-index:2;opacity:0;transform:translateY(8px);transition:all .4s;}
-    .gal3d-item:hover .gal-label{opacity:1;transform:translateY(0);}
-    .gal3d-item::after{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(201,168,76,.6),transparent);transform:scaleX(0);transition:transform .5s;z-index:2;}
-    .gal3d-item:hover::after{transform:scaleX(1);}
-    @media(max-width:768px){.gal3d{columns:2;}}
-    @media(max-width:480px){.gal3d{columns:1;}}
-    </style>
-
-    <div class="gal3d">
-      <div class="gal3d-item reveal">
-        <img src="images/foto1.jpeg" alt="Reservado VIP">
-        <span class="gal-label">Reservado VIP</span>
-      </div>
-      <div class="gal3d-item reveal">
-        <img src="images/foto10.jpeg" alt="Open Bar Premium">
-        <span class="gal-label">Open Bar Premium</span>
-      </div>
-      <div class="gal3d-item reveal">
-        <img src="images/foto4.jpeg" alt="Sushi & Samba">
-        <span class="gal-label">Sushi & Samba</span>
-      </div>
-      <div class="gal3d-item reveal">
-        <img src="images/foto2.jpeg" alt="Vista Sapucaí">
-        <span class="gal-label">Vista Sapucaí</span>
-      </div>
-      <div class="gal3d-item reveal">
-        <img src="images/foto6.jpeg" alt="Gastronomia">
-        <span class="gal-label">Gastronomia</span>
-      </div>
-      <div class="gal3d-item reveal">
-        <img src="images/foto5.jpeg" alt="Churrasco">
-        <span class="gal-label">Churrasco</span>
-      </div>
-      <div class="gal3d-item reveal">
-        <img src="images/foto3.jpeg" alt="Open Bar">
-        <span class="gal-label">Open Bar</span>
-      </div>
-      <div class="gal3d-item reveal">
-        <img src="images/foto7.jpeg" alt="Corredor Reservados">
-        <span class="gal-label">Corredor VIP</span>
-      </div>
-      <div class="gal3d-item reveal">
-        <img src="images/foto11.jpeg" alt="Sushi Bar">
-        <span class="gal-label">Sushi Bar</span>
-      </div>
+    <div style="max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:auto;gap:6px;">
+      <div style="grid-column:1;grid-row:1/3;overflow:hidden;aspect-ratio:3/4;"><img src="images/foto1.jpeg" alt="Reservado Atmosfera" style="width:100%;height:100%;object-fit:cover;transition:transform .6s;"></div>
+      <div style="overflow:hidden;aspect-ratio:16/9;"><img src="images/foto2.jpeg" alt="Vista Sapucaí" style="width:100%;height:100%;object-fit:cover;transition:transform .6s;"></div>
+      <div style="overflow:hidden;aspect-ratio:16/9;"><img src="images/foto10.jpeg" alt="Open Bar" style="width:100%;height:100%;object-fit:cover;transition:transform .6s;"></div>
+      <div style="overflow:hidden;aspect-ratio:16/9;"><img src="images/foto3.jpeg" alt="Bar" style="width:100%;height:100%;object-fit:cover;transition:transform .6s;"></div>
+      <div style="overflow:hidden;aspect-ratio:16/9;"><img src="images/foto11.jpeg" alt="Sushi Bar" style="width:100%;height:100%;object-fit:cover;transition:transform .6s;"></div>
+      <div style="grid-column:1/3;overflow:hidden;aspect-ratio:16/7;"><img src="images/foto4.jpeg" alt="Sushi Samba Sapucaí" style="width:100%;height:100%;object-fit:cover;transition:transform .6s;"></div>
+      <div style="overflow:hidden;aspect-ratio:16/9;"><img src="images/foto9.jpeg" alt="Banheiro Feminino" style="width:100%;height:100%;object-fit:cover;transition:transform .6s;"></div>
+      <div style="overflow:hidden;aspect-ratio:16/9;"><img src="images/foto6.jpeg" alt="Churrasco" style="width:100%;height:100%;object-fit:cover;transition:transform .6s;"></div>
+      <div style="overflow:hidden;aspect-ratio:16/9;"><img src="images/foto5.jpeg" alt="Gastronomia" style="width:100%;height:100%;object-fit:cover;transition:transform .6s;"></div>
+      <div style="overflow:hidden;aspect-ratio:16/9;"><img src="images/foto7.jpeg" alt="Corredor" style="width:100%;height:100%;object-fit:cover;transition:transform .6s;"></div>
+      <div style="grid-column:2/4;overflow:hidden;aspect-ratio:16/7;"><img src="images/foto8.jpeg" alt="Open Bar Premium" style="width:100%;height:100%;object-fit:cover;transition:transform .6s;"></div>
     </div>
+  </div>
 </section>
 
-<!-- MARKETING
+<!-- MARKETING -->
+<section id="marketing">
+  <div class="section-wrap">
+    <div class="mkt-layout">
+      <div class="mkt-text reveal">
+        <span class="eyebrow">Oportunidades de Marketing</span>
+        <h2>Aqui a magia acontece.<br><em>Sua marca vista por milhares.</em></h2>
+        <p>Considerado o maior espetáculo a céu aberto da Terra, o Carnaval do Rio é um dos eventos mais assistidos do mundo, com ampla cobertura televisiva, digital e presencial.</p>
+        <div class="mkt-stat"><strong>200M+</strong><span>Audiência global do Carnaval do Rio</span></div>
+        <div class="mkt-stat"><strong>190+</strong><span>Países com cobertura televisiva</span></div>
+      </div>
+      <div class="mkt-quote reveal">
+        <blockquote>"Ao patrocinar o Camarote Atmosfera, sua empresa se conecta a um público altamente qualificado, em um ambiente de grande visibilidade."</blockquote>
+        <cite>Camarote Atmosfera · Sapucaí 2027</cite>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA FINAL -->
+<section id="cta-final">
+  <div class="cta-orb"></div>
+  <div class="cta-grid-bg"></div>
+  <div class="cta-content">
+    <div class="cta-ey"><span>Carnaval 2027</span></div>
+    <h2 class="cta-title">Entre. <em>Sinta.</em> Viva.</h2>
+    <p class="cta-sub">Não fique de fora do maior espetáculo da Terra.</p>
+    <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
+      <a href="#ingressos" class="btn-p gold">Garantir meu ingresso</a>
+      <a href="https://wa.me/5521999912221" target="_blank" class="btn-p ghost">Falar no WhatsApp</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="ft-inner">
+    <div class="ft-brand">
+      <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MDAgMTEwIj4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iZyIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMCUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdHlsZT0ic3RvcC1jb2xvcjojOEI2OTE0Ii8+CiAgICAgIDxzdG9wIG9mZnNldD0iMjUlIiBzdHlsZT0ic3RvcC1jb2xvcjojRThDOTdBIi8+CiAgICAgIDxzdG9wIG9mZnNldD0iNTAlIiBzdHlsZT0ic3RvcC1jb2xvcjojQzlBODRDIi8+CiAgICAgIDxzdG9wIG9mZnNldD0iNzUlIiBzdHlsZT0ic3RvcC1jb2xvcjojRThDOTdBIi8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3R5bGU9InN0b3AtY29sb3I6IzhCNjkxNCIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICA8L2RlZnM+CiAgPHRleHQgeD0iMjUwIiB5PSIyOCIgZm9udC1mYW1pbHk9Ikdlb3JnaWEsc2VyaWYiIGZvbnQtc2l6ZT0iMTMiIGZpbGw9InVybCgjZykiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGxldHRlci1zcGFjaW5nPSIxMCI+Q0FNQVJPVEU8L3RleHQ+CiAgPHRleHQgeD0iMjUwIiB5PSI4OCIgZm9udC1mYW1pbHk9Ikdlb3JnaWEsc2VyaWYiIGZvbnQtc2l6ZT0iNTUiIGZvbnQtd2VpZ2h0PSIzMDAiIGZpbGw9InVybCgjZykiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGxldHRlci1zcGFjaW5nPSIzIj5BVE1PU0ZFUkE8L3RleHQ+Cjwvc3ZnPg==" alt="Camarote Atmosfera" style="height:55px;width:auto;margin-bottom:1rem;">
+      <p>A experiência premium no maior espetáculo a céu aberto do mundo. Sapucaí · Carnaval 2027.</p>
+    </div>
+    <div class="ft-nav">
+      <h4>Navegação</h4>
+      <ul>
+        <li><a href="#experiencias">Experiências</a></li>
+        <li><a href="#boate">Boate</a></li>
+        <li><a href="#reservados">Reservados</a></li>
+        <li><a href="#ingressos">Ingressos</a></li>
+        <li><a href="#transporte">Transfer</a></li>
+        <li><a href="#credenciamento">Credenciamento</a></li>
+        <li><a href="#galeria">Galeria</a></li>
+        <li><a href="#marketing">Marketing</a></li>
+      </ul>
+    </div>
+    <div class="ft-ct">
+      <h4>Contato</h4>
+      <p>📧 <a href="mailto:contato@camaroteatmosfera.com.br">contato@camaroteatmosfera.com.br</a></p>
+      <p>📱 <a href="https://wa.me/5521999912221">(21) 99999-9999</a></p>
+      <p>📍 Sambódromo · Setor 8 · Rio de Janeiro</p>
+    </div>
+  </div>
+  <div class="ft-bottom">
+    <p>© 2025 Camarote Atmosfera. Todos os direitos reservados.</p>
+    <p>Sapucaí · Rio de Janeiro · Brasil</p>
+  </div>
+</footer>
+
+<script>
+// NAV
+const nav=document.getElementById('nav');
+window.addEventListener('scroll',()=>nav.classList.toggle('sc',scrollY>60));
+const hb=document.getElementById('hb'),nm=document.getElementById('nm');
+hb.addEventListener('click',()=>{nm.classList.toggle('open');hb.textContent=nm.classList.contains('open')?'✕':'☰';});
+nm.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{nm.classList.remove('open');hb.textContent='☰';}));
+
+// COUNTDOWN
+const D=new Date('2027-02-05T20:00:00-03:00');
+function tick(){
+  const d=D-new Date();if(d<0)return;
+  const p=n=>String(Math.floor(n)).padStart(2,'0');
+  document.getElementById('cd-d').textContent=p(d/86400000);
+  document.getElementById('cd-h').textContent=p((d%86400000)/3600000);
+  document.getElementById('cd-m').textContent=p((d%3600000)/60000);
+  document.getElementById('cd-s').textContent=p((d%60000)/1000);
+}
+tick();setInterval(tick,1000);
+
+// HERO CHAR ANIMATION
+const ht=document.getElementById('heroTitle');
+const txt=ht.textContent;
+ht.innerHTML=txt.split('').map((c,i)=>`<span class="char" style="animation-delay:${i*.08}s">${c}</span>`).join('');
+
+// STAGE LIGHTS
+const sl=document.getElementById('stageLights');
+const cols=['#4040ff','#ff4080','#ffcc00','#40ffcc','#ff8040'];
+for(let i=0;i<8;i++){
+  const l=document.createElement('div');
+  const ang=-30+i*10;
+  l.className='sl';
+  l.style.cssText=`left:${10+i*11}%;height:${60+Math.random()*30}%;background:linear-gradient(to bottom,${cols[i%cols.length]}80,transparent);--r:${ang}deg;animation-duration:${2+Math.random()*2}s;animation-delay:${Math.random()*2}s;`;
+  sl.appendChild(l);
+}
+
+// SCROLL REVEAL
+const ro=new IntersectionObserver(entries=>entries.forEach(e=>{
+  if(e.isIntersecting){e.target.classList.add('in');ro.unobserve(e.target);}
+}),{threshold:.08});
+document.querySelectorAll('.reveal').forEach(el=>ro.observe(el));
+</script>
+</body>
+</html>
