@@ -251,9 +251,13 @@ async function uploadArtistaImagem(id, input) {
   const file = input.files[0];
   if(!file) return;
   const nome = `artista_${id}_${Date.now()}.${file.name.split('.').pop()}`;
-  const {data, error} = await sb.storage.from('camarote-artistas').upload(nome, file, {upsert:true});
-  if(error) { mostrarAlert('Erro no upload: '+error.message, 'error'); return; }
-  const url = sb.storage.from('camarote-artistas').getPublicUrl(nome).data.publicUrl;
+  const {data, error} = await sb.storage.from('camarote-artistas').upload(nome, file, {
+    upsert: true,
+    contentType: file.type
+  });
+  if(error) { mostrarAlert('Erro no upload: ' + error.message, 'error'); console.error(error); return; }
+  const { data: urlData } = sb.storage.from('camarote-artistas').getPublicUrl(nome);
+  const url = urlData.publicUrl;
   await sb.from('camarote_artistas').update({
     imagem_url: url,
     atualizado_por: userAtual.email,
