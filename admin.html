@@ -137,7 +137,7 @@ body{background:#060608;color:#F5F0E8;font-family:"Montserrat",sans-serif;min-he
 
     <!-- ARTISTAS -->
     <div class="tab-content active" id="tab-artistas">
-      <div style="margin-bottom:2rem;">
+      <div style="margin-bottom:2.5rem;">
         <p class="admin-section-title">🥇 Série Ouro</p>
         <div id="artistas-ouro"></div>
       </div>
@@ -228,16 +228,44 @@ async function carregarArtistas() {
 function renderArtistas(artistas, containerId) {
   const el = document.getElementById(containerId);
   el.innerHTML = artistas.map(a => `
-    <div class="artista-row">
+    <div class="artista-row" style="grid-template-columns:80px 1fr 1fr 1fr auto;">
+      <div style="position:relative;">
+        ${a.imagem_url ? `<img src="${a.imagem_url}" style="width:80px;height:80px;object-fit:cover;border:1px solid rgba(201,168,76,.2);">` : `<div style="width:80px;height:80px;background:rgba(255,255,255,.05);border:1px dashed rgba(201,168,76,.2);display:flex;align-items:center;justify-content:center;font-size:1.5rem;">🎤</div>`}
+        <input type="file" id="img-${a.id}" accept="image/*" style="display:none;" onchange="uploadArtistaImagem('${a.id}', this)">
+        <button class="btn-sm save" onclick="document.getElementById('img-${a.id}').click()" style="width:80px;margin-top:4px;font-size:.55rem;">📷 Trocar</button>
+      </div>
       <div>
         <div class="artista-info">${a.dia} · ${a.data_evento}</div>
         <input type="text" id="nome-${a.id}" value="${a.nome_artista}" placeholder="Nome do artista">
       </div>
-      <input type="text" id="tipo-${a.id}" value="${a.tipo}" placeholder="Tipo (ex: DJ, Show)">
-      <div class="artista-info" style="font-size:.6rem;">Atualizado por:<br>${a.atualizado_por || '—'}</div>
+      <input type="text" id="tipo-${a.id}" value="${a.tipo}" placeholder="Tipo (ex: DJ, Show, Live)">
+      <div class="artista-info" style="font-size:.6rem;line-height:1.6;">
+        ${a.atualizado_por ? `Atualizado por:<br><strong style="color:var(--g)">${a.atualizado_por}</strong>` : 'Não atualizado'}
+      </div>
       <button class="btn-save" onclick="salvarArtista('${a.id}')">Salvar</button>
     </div>
   `).join('');
+}
+
+async function uploadArtistaImagem(id, input) {
+  const file = input.files[0];
+  if(!file) return;
+  const nome = `artista_${id}_${Date.now()}.${file.name.split('.').pop()}`;
+  const {data, error} = await sb.storage.from('camarote-artistas').upload(nome, file, {upsert:true});
+  if(error) { mostrarAlert('Erro no upload: '+error.message, 'error'); return; }
+  const url = sb.storage.from('camarote-artistas').getPublicUrl(nome).data.publicUrl;
+  await sb.from('camarote_artistas').update({
+    imagem_url: url,
+    atualizado_por: userAtual.email,
+    updated_at: new Date().toISOString()
+  }).eq('id', id);
+  await sb.from('camarote_logs').insert({
+    admin_email: userAtual.email,
+    acao: 'Imagem artista atualizada',
+    detalhes: nome
+  });
+  mostrarAlert('Imagem salva!');
+  carregarArtistas();
 }
 
 async function salvarArtista(id) {
