@@ -1240,19 +1240,27 @@ function enviarMsg(){
   
   mostrarTyping();
   
-  setTimeout(function(){
-    removerTyping();
-    var resultado = buscarResposta(texto);
-    
-    if(resultado){
-      adicionarMsg('bot', resultado.resposta);
-      setTimeout(function(){
-        adicionarMsg('bot', 'Posso te ajudar com mais alguma coisa? 😊');
-      }, 600);
-    } else {
-      adicionarMsg('bot', 'Não encontrei uma resposta específica para isso. Para informações mais detalhadas, fale diretamente com nossa equipe pelo WhatsApp: (21) 99991-2221 📱');
-    }
-  }, 1000);
+  // Usar IA do Groq se disponível
+  if(window.handleChatMessage) {
+    window.handleChatMessage(texto).then(function(resposta){
+      removerTyping();
+      adicionarMsg('bot', resposta);
+    }).catch(function(){
+      removerTyping();
+      adicionarMsg('bot', 'Desculpe, tive um problema técnico! Fale conosco pelo WhatsApp: (21) 99991-2221 📱');
+    });
+  } else {
+    // Fallback para FAQ do Supabase
+    setTimeout(function(){
+      removerTyping();
+      var resultado = buscarResposta(texto);
+      if(resultado){
+        adicionarMsg('bot', resultado.resposta);
+      } else {
+        adicionarMsg('bot', 'Não encontrei uma resposta específica. Fale com nossa equipe pelo WhatsApp: (21) 99991-2221 📱');
+      }
+    }, 1000);
+  }
 }
 
 function enviarSugg(btn){
@@ -1260,5 +1268,7 @@ function enviarSugg(btn){
   enviarMsg();
 }
 </script>
+<script src="js/config.js"></script>
+<script src="js/chat-ia.js"></script>
 </body>
 </html>
