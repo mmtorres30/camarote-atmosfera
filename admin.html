@@ -132,6 +132,7 @@ body{background:#060608;color:#F5F0E8;font-family:"Montserrat",sans-serif;min-he
     <div class="tabs">
       <div class="tab active" onclick="mudarTab('artistas')">🎤 Artistas</div>
       <div class="tab" onclick="mudarTab('fotos')">📸 Fotos</div>
+      <div class="tab" onclick="mudarTab('faq')">💬 FAQ / Chat</div>
       <div class="tab" onclick="mudarTab('logs')">📋 Logs</div>
     </div>
 
@@ -156,6 +157,52 @@ body{background:#060608;color:#F5F0E8;font-family:"Montserrat",sans-serif;min-he
       </div>
       <input type="file" id="file-input" multiple accept="image/*" onchange="uploadFotos(this.files)">
       <div class="fotos-grid" id="fotos-grid"></div>
+    </div>
+
+    <!-- FAQ -->
+    <div class="tab-content" id="tab-faq">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;">
+        <p class="admin-section-title" style="margin:0;">💬 Perguntas & Respostas do Chat</p>
+        <button class="btn-save" onclick="abrirNovaFaq()">+ Nova Pergunta</button>
+      </div>
+
+      <!-- FORMULÁRIO NOVA/EDITAR -->
+      <div id="faq-form" style="display:none;background:rgba(201,168,76,.04);border:1px solid rgba(201,168,76,.2);padding:2rem;margin-bottom:2rem;">
+        <p class="admin-section-title">✏️ <span id="faq-form-title">Nova Pergunta</span></p>
+        <input type="hidden" id="faq-id">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem;">
+          <div>
+            <label style="font-size:.6rem;letter-spacing:.15em;color:var(--g);text-transform:uppercase;display:block;margin-bottom:.4rem;">Categoria</label>
+            <select id="faq-cat" style="width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(201,168,76,.2);color:var(--w);padding:.7rem;font-family:Montserrat,sans-serif;font-size:.8rem;">
+              <option value="Credenciamento">Credenciamento</option>
+              <option value="Ingressos">Ingressos</option>
+              <option value="Transporte">Transporte</option>
+              <option value="Estrutura">Estrutura</option>
+              <option value="Reservados">Reservados</option>
+              <option value="Geral">Geral</option>
+            </select>
+          </div>
+          <div>
+            <label style="font-size:.6rem;letter-spacing:.15em;color:var(--g);text-transform:uppercase;display:block;margin-bottom:.4rem;">Palavras-chave (separadas por espaço)</label>
+            <input type="text" id="faq-palavras" placeholder="ex: credenciamento documento autorização" style="width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(201,168,76,.2);color:var(--w);padding:.7rem;font-family:Montserrat,sans-serif;font-size:.8rem;">
+          </div>
+        </div>
+        <div style="margin-bottom:1rem;">
+          <label style="font-size:.6rem;letter-spacing:.15em;color:var(--g);text-transform:uppercase;display:block;margin-bottom:.4rem;">Pergunta</label>
+          <input type="text" id="faq-pergunta" placeholder="Ex: Quem pode fazer o credenciamento?" style="width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(201,168,76,.2);color:var(--w);padding:.7rem;font-family:Montserrat,sans-serif;font-size:.8rem;">
+        </div>
+        <div style="margin-bottom:1.5rem;">
+          <label style="font-size:.6rem;letter-spacing:.15em;color:var(--g);text-transform:uppercase;display:block;margin-bottom:.4rem;">Resposta</label>
+          <textarea id="faq-resposta" rows="4" placeholder="Digite a resposta completa..." style="width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(201,168,76,.2);color:var(--w);padding:.7rem;font-family:Montserrat,sans-serif;font-size:.8rem;resize:vertical;"></textarea>
+        </div>
+        <div style="display:flex;gap:1rem;">
+          <button class="btn-save" onclick="salvarFaq()">💾 Salvar</button>
+          <button class="btn-sm del" onclick="document.getElementById('faq-form').style.display='none'" style="padding:.5rem 1.2rem;">Cancelar</button>
+        </div>
+      </div>
+
+      <!-- LISTA DE FAQs -->
+      <div id="faq-lista"></div>
     </div>
 
     <!-- LOGS -->
@@ -204,6 +251,7 @@ function mudarTab(tab) {
   document.querySelectorAll('.tab')[idx].classList.add('active');
   document.getElementById('tab-'+tab).classList.add('active');
   if(tab === 'logs') carregarLogs();
+    if(tab === 'faq') carregarFaq();
 }
 
 // ALERT
@@ -355,6 +403,100 @@ async function carregarLogs() {
       <span class="log-user">${l.admin_email}</span>
     </div>
   `).join('');
+}
+
+// FAQ FUNCTIONS
+async function carregarFaq() {
+  const {data} = await sb.from('camarote_faq').select('*').order('categoria').order('ordem');
+  if(!data) return;
+  
+  const categorias = [...new Set(data.map(f => f.categoria))];
+  let html = '';
+  
+  categorias.forEach(cat => {
+    const itens = data.filter(f => f.categoria === cat);
+    html += `<div style="margin-bottom:2rem;">
+      <p style="font-size:.6rem;letter-spacing:.25em;color:var(--g);text-transform:uppercase;margin-bottom:.8rem;padding-bottom:.4rem;border-bottom:1px solid rgba(201,168,76,.1);">${cat} <span style="color:var(--wd)">(${itens.length})</span></p>`;
+    itens.forEach(f => {
+      html += `<div style="background:rgba(18,18,18,.8);border:1px solid rgba(201,168,76,${f.ativo?'.1':'.05'});padding:1rem 1.2rem;margin-bottom:.4rem;display:grid;grid-template-columns:1fr auto;gap:1rem;align-items:start;opacity:${f.ativo?1:.5};">
+        <div>
+          <p style="font-size:.78rem;font-weight:600;color:var(--w);margin-bottom:.3rem;">${f.pergunta}</p>
+          <p style="font-size:.72rem;color:var(--wd);line-height:1.5;">${f.resposta.substring(0,120)}${f.resposta.length>120?'...':''}</p>
+          <p style="font-size:.6rem;color:rgba(201,168,76,.5);margin-top:.3rem;">🔑 ${f.palavras_chave||'sem palavras-chave'}</p>
+        </div>
+        <div style="display:flex;gap:.4rem;flex-shrink:0;">
+          <button class="btn-sm save" onclick="editarFaq('${f.id}')">✏️</button>
+          <button class="btn-sm del" onclick="toggleFaqAtivo('${f.id}',${f.ativo})">${f.ativo?'🔴':'🟢'}</button>
+        </div>
+      </div>`;
+    });
+    html += '</div>';
+  });
+  
+  document.getElementById('faq-lista').innerHTML = html || '<p style="color:var(--wd);font-size:.8rem;">Nenhuma pergunta cadastrada ainda.</p>';
+}
+
+function abrirNovaFaq() {
+  document.getElementById('faq-id').value = '';
+  document.getElementById('faq-cat').value = 'Geral';
+  document.getElementById('faq-pergunta').value = '';
+  document.getElementById('faq-resposta').value = '';
+  document.getElementById('faq-palavras').value = '';
+  document.getElementById('faq-form-title').textContent = 'Nova Pergunta';
+  document.getElementById('faq-form').style.display = 'block';
+  document.getElementById('faq-form').scrollIntoView({behavior:'smooth'});
+}
+
+async function editarFaq(id) {
+  const {data} = await sb.from('camarote_faq').select('*').eq('id', id).single();
+  if(!data) return;
+  document.getElementById('faq-id').value = data.id;
+  document.getElementById('faq-cat').value = data.categoria;
+  document.getElementById('faq-pergunta').value = data.pergunta;
+  document.getElementById('faq-resposta').value = data.resposta;
+  document.getElementById('faq-palavras').value = data.palavras_chave||'';
+  document.getElementById('faq-form-title').textContent = 'Editar Pergunta';
+  document.getElementById('faq-form').style.display = 'block';
+  document.getElementById('faq-form').scrollIntoView({behavior:'smooth'});
+}
+
+async function salvarFaq() {
+  const id = document.getElementById('faq-id').value;
+  const dados = {
+    categoria: document.getElementById('faq-cat').value,
+    pergunta: document.getElementById('faq-pergunta').value,
+    resposta: document.getElementById('faq-resposta').value,
+    palavras_chave: document.getElementById('faq-palavras').value,
+    criado_por: userAtual.email,
+    updated_at: new Date().toISOString()
+  };
+  
+  if(!dados.pergunta || !dados.resposta) { mostrarAlert('Preencha pergunta e resposta!','error'); return; }
+  
+  let error;
+  if(id) {
+    ({error} = await sb.from('camarote_faq').update(dados).eq('id', id));
+  } else {
+    ({error} = await sb.from('camarote_faq').insert({...dados, ativo:true}));
+  }
+  
+  if(error) { mostrarAlert('Erro ao salvar: '+error.message,'error'); return; }
+  
+  await sb.from('camarote_logs').insert({
+    admin_email: userAtual.email,
+    acao: id ? 'FAQ editado' : 'FAQ criado',
+    detalhes: dados.pergunta
+  });
+  
+  mostrarAlert(id ? 'FAQ atualizado!' : 'FAQ criado!');
+  document.getElementById('faq-form').style.display = 'none';
+  carregarFaq();
+}
+
+async function toggleFaqAtivo(id, ativo) {
+  await sb.from('camarote_faq').update({ativo: !ativo}).eq('id', id);
+  mostrarAlert(ativo ? 'Pergunta desativada!' : 'Pergunta ativada!');
+  carregarFaq();
 }
 
 // Verificar sessão ao carregar
