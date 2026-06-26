@@ -9,11 +9,8 @@ export default async function handler(req, res) {
   const { message, history } = req.body;
   const groqKey = process.env.GROQ_KEY;
 
-  console.log("GROQ_KEY presente:", !!groqKey);
-  console.log("Mensagem recebida:", message);
-
   if (!groqKey) {
-    return res.status(200).json({ reply: "⚠️ GROQ_KEY não encontrada nas variáveis de ambiente." });
+    return res.status(200).json({ reply: "⚠️ GROQ_KEY não encontrada." });
   }
 
   try {
@@ -24,11 +21,11 @@ export default async function handler(req, res) {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        model: "llama3-8b-8192",
+        model: "llama-3.1-8b-instant",
         messages: [
           {
             role: "system",
-            content: "Você é o Assistente Atmosfera, assistente virtual do Camarote Atmosfera — camarote VIP premium no Sambódromo da Sapucaí, Carnaval 2027 Rio de Janeiro. Seja simpático e elegante. INGRESSOS: Série Ouro Sex 05/02: R$ 1.340 | Série Ouro Sáb 06/02: R$ 1.540 | Grupo Especial Dom 07/02, Seg 08/02, Ter 09/02, Campeãs 13/02: R$ 2.790. CONTATO: WhatsApp (21) 99991-2221. REGRAS: Responda SEMPRE em português. Respostas curtas e objetivas."
+            content: "Você é o Assistente Atmosfera, assistente virtual do Camarote Atmosfera — camarote VIP premium no Sambódromo da Sapucaí, Carnaval 2027 Rio de Janeiro. Seja simpático e elegante. INGRESSOS: Série Ouro Sex 05/02: R$ 1.340 | Série Ouro Sáb 06/02: R$ 1.540 | Grupo Especial Dom 07/02, Seg 08/02, Ter 09/02, Campeãs 13/02: R$ 2.790. CREDENCIAMENTO: Novotel Barra da Tijuca — Av. Embaixador Abelardo Bueno, 1511 — 01/02 a 13/02/2027. CONTATO: WhatsApp (21) 99991-2221 | camaroteatmosfera.com.br. REGRAS: Responda SEMPRE em português. Para compras direcione ao WhatsApp. Respostas curtas e objetivas."
           },
           ...(history || []),
           { role: "user", content: message }
@@ -38,19 +35,15 @@ export default async function handler(req, res) {
       })
     });
 
-    console.log("Status Groq:", response.status);
     const data = await response.json();
-    console.log("Resposta Groq:", JSON.stringify(data).slice(0, 200));
 
     if (data.choices && data.choices[0]) {
-      const reply = data.choices[0].message.content;
-      return res.status(200).json({ reply });
+      return res.status(200).json({ reply: data.choices[0].message.content });
     } else {
-      return res.status(200).json({ reply: "Erro na resposta da IA. Erro: " + JSON.stringify(data).slice(0, 100) });
+      return res.status(200).json({ reply: "Erro inesperado. WhatsApp: (21) 99991-2221 📱" });
     }
 
   } catch (error) {
-    console.error("Erro catch:", error.message);
     return res.status(200).json({ reply: "Erro: " + error.message });
   }
 }
