@@ -177,3 +177,99 @@ footer{background:#060606;border-top:1px solid rgba(201,168,76,0.1);padding:4rem
   .gallery-item.tall{grid-row:span 1;}
   .cred-grid{grid-template-columns:1fr 1fr;}
 }
+
+/* ══════════════════════════════════════
+   MOBILE RESPONSIVO — CORREÇÕES GERAIS
+══════════════════════════════════════ */
+@media(max-width:768px){
+  /* OVERFLOW */
+  html,body{overflow-x:hidden!important;width:100%!important;}
+  
+  /* NAV */
+  nav{padding:1rem 1.5rem!important;}
+  
+  /* HERO */
+  .hero-title{font-size:clamp(3rem,15vw,5rem)!important;}
+  .hero-pill span{font-size:.55rem!important;}
+  .hero-btns{flex-direction:column!important;align-items:center!important;gap:.8rem!important;}
+  .btn-p{width:90%!important;text-align:center!important;}
+
+  /* STATS */
+  .stats-bar{grid-template-columns:repeat(2,1fr)!important;margin:0 1rem!important;}
+  .stat{border-right:none!important;border-bottom:1px solid rgba(201,168,76,.1)!important;padding:1.5rem 1rem!important;}
+
+  /* COUNTDOWN */
+  .cd-block{padding:1rem 1.2rem!important;min-width:70px!important;}
+  .cd-block span{font-size:clamp(2.5rem,10vw,4rem)!important;}
+  .cd-sep{font-size:2rem!important;}
+
+  /* SECTION WRAP */
+  .section-wrap{padding:0 1rem!important;}
+
+  /* EXPERIENCIAS */
+  .exp-cards{grid-template-columns:1fr!important;}
+
+  /* BOATE */
+  .boate-grid{grid-template-columns:1fr!important;gap:2rem!important;}
+  .boate-viz{width:100%!important;}
+
+  /* RESERVADOS */
+  .res-layout{grid-template-columns:1fr!important;gap:2rem!important;}
+  .res-features{grid-template-columns:1fr!important;}
+  .res-card{margin-top:1rem!important;}
+
+  /* INGRESSOS */
+  .ing-cards{grid-template-columns:1fr!important;}
+  .ic--vip{transform:none!important;}
+
+  /* TRANSPORTE */
+  .tp-grid{grid-template-columns:1fr!important;}
+
+  /* CREDENCIAMENTO */
+  .cred-loc{flex-direction:column!important;gap:1rem!important;}
+  div[style*="grid-template-columns:1fr 1fr"][style*="900px"]{
+    grid-template-columns:1fr!important;
+  }
+  .cc-day{flex-direction:column!important;gap:.2rem!important;}
+
+  /* GALERIA */
+  .grow-a{grid-template-columns:1fr!important;}
+  .grow-a .g-tall{height:250px!important;}
+  .grow-a .g-reg{height:200px!important;}
+  .grow-b{grid-template-columns:1fr!important;}
+  .grow-b .g-reg,.grow-b .g-wide{height:200px!important;}
+
+  /* ARTISTAS */
+  .artistas-wrap{padding:0 1rem!important;}
+  #grid-serie-ouro{grid-template-columns:1fr!important;width:100%!important;}
+  #grid-grupo-especial{grid-template-columns:1fr!important;width:100%!important;}
+  .artista-card{padding:1.5rem!important;}
+
+  /* MARKETING */
+  .mkt-layout{grid-template-columns:1fr!important;gap:2rem!important;}
+
+  /* CTA */
+  #cta-final{padding:5rem 1rem!important;}
+  .cta-title{font-size:clamp(2.5rem,10vw,4rem)!important;}
+  .cta-ey::before,.cta-ey::after{width:30px!important;}
+
+  /* FOOTER */
+  .ft-inner{grid-template-columns:1fr!important;gap:2rem!important;}
+  .ft-bottom{flex-direction:column!important;gap:.5rem!important;text-align:center!important;}
+
+  /* CREDENCIAMENTO DATAS */
+  .cred-date,.cred-time{font-size:.65rem!important;}
+
+  /* TEXTOS GERAIS */
+  h2{font-size:clamp(1.8rem,7vw,2.5rem)!important;}
+  .sec-header h2{font-size:clamp(1.8rem,7vw,2.5rem)!important;}
+}
+
+@media(max-width:480px){
+  .stats-bar{grid-template-columns:1fr 1fr!important;}
+  .cd-grid{gap:.3rem!important;}
+  .cd-block{min-width:60px!important;padding:.8rem!important;}
+  .cd-block span{font-size:2rem!important;}
+  .cd-sep{font-size:1.5rem!important;padding-bottom:1rem!important;}
+  nav{padding:.8rem 1rem!important;}
+}
