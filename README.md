@@ -1,74 +1,1274 @@
-# 🎭 Camarote Atmosfera — Guia de Edição
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Camarote Atmosfera — Sapucaí · Carnaval 2027</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,200;0,300;0,400;0,600;1,200;1,300&family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --g:#C9A84C;--g2:#E8C97A;--g3:#8B6914;
+  --b:#060608;--b2:#0c0c10;--b3:#12121a;
+  --w:#F5F0E8;--wd:rgba(245,240,232,.65);--wf:rgba(245,240,232,.08);
+  --fd:'Cormorant Garamond',serif;--fb:'Montserrat',sans-serif;
+  --tr:.45s cubic-bezier(.25,.46,.45,.94);
+}
+html{scroll-behavior:smooth;}
+body{background:var(--b);color:var(--w);font-family:var(--fb);overflow-x:hidden;}
+a{color:inherit;text-decoration:none;}ul{list-style:none;}
 
-## Estrutura de arquivos
-```
-atmosfera/
-├── index.html       ← conteúdo do site (textos, seções)
-├── css/style.css    ← visual (cores, fontes, layout)
-├── js/main.js       ← configurações (data, links, whatsapp)
-└── images/          ← suas fotos aqui
-```
+/* ── ORBS DE LUZ ── */
+.orbs{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
+.orb{position:absolute;border-radius:50%;filter:blur(80px);animation:orbFloat ease-in-out infinite;}
+@keyframes orbFloat{0%,100%{transform:translate(0,0) scale(1);}33%{transform:translate(30px,-40px) scale(1.1);}66%{transform:translate(-20px,20px) scale(.9);}}
 
----
+/* ── NAV ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:1.5rem 3rem;display:flex;align-items:center;justify-content:space-between;transition:var(--tr);}
+nav.sc{background:rgba(6,6,8,.9);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-bottom:1px solid rgba(201,168,76,.12);padding:1rem 3rem;}
+.nl{display:flex;flex-direction:column;line-height:1.1;}
+.nl span:first-child{font-size:.5rem;letter-spacing:.4em;color:var(--g);font-weight:500;text-transform:uppercase;}
+.nl span:last-child{font-family:var(--fd);font-size:1.3rem;font-weight:400;letter-spacing:.2em;color:var(--w);}
+.nm{display:flex;align-items:center;gap:1.8rem;}
+.nm a{font-size:.62rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--wd);transition:color .2s;}
+.nm a:hover{color:var(--g);}
+.ncta{border:1px solid var(--g)!important;color:var(--g)!important;padding:.5rem 1.5rem;transition:all .3s!important;}
+.ncta:hover{background:var(--g)!important;color:var(--b)!important;}
+.hb{display:none;background:none;border:none;color:var(--w);font-size:1.5rem;cursor:pointer;}
 
-## ✏️ Edições mais comuns
+/* ── HERO ── */
+#hero{position:relative;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:2rem;overflow:hidden;}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(201,168,76,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(201,168,76,.04) 1px,transparent 1px);background-size:60px 60px;pointer-events:none;}
+.hero-vignette{position:absolute;inset:0;background:radial-gradient(ellipse at center,transparent 30%,rgba(6,6,8,.8) 100%);pointer-events:none;}
+.hero-content{position:relative;z-index:2;}
+.hero-line{display:flex;align-items:center;justify-content:center;gap:1.5rem;margin-bottom:2.5rem;}
+.hero-line::before,.hero-line::after{content:'';flex:1;max-width:80px;height:1px;background:linear-gradient(to right,transparent,var(--g));}
+.hero-line::after{background:linear-gradient(to left,transparent,var(--g));}
+.hero-eyebrow{font-size:.65rem;letter-spacing:.5em;color:var(--g);font-weight:500;white-space:nowrap;}
+.hero-title{font-family:var(--fd);font-size:clamp(2.5rem,8vw,7rem);font-weight:200;line-height:.85;letter-spacing:.04em;color:var(--w);margin-bottom:2.5rem;position:relative;}
+.hero-title .char{display:inline-block;animation:charIn .8s ease both;}
+@keyframes charIn{from{opacity:0;transform:translateY(40px);}to{opacity:1;transform:translateY(0);}}
+.hero-subtitle{font-size:clamp(.9rem,2vw,1.1rem);font-weight:300;color:var(--wd);margin-bottom:.8rem;letter-spacing:.1em;}
+.hero-pill{display:inline-flex;align-items:center;gap:.8rem;border:1px solid rgba(201,168,76,.25);padding:.6rem 1.8rem;margin-bottom:3.5rem;background:rgba(201,168,76,.04);backdrop-filter:blur(10px);}
+.hero-pill span{font-size:.6rem;font-weight:600;letter-spacing:.25em;color:var(--g);text-transform:uppercase;}
+.hero-pill::before{content:'◆';color:var(--g);font-size:.4rem;}
+.hero-pill::after{content:'◆';color:var(--g);font-size:.4rem;}
+.hero-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;}
+.btn-p{display:inline-block;padding:1rem 2.5rem;font-size:.7rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;transition:var(--tr);position:relative;overflow:hidden;}
+.btn-p.gold{background:var(--g);color:var(--b);border:2px solid var(--g);}
+.btn-p.gold::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.25),transparent);transform:translateX(-100%);transition:.6s;}
+.btn-p.gold:hover::after{transform:translateX(100%);}
+.btn-p.gold:hover{background:transparent;color:var(--g);}
+.btn-p.ghost{background:rgba(245,240,232,.04);color:var(--w);border:1px solid rgba(245,240,232,.2);backdrop-filter:blur(10px);}
+.btn-p.ghost:hover{border-color:var(--g);color:var(--g);}
+.scroll-indicator{position:absolute;bottom:2.5rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:.6rem;animation:si 2s ease infinite;}
+.scroll-indicator span{font-size:.55rem;letter-spacing:.3em;color:var(--wd);text-transform:uppercase;}
+.scroll-indicator::after{content:'';width:1px;height:50px;background:linear-gradient(to bottom,var(--g),transparent);}
+@keyframes si{0%,100%{transform:translateX(-50%) translateY(0);}50%{transform:translateX(-50%) translateY(8px);}}
 
-### 1. Alterar a data do Carnaval
-Abra `js/main.js` e mude a linha:
-```js
-carnavalDate: new Date('2027-02-20T21:00:00-03:00'),
-```
+/* ── STATS ── */
+#stats{position:relative;z-index:1;padding:0 2rem;}
+.stats-bar{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);background:rgba(12,12,16,.8);backdrop-filter:blur(20px);border:1px solid rgba(201,168,76,.12);border-radius:2px;}
+.stat{padding:2.5rem 2rem;text-align:center;border-right:1px solid rgba(201,168,76,.1);position:relative;}
+.stat:last-child{border-right:none;}
+.stat-val{font-family:var(--fd);font-size:clamp(2.5rem,5vw,4rem);font-weight:200;color:var(--g);line-height:1;display:block;}
+.stat-label{font-size:.6rem;letter-spacing:.2em;color:var(--wd);text-transform:uppercase;margin-top:.4rem;display:block;}
 
-### 2. Adicionar link de compra de ingressos
-Em `js/main.js`:
-```js
-ticketLinks: {
-  sexta:  'https://sympla.com.br/seu-evento',
-  sabado: 'https://sympla.com.br/seu-evento-sabado',
-},
-```
+/* ── COUNTDOWN ── */
+#countdown{position:relative;z-index:1;padding:6rem 2rem;text-align:center;}
+.cd-wrap{max-width:900px;margin:0 auto;}
+.eyebrow{font-size:.62rem;font-weight:600;letter-spacing:.4em;color:var(--g);text-transform:uppercase;display:block;margin-bottom:1rem;}
+.cd-nums{display:flex;align-items:center;justify-content:center;gap:1rem;flex-wrap:wrap;margin:2rem 0;}
+.cd-block{background:rgba(12,12,16,.7);backdrop-filter:blur(20px);border:1px solid rgba(201,168,76,.15);padding:2rem 2.5rem;min-width:110px;text-align:center;position:relative;overflow:hidden;}
+.cd-block::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--g),transparent);}
+.cd-block span{font-family:var(--fd);font-size:clamp(3.5rem,8vw,6rem);font-weight:200;color:var(--w);line-height:1;display:block;}
+.cd-block label{font-size:.55rem;letter-spacing:.25em;color:var(--g);text-transform:uppercase;}
+.cd-sep{font-family:var(--fd);font-size:clamp(2.5rem,5vw,5rem);color:var(--g);opacity:.25;padding-bottom:2rem;font-weight:200;}
+.cd-sub{font-size:.8rem;color:var(--wd);letter-spacing:.08em;}
 
-### 3. Alterar preços dos ingressos
-Em `index.html`, encontre o bloco do ingresso e mude o número:
-```html
-<span class="ticket-value" data-price="1500">1.500</span>
-```
+/* ── SECTION BASE ── */
+.section-wrap{max-width:1200px;margin:0 auto;padding:0 2rem;}
+.sec-header{text-align:center;margin-bottom:4rem;}
+.sec-header h2{font-family:var(--fd);font-size:clamp(2.5rem,5vw,4.5rem);font-weight:200;line-height:1.1;color:var(--w);}
+.sec-header h2 em{color:var(--g);font-style:italic;}
+.sec-header .line{width:50px;height:1px;background:var(--g);margin:.8rem auto 0;opacity:.6;}
 
-### 4. Adicionar fotos na galeria
-1. Coloque sua foto na pasta `images/`
-2. Em `index.html`, encontre a seção `#galeria`
-3. Troque um placeholder por:
-```html
-<div class="gallery-item">
-  <img src="images/sua-foto.jpg" alt="Camarote Atmosfera">
+/* ── EXPERIÊNCIAS GLASS ── */
+#experiencias{position:relative;z-index:1;padding:7rem 0;}
+.exp-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;}
+.exp-glass{background:rgba(18,18,26,.6);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(201,168,76,.12);padding:3rem 2.5rem;position:relative;overflow:hidden;transition:var(--tr);cursor:default;}
+.exp-glass::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--g),transparent);transform:scaleX(0);transition:var(--tr);}
+.exp-glass:hover::before{transform:scaleX(1);}
+.exp-glass::after{content:'';position:absolute;inset:0;background:radial-gradient(circle at top left,rgba(201,168,76,.06),transparent 60%);opacity:0;transition:var(--tr);}
+.exp-glass:hover::after{opacity:1;}
+.exp-glass:hover{border-color:rgba(201,168,76,.3);transform:translateY(-4px);}
+.exp-num{font-family:var(--fd);font-size:6rem;font-weight:200;color:rgba(201,168,76,.07);line-height:1;position:absolute;top:1rem;right:1.5rem;}
+.exp-floor{font-size:.58rem;letter-spacing:.25em;color:var(--g);text-transform:uppercase;margin-bottom:.8rem;}
+.exp-glass h3{font-family:var(--fd);font-size:2rem;font-weight:300;color:var(--w);margin-bottom:1.5rem;position:relative;}
+.exp-glass ul li{font-size:.78rem;color:var(--wd);padding:.45rem 0;border-bottom:1px solid var(--wf);display:flex;align-items:flex-start;gap:.6rem;position:relative;}
+.exp-glass ul li::before{content:'◆';color:var(--g);font-size:.35rem;margin-top:.45rem;flex-shrink:0;}
+.exp-glass ul li:last-child{border-bottom:none;}
+
+/* ── BOATE ── */
+#boate{position:relative;z-index:1;padding:7rem 0;background:linear-gradient(to bottom,var(--b),var(--b2),var(--b));}
+.boate-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;}
+.boate-viz{position:relative;aspect-ratio:4/3;overflow:hidden;border:1px solid rgba(201,168,76,.1);}
+.boate-viz-bg{position:absolute;inset:0;background:radial-gradient(ellipse at center bottom,#1a0a3a 0%,#0a0a18 50%,#060608 100%);}
+.stage-lights{position:absolute;inset:0;}
+.sl{position:absolute;width:3px;top:0;transform-origin:top center;animation:stageLight ease-in-out infinite;}
+@keyframes stageLight{0%,100%{opacity:.3;transform:rotate(var(--r,0deg));}50%{opacity:.9;transform:rotate(calc(var(--r,0deg) + 15deg));}}
+.boate-overlay{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.5rem;}
+.boate-overlay p:first-child{font-size:.55rem;letter-spacing:.35em;color:var(--g);text-transform:uppercase;}
+.boate-overlay p:last-child{font-family:var(--fd);font-size:3.5rem;font-weight:200;color:var(--w);}
+.boate-overlay small{font-size:.7rem;color:var(--wd);}
+.boate-floor-light{position:absolute;bottom:0;left:0;right:0;height:40%;background:linear-gradient(to top,rgba(201,168,76,.08),transparent);}
+.boate-text .eyebrow{text-align:left;}
+.boate-text h2{font-family:var(--fd);font-size:clamp(2.5rem,4vw,4rem);font-weight:200;line-height:1.1;margin-bottom:1.5rem;}
+.boate-text h2 em{color:var(--g);font-style:italic;}
+.boate-text p{font-size:.82rem;color:var(--wd);line-height:1.9;margin-bottom:1.2rem;}
+.boate-chips{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:2rem;}
+.chip{font-size:.65rem;font-weight:500;letter-spacing:.1em;color:var(--g);border:1px solid rgba(201,168,76,.2);padding:.4rem 1rem;background:rgba(201,168,76,.04);}
+
+/* ── RESERVADOS ── */
+#reservados{position:relative;z-index:1;padding:7rem 0;}
+.res-layout{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start;margin-bottom:4rem;}
+.res-text .eyebrow{text-align:left;}
+.res-text h2{font-family:var(--fd);font-size:clamp(2.5rem,5vw,4.5rem);font-weight:200;line-height:1.05;margin-bottom:.8rem;}
+.res-text h2 strong{color:var(--g);font-weight:200;}
+.res-italic{font-family:var(--fd);font-size:1.5rem;font-style:italic;color:var(--wd);margin-bottom:2rem;display:block;}
+.res-text p{font-size:.82rem;color:var(--wd);line-height:1.9;margin-bottom:1.2rem;}
+.res-price-block{background:rgba(201,168,76,.04);border:1px solid rgba(201,168,76,.15);padding:2rem;margin:2rem 0;}
+.res-price-block small{font-size:.6rem;letter-spacing:.2em;color:var(--wd);text-transform:uppercase;display:block;margin-bottom:.5rem;}
+.res-price-block strong{font-family:var(--fd);font-size:3.5rem;font-weight:200;color:var(--g);display:block;line-height:1;}
+.res-price-block span{font-size:.75rem;color:var(--wd);}
+.res-card{background:rgba(12,12,16,.8);backdrop-filter:blur(20px);border:1px solid rgba(201,168,76,.15);padding:3rem;position:relative;}
+.res-card::before{content:'RESERVADO EXCLUSIVO';position:absolute;top:-1px;left:50%;transform:translateX(-50%);background:var(--g);color:var(--b);font-size:.5rem;font-weight:800;letter-spacing:.2em;padding:.35rem 1.2rem;white-space:nowrap;}
+.res-big-num{font-family:var(--fd);font-size:7rem;font-weight:200;color:var(--g);line-height:1;text-align:center;display:block;}
+.res-big-label{font-size:.65rem;letter-spacing:.2em;color:var(--wd);text-transform:uppercase;text-align:center;display:block;}
+.res-divider{width:40px;height:1px;background:var(--g);margin:1.5rem auto;opacity:.3;}
+.res-list li{font-size:.75rem;color:var(--wd);padding:.5rem 0;border-bottom:1px solid var(--wf);display:flex;gap:.6rem;}
+.res-list li::before{content:'✓';color:var(--g);font-weight:700;}
+.res-features{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(201,168,76,.08);}
+.rf{background:var(--b2);padding:2rem 1.5rem;text-align:center;transition:var(--tr);}
+.rf:hover{background:var(--b3);}
+.rf-icon{font-size:2.2rem;margin-bottom:1rem;display:block;}
+.rf h4{font-family:var(--fd);font-size:1.3rem;font-weight:300;color:var(--w);margin-bottom:.5rem;}
+.rf p{font-size:.75rem;color:var(--wd);line-height:1.7;}
+
+/* ── INGRESSOS ── */
+#ingressos{position:relative;z-index:1;padding:7rem 0;background:var(--b2);}
+.ing-cards{max-width:900px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:2px;}
+.ic{background:rgba(18,18,26,.9);backdrop-filter:blur(20px);border:1px solid rgba(201,168,76,.1);padding:3rem;position:relative;transition:var(--tr);}
+.ic:hover{border-color:rgba(201,168,76,.25);}
+.ic--vip{background:linear-gradient(135deg,rgba(26,16,0,.95),rgba(18,18,26,.95));border-color:rgba(201,168,76,.3);transform:translateY(-6px);}
+.ic--vip::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--g),transparent);}
+.ic-badge{position:absolute;top:-1px;right:1.5rem;background:var(--g);color:var(--b);font-size:.5rem;font-weight:800;letter-spacing:.15em;padding:.35rem .9rem;text-transform:uppercase;}
+.ic-night{font-size:.58rem;letter-spacing:.25em;color:var(--g);text-transform:uppercase;margin-bottom:.5rem;}
+.ic h3{font-family:var(--fd);font-size:2.2rem;font-weight:200;color:var(--w);margin-bottom:1.5rem;}
+.ic-price{display:flex;align-items:flex-start;gap:.3rem;margin-bottom:2rem;padding-bottom:2rem;border-bottom:1px solid var(--wf);}
+.ic-cur{font-size:.85rem;font-weight:600;color:var(--g);margin-top:.4rem;}
+.ic-val{font-family:var(--fd);font-size:4rem;font-weight:200;color:var(--g);line-height:1;}
+.ic-items{margin-bottom:2rem;}
+.ic-items li{font-size:.76rem;color:var(--wd);padding:.45rem 0;border-bottom:1px solid var(--wf);display:flex;gap:.5rem;}
+.ic-items li::before{content:'✓';color:var(--g);}
+.ic-btn{display:block;text-align:center;padding:1rem;font-size:.68rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;transition:var(--tr);border:1px solid var(--g);background:var(--g);color:var(--b);}
+.ic-btn:hover{background:transparent;color:var(--g);}
+.ic-btn.ghost{background:transparent;color:var(--w);border-color:rgba(245,240,232,.2);}
+.ic-btn.ghost:hover{border-color:var(--g);color:var(--g);}
+
+/* ── TRANSPORTE ── */
+#transporte{position:relative;z-index:1;padding:7rem 0;}
+.tp-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;}
+.tp-card{background:rgba(12,12,16,.7);backdrop-filter:blur(20px);border:1px solid rgba(201,168,76,.12);padding:2.5rem;border-top:2px solid var(--g);transition:var(--tr);}
+.tp-card:hover{background:rgba(18,18,26,.8);}
+.tp-icon{font-size:2.5rem;margin-bottom:1.2rem;display:block;}
+.tp-card h3{font-family:var(--fd);font-size:1.6rem;font-weight:300;color:var(--w);margin-bottom:1.5rem;}
+.tp-stop{display:flex;gap:1rem;padding:.7rem 0;border-bottom:1px solid var(--wf);align-items:baseline;}
+.tp-time{font-family:var(--fd);font-size:1.2rem;font-weight:200;color:var(--g);min-width:3.5rem;}
+.tp-name{font-size:.76rem;color:var(--wd);}
+.tp-stop.arr .tp-name{color:var(--g);font-weight:500;}
+.tp-info{background:rgba(201,168,76,.03);border:1px solid rgba(201,168,76,.1);padding:2.5rem;border-top:2px solid var(--g);}
+.tp-info h3{font-family:var(--fd);font-size:1.6rem;font-weight:300;color:var(--w);margin-bottom:1.5rem;}
+.tp-info p{font-size:.78rem;color:var(--wd);margin-bottom:.8rem;line-height:1.7;}
+.tp-info strong{color:var(--g);}
+.tp-note{margin-top:1.5rem;padding:1rem;border-left:2px solid var(--g);background:rgba(201,168,76,.03);font-size:.72rem;color:var(--wd);}
+
+/* ── CREDENCIAMENTO ── */
+#credenciamento{position:relative;z-index:1;padding:7rem 0;background:var(--b2);}
+.cred-loc{display:flex;align-items:center;gap:2rem;background:rgba(12,12,16,.8);backdrop-filter:blur(20px);border-left:2px solid var(--g);padding:2rem 2.5rem;margin-bottom:3rem;}
+.cred-loc-icon{font-size:2.5rem;}
+.cred-loc-tag{font-size:.58rem;letter-spacing:.25em;color:var(--g);text-transform:uppercase;margin-bottom:.3rem;}
+.cred-loc-addr{font-family:var(--fd);font-size:1.5rem;color:var(--w);}
+.cred-loc-sub{font-size:.75rem;color:var(--wd);margin-top:.2rem;}
+.cred-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(201,168,76,.06);margin-bottom:2rem;}
+.cc{background:var(--b2);padding:2rem 1.5rem;border-top:2px solid transparent;transition:var(--tr);}
+.cc:hover,.cc.gold{border-top-color:var(--g);}
+.cc.gold{background:linear-gradient(135deg,rgba(26,18,0,.8),var(--b2));}
+.cc-icon{font-size:1.8rem;margin-bottom:.8rem;display:block;}
+.cc h3{font-family:var(--fd);font-size:1.2rem;font-weight:300;color:var(--w);margin-bottom:1rem;}
+.cc-day{display:flex;justify-content:space-between;padding:.55rem 0;border-bottom:1px solid var(--wf);}
+.cc-date{font-size:.7rem;color:var(--g);font-weight:500;}
+.cc-time{font-size:.7rem;color:var(--wd);}
+.cc-note{font-size:.67rem;color:var(--wd);padding:.5rem .7rem;background:rgba(201,168,76,.04);border-left:1px solid rgba(201,168,76,.3);margin-top:.8rem;}
+.cred-alert{padding:1.2rem 2rem;background:rgba(201,168,76,.04);border:1px solid rgba(201,168,76,.12);font-size:.78rem;color:var(--wd);}
+.cred-alert strong{color:var(--g);}
+
+/* ── GALERIA ── */
+#galeria{position:relative;z-index:1;padding:7rem 0;}
+.gal{display:grid;grid-template-columns:repeat(3,1fr);grid-auto-rows:250px;gap:4px;}
+.gi{overflow:hidden;background:rgba(18,18,26,.6);border:1px solid rgba(201,168,76,.08);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:.5rem;color:rgba(245,240,232,.2);font-size:.72rem;transition:var(--tr);}
+.gi:hover{border-color:rgba(201,168,76,.2);}
+.gi.t{grid-row:span 2;}
+.gi.w{grid-column:span 2;}
+.gi img{width:100%;height:100%;object-fit:cover;transition:transform .7s ease;}
+.gi:hover img{transform:scale(1.05);}
+.gi span{font-size:2.5rem;}
+
+/* ── MARKETING ── */
+#marketing{position:relative;z-index:1;padding:7rem 0;background:var(--b2);}
+.mkt-layout{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;}
+.mkt-text .eyebrow{text-align:left;}
+.mkt-text h2{font-family:var(--fd);font-size:clamp(2.5rem,4vw,4rem);font-weight:200;line-height:1.1;margin-bottom:1.5rem;}
+.mkt-text h2 em{color:var(--g);font-style:italic;}
+.mkt-text p{font-size:.82rem;color:var(--wd);line-height:1.9;margin-bottom:1.5rem;}
+.mkt-stat{padding:1.2rem 1.5rem;background:rgba(201,168,76,.04);border-left:2px solid var(--g);margin-bottom:.8rem;}
+.mkt-stat strong{font-family:var(--fd);font-size:2rem;font-weight:200;color:var(--g);display:block;}
+.mkt-stat span{font-size:.72rem;color:var(--wd);}
+.mkt-quote{background:rgba(12,12,16,.8);backdrop-filter:blur(20px);border:1px solid rgba(201,168,76,.12);padding:4rem;position:relative;}
+.mkt-quote::before{content:'"';font-family:var(--fd);font-size:10rem;font-weight:200;color:var(--g);opacity:.08;position:absolute;top:-1rem;left:1rem;line-height:1;pointer-events:none;}
+.mkt-quote blockquote{font-family:var(--fd);font-size:clamp(1.5rem,3vw,2.2rem);font-style:italic;font-weight:200;color:var(--w);line-height:1.5;position:relative;}
+.mkt-quote cite{display:block;margin-top:2rem;font-size:.65rem;letter-spacing:.2em;color:var(--g);text-transform:uppercase;font-style:normal;}
+
+/* ── CTA FINAL ── */
+#cta-final{position:relative;z-index:1;padding:10rem 2rem;text-align:center;overflow:hidden;}
+.cta-orb{position:absolute;width:500px;height:500px;border-radius:50%;filter:blur(100px);background:radial-gradient(circle,rgba(201,168,76,.12),transparent 70%);top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;animation:orbFloat 6s ease-in-out infinite;}
+.cta-grid-bg{position:absolute;inset:0;background-image:linear-gradient(rgba(201,168,76,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(201,168,76,.03) 1px,transparent 1px);background-size:50px 50px;pointer-events:none;}
+.cta-content{position:relative;z-index:2;}
+.cta-ey{display:flex;align-items:center;justify-content:center;gap:1.5rem;margin-bottom:2rem;}
+.cta-ey::before,.cta-ey::after{content:'';width:80px;height:1px;background:linear-gradient(to right,transparent,var(--g));}
+.cta-ey::after{background:linear-gradient(to left,transparent,var(--g));}
+.cta-ey span{font-size:.62rem;letter-spacing:.45em;color:var(--g);text-transform:uppercase;}
+.cta-title{font-family:var(--fd);font-size:clamp(4rem,9vw,9rem);font-weight:200;color:var(--w);line-height:.9;margin-bottom:1rem;}
+.cta-title em{color:var(--g);}
+.cta-sub{font-size:.95rem;color:var(--wd);margin-bottom:3.5rem;letter-spacing:.06em;}
+
+/* ── FOOTER ── */
+footer{background:#040405;border-top:1px solid rgba(201,168,76,.08);padding:5rem 2rem 2rem;position:relative;z-index:1;}
+.ft-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1.2fr 1.5fr 1fr;gap:4rem;margin-bottom:4rem;}
+.ft-brand .nl{margin-bottom:1.2rem;}
+.ft-brand p{font-size:.75rem;color:var(--wd);line-height:1.8;}
+.ft-nav h4,.ft-ct h4{font-size:.58rem;letter-spacing:.3em;color:var(--g);text-transform:uppercase;margin-bottom:1.2rem;}
+.ft-nav ul{display:grid;grid-template-columns:1fr 1fr;gap:.5rem;}
+.ft-nav a{font-size:.74rem;color:var(--wd);transition:color .2s;}
+.ft-nav a:hover{color:var(--g);}
+.ft-ct p{font-size:.76rem;color:var(--wd);margin-bottom:.6rem;}
+.ft-ct a{color:var(--wd);transition:color .2s;}
+.ft-ct a:hover{color:var(--g);}
+.ft-bottom{max-width:1200px;margin:0 auto;padding-top:2rem;border-top:1px solid rgba(245,240,232,.04);display:flex;justify-content:space-between;}
+.ft-bottom p{font-size:.62rem;color:rgba(245,240,232,.2);letter-spacing:.08em;}
+
+/* ── REVEAL ── */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .8s ease,transform .8s ease;}
+.reveal.in{opacity:1;transform:translateY(0);}
+
+/* ── RESPONSIVE ── */
+@media(max-width:900px){
+  nav{padding:1rem 1.5rem;}
+  .nm{display:none;}.hb{display:block;}
+  .nm.open{display:flex;flex-direction:column;position:fixed;inset:0;background:rgba(6,6,8,.97);align-items:center;justify-content:center;gap:2.5rem;z-index:999;}
+  .nm.open a{font-size:1.1rem;}
+  .stats-bar,.exp-cards,.boate-grid,.res-layout,.res-features,.cred-cards,.mkt-layout,.ft-inner{grid-template-columns:1fr;}
+  .ing-cards,.tp-grid{grid-template-columns:1fr;}
+  .ic--vip{transform:none;}
+  .stat{border-right:none;border-bottom:1px solid rgba(201,168,76,.1);}
+  .gal{grid-template-columns:1fr 1fr;}
+  .gi.w{grid-column:span 1;}
+}
+@media(max-width:600px){
+  .gal{grid-template-columns:1fr;}
+  .gi.t{grid-row:span 1;}
+  .cred-cards{grid-template-columns:1fr 1fr;}
+  .ft-inner,.ft-bottom{grid-template-columns:1fr;flex-direction:column;gap:1rem;}
+}
+</style>
+
+<style>
+@media(max-width:600px){
+  .artistas-wrap{padding:0 1rem!important;}
+  .artista-card{padding:1.2rem 1rem;}
+  .artista-data{font-size:2.5rem!important;}
+  .artista-nome{font-size:1rem!important;}
+  #grid-grupo-especial{grid-template-columns:repeat(2,1fr)!important;}
+  #grid-serie-ouro{grid-template-columns:repeat(2,1fr)!important;}
+}
+</style>
+</head>
+<body>
+
+<!-- ORBS -->
+<div class="orbs">
+  <div class="orb" style="width:600px;height:600px;background:radial-gradient(circle,rgba(201,168,76,.07),transparent 70%);top:-10%;left:-10%;animation-duration:12s;"></div>
+  <div class="orb" style="width:500px;height:500px;background:radial-gradient(circle,rgba(120,40,160,.05),transparent 70%);top:30%;right:-5%;animation-duration:15s;animation-delay:3s;"></div>
+  <div class="orb" style="width:400px;height:400px;background:radial-gradient(circle,rgba(201,168,76,.05),transparent 70%);bottom:10%;left:20%;animation-duration:18s;animation-delay:6s;"></div>
+  <div class="orb" style="width:300px;height:300px;background:radial-gradient(circle,rgba(200,50,50,.04),transparent 70%);top:60%;right:30%;animation-duration:10s;animation-delay:2s;"></div>
 </div>
-```
 
-### 5. Alterar horários do transporte
-Em `index.html`, encontre a seção `#transporte` e altere os `<span class="stop-time">` e `<span class="stop-name">`.
+<!-- NAV -->
+<nav id="nav">
+  <a href="#hero"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MDAgMTEwIj4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iZyIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMCUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdHlsZT0ic3RvcC1jb2xvcjojOEI2OTE0Ii8+CiAgICAgIDxzdG9wIG9mZnNldD0iMjUlIiBzdHlsZT0ic3RvcC1jb2xvcjojRThDOTdBIi8+CiAgICAgIDxzdG9wIG9mZnNldD0iNTAlIiBzdHlsZT0ic3RvcC1jb2xvcjojQzlBODRDIi8+CiAgICAgIDxzdG9wIG9mZnNldD0iNzUlIiBzdHlsZT0ic3RvcC1jb2xvcjojRThDOTdBIi8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3R5bGU9InN0b3AtY29sb3I6IzhCNjkxNCIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICA8L2RlZnM+CiAgPHRleHQgeD0iMjUwIiB5PSIyOCIgZm9udC1mYW1pbHk9Ikdlb3JnaWEsc2VyaWYiIGZvbnQtc2l6ZT0iMTMiIGZpbGw9InVybCgjZykiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGxldHRlci1zcGFjaW5nPSIxMCI+Q0FNQVJPVEU8L3RleHQ+CiAgPHRleHQgeD0iMjUwIiB5PSI4OCIgZm9udC1mYW1pbHk9Ikdlb3JnaWEsc2VyaWYiIGZvbnQtc2l6ZT0iNTUiIGZvbnQtd2VpZ2h0PSIzMDAiIGZpbGw9InVybCgjZykiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGxldHRlci1zcGFjaW5nPSIzIj5BVE1PU0ZFUkE8L3RleHQ+Cjwvc3ZnPg==" alt="Camarote Atmosfera" style="height:55px;width:auto;"></a>
+  <ul class="nm" id="nm">
+    <li><a href="#experiencias">Experiências</a></li>
+    <li><a href="#reservados">Reservados</a></li>
+    <li><a href="https://www.ticketmaster.com.br/event/rio-carnaval-2027-camarote-atmosfera" target="_blank" rel="noopener">Ingressos</a></li>
+    <li><a href="#transporte">Transfer</a></li>
+    <li><a href="#credenciamento">Credenciamento</a></li>
+    <li><a href="#ingressos" class="ncta">Garantir Vaga</a></li>
+  </ul>
+  <button class="hb" id="hb">☰</button>
+</nav>
 
-### 6. Mudar WhatsApp de contato
-Em `js/main.js`:
-```js
-whatsappNumber: '5521999999999',  // DDI + DDD + número
-```
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-vignette"></div>
+  <div class="hero-content">
+    <div class="hero-line"><span class="hero-eyebrow">Sapucaí · Carnaval 2027</span></div>
+    <h1 class="hero-title" id="heroTitle">ATMOSFERA</h1>
+    <p class="hero-subtitle">O maior espetáculo da Terra. Viva por dentro.</p>
+    <div class="hero-pill"><span>Setor 8 · Meio da Avenida · Vista Panorâmica</span></div>
+    <div class="hero-btns">
+      <a href="https://www.ticketmaster.com.br/event/rio-carnaval-2027-camarote-atmosfera" target="_blank" rel="noopener" class="btn-p gold">Garantir meu ingresso</a>
+      <a href="#reservados" class="btn-p ghost">Reservados Corporativos</a>
+    </div>
+  </div>
+  <div class="scroll-indicator"><span>Descubra</span></div>
+</section>
 
----
+<!-- STATS -->
+<section id="stats">
+  <div class="stats-bar">
+    <div class="stat reveal"><span class="stat-val">3.000</span><span class="stat-label">m² de experiência</span></div>
+    <div class="stat reveal"><span class="stat-val">3</span><span class="stat-label">andares integrados</span></div>
+    <div class="stat reveal"><span class="stat-val">8</span><span class="stat-label">Setor · Meio da Avenida</span></div>
+    <div class="stat reveal"><span class="stat-val">2027</span><span class="stat-label">Carnaval da Sapucaí</span></div>
+  </div>
+</section>
 
-## 🚀 Publicar no Vercel
+<!-- COUNTDOWN -->
+<section id="countdown">
+  <div class="cd-wrap">
+    <span class="eyebrow">Contagem regressiva</span>
+    <div class="cd-nums">
+      <div class="cd-block"><span id="cd-d">00</span><label>dias</label></div>
+      <div class="cd-sep">:</div>
+      <div class="cd-block"><span id="cd-h">00</span><label>horas</label></div>
+      <div class="cd-sep">:</div>
+      <div class="cd-block"><span id="cd-m">00</span><label>min</label></div>
+      <div class="cd-sep">:</div>
+      <div class="cd-block"><span id="cd-s">00</span><label>seg</label></div>
+    </div>
+    <p class="cd-sub">para o Carnaval 2027 na Sapucaí</p>
+  </div>
+</section>
 
-1. Suba os arquivos para o GitHub
-2. Acesse vercel.com → New Project → importe seu repositório
-3. Pronto! O site vai ao ar automaticamente
+<!-- EXPERIÊNCIAS -->
+<section id="experiencias">
+  <div class="section-wrap">
+    <div class="sec-header">
+      <span class="eyebrow">Estrutura</span>
+      <h2>Três andares de<br><em>experiências únicas</em></h2>
+      <div class="line"></div>
+    </div>
+    <div class="exp-cards">
+      <div class="exp-glass reveal">
+        <div class="exp-num">01</div>
+        <div class="exp-floor">1º Piso · Nível da Pista</div>
+        <h3>Frisas & Gastronomia</h3>
+        <ul>
+          <li>Frisas Open — desfiles bem de pertinho</li>
+          <li>Pizzaria e buffet de massas</li>
+          <li>Bares com bebidas quentes e frias</li>
+          <li>Chopeiras artesanais</li>
+          <li>Banheiros modernos e climatizados</li>
+        </ul>
+      </div>
+      <div class="exp-glass reveal">
+        <div class="exp-num">02</div>
+        <div class="exp-floor">2º Piso · Bem-estar</div>
+        <h3>Relax & Beleza</h3>
+        <ul>
+          <li>Espaço Relax: reflexologia e massagem</li>
+          <li>Espaço Beauty: maquiagem e penteados</li>
+          <li>Barbearia Express: barba e cabelo</li>
+          <li>Ambientes instagramáveis</li>
+        </ul>
+      </div>
+      <div class="exp-glass reveal">
+        <div class="exp-num">03</div>
+        <div class="exp-floor">3º Piso · Vista Panorâmica</div>
+        <h3>Boate & Buffet VIP</h3>
+        <ul>
+          <li>Varandão com vista panorâmica</li>
+          <li>Boate com shows e DJs internacionais</li>
+          <li>Buffet: jantar, japonesa e hamburgueria</li>
+          <li>Reservados corporativos exclusivos</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
 
-Toda vez que você salvar uma mudança no GitHub, o Vercel atualiza o site em ~30 segundos.
+<!-- BOATE -->
+<section id="boate">
+  <div class="section-wrap">
+    <div class="boate-grid">
+      <div class="boate-viz reveal">
+        <div class="boate-viz-bg"></div>
+        <div class="stage-lights" id="stageLights"></div>
+        <div class="boate-floor-light"></div>
+        <div class="boate-overlay">
+          <p>Boate</p>
+          <p>ATMOSFERA</p>
+          <small>400m² · Som e Luz de Ponta</small>
+        </div>
+      </div>
+      <div class="boate-text reveal">
+        <span class="eyebrow">Novidade 2027</span>
+        <h2>A primeira boate da<br><em>Sapucaí com vista panorâmica</em></h2>
+        <p>O novo espaço de 400m² será a primeira boate da Sapucaí com vista panorâmica para os desfiles — uma experiência inédita no mundo.</p>
+        <p>Shows de artistas e DJs nacionais e internacionais em um ambiente com isolamento acústico e produção de ponta.</p>
+        <div class="boate-chips">
+          <span class="chip">Isolamento acústico</span>
+          <span class="chip">Som e luz de ponta</span>
+          <span class="chip">Vista panorâmica</span>
+          <span class="chip">DJs internacionais</span>
+          <span class="chip">Camarotes VIP</span>
+          <span class="chip">Camarins exclusivos</span>
+        </div>
+      </div>
+    </div>
 
----
+    <!-- GRADE DE ARTISTAS -->
+    <style>
+      .artistas-wrap{margin-top:5rem;max-width:1200px;margin-left:auto;margin-right:auto;padding:0 2rem;}
+      .artistas-eyebrow{font-size:.62rem;letter-spacing:.4em;color:var(--g);text-transform:uppercase;text-align:center;display:block;margin-bottom:1rem;}
+      .artistas-title{font-family:"Cormorant Garamond",serif;font-size:clamp(2rem,4vw,3.2rem);font-weight:200;color:var(--w);text-align:center;margin-bottom:.5rem;}
+      .artistas-title em{color:var(--g);font-style:italic;}
+      .artistas-sub{text-align:center;font-size:.78rem;color:var(--wd);margin-bottom:3rem;}
+      .artistas-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:3px;}
+      .artista-card{position:relative;background:rgba(12,12,16,.9);border:1px solid rgba(201,168,76,.08);padding:2rem 1.2rem 1.5rem;text-align:center;transition:all .4s;overflow:hidden;cursor:pointer;}
+      .artista-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--g),transparent);transform:scaleX(0);transition:transform .4s;}
+      .artista-card:hover::before{transform:scaleX(1);}
+      .artista-card::after{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 0%,rgba(201,168,76,.06),transparent 70%);opacity:0;transition:opacity .4s;}
+      .artista-card:hover::after{opacity:1;}
+      .artista-card:hover{border-color:rgba(201,168,76,.25);transform:translateY(-4px);}
+      .artista-dia{font-size:.55rem;font-weight:700;letter-spacing:.25em;color:var(--g);text-transform:uppercase;margin-bottom:.8rem;display:block;}
+      .artista-data{font-family:"Cormorant Garamond",serif;font-size:2.5rem;font-weight:200;color:var(--w);line-height:1;display:block;margin-bottom:.3rem;}
+      .artista-mes{font-size:.6rem;letter-spacing:.15em;color:var(--wd);text-transform:uppercase;margin-bottom:1.2rem;display:block;}
+      .artista-nome{font-family:"Cormorant Garamond",serif;font-size:1.3rem;font-weight:300;color:var(--w);margin-bottom:.3rem;display:block;}
+      .artista-tipo{font-size:.6rem;letter-spacing:.15em;color:var(--g);text-transform:uppercase;}
+      .artista-card.destaque{background:linear-gradient(135deg,rgba(26,16,0,.95),rgba(12,12,16,.9));border-color:rgba(201,168,76,.25);}
+      .artista-card.destaque .artista-nome{font-size:1.5rem;color:var(--g);}
+      .artista-tba{font-family:"Cormorant Garamond",serif;font-size:1.1rem;font-style:italic;color:rgba(245,240,232,.3);}
+      @media(max-width:900px){.artistas-grid{grid-template-columns:repeat(3,1fr);}}
+      @media(max-width:600px){.artistas-grid{grid-template-columns:repeat(2,1fr);}}
+    </style>
 
-## 🎨 Mudar cores
-As cores principais estão no topo de `css/style.css`:
-```css
---gold:   #C9A84C;   /* dourado */
---black:  #0A0A0A;   /* fundo principal */
---white:  #F5F0E8;   /* texto claro */
-```
+    <div class="artistas-wrap" style="max-width:1200px;margin:0 auto;">
+      <span class="artistas-eyebrow">Line-up 2027</span>
+      <h2 class="artistas-title">Shows & <em>Atrações</em></h2>
+      <p class="artistas-sub">Boate Atmosfera · 400m² · Primeira boate com vista panorâmica da Sapucaí</p>
+
+      <!-- GRUPO OURO -->
+      <div style="margin-bottom:3rem;text-align:center;">
+        <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem;">
+          <div style="width:30px;height:1px;background:var(--g);opacity:.5;"></div>
+          <span style="font-size:.6rem;letter-spacing:.3em;color:var(--g);text-transform:uppercase;font-weight:600;">🥇 Série Ouro</span>
+          <div style="flex:1;height:1px;background:rgba(201,168,76,.15);"></div>
+        </div>
+        <div style="display:inline-grid;grid-template-columns:repeat(2,280px);gap:3px;justify-content:center;">
+          <div class="artista-card reveal">
+            <span class="artista-dia">Sexta-feira</span>
+            <span class="artista-data">05</span>
+            <span class="artista-mes">Fev 2027</span>
+            <span class="artista-nome artista-tba">A confirmar</span>
+            <span class="artista-tipo">Atração Principal</span>
+          </div>
+          <div class="artista-card reveal">
+            <span class="artista-dia">Sábado</span>
+            <span class="artista-data">06</span>
+            <span class="artista-mes">Fev 2027</span>
+            <span class="artista-nome artista-tba">A confirmar</span>
+            <span class="artista-tipo">Atração Principal</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- GRUPO ESPECIAL -->
+      <div style="text-align:center;">
+        <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem;">
+          <div style="width:30px;height:1px;background:var(--g);opacity:.5;"></div>
+          <span style="font-size:.6rem;letter-spacing:.3em;color:var(--g);text-transform:uppercase;font-weight:600;">⭐ Grupo Especial</span>
+          <div style="flex:1;height:1px;background:rgba(201,168,76,.15);"></div>
+        </div>
+        <div id="grid-grupo-especial" style="display:grid;grid-template-columns:repeat(2,1fr);gap:8px;width:100%;">
+          <div class="artista-card destaque reveal">
+            <span class="artista-dia">Domingo</span>
+            <span class="artista-data">07</span>
+            <span class="artista-mes">Fev 2027</span>
+            <span class="artista-nome artista-tba">A confirmar</span>
+            <span class="artista-tipo">✦ Noite Especial</span>
+          </div>
+          <div class="artista-card destaque reveal">
+            <span class="artista-dia">Segunda</span>
+            <span class="artista-data">08</span>
+            <span class="artista-mes">Fev 2027</span>
+            <span class="artista-nome artista-tba">A confirmar</span>
+            <span class="artista-tipo">✦ Noite Especial</span>
+          </div>
+          <div class="artista-card destaque reveal">
+            <span class="artista-dia">Terça</span>
+            <span class="artista-data">09</span>
+            <span class="artista-mes">Fev 2027</span>
+            <span class="artista-nome artista-tba">A confirmar</span>
+            <span class="artista-tipo">✦ Noite Especial</span>
+          </div>
+          <div class="artista-card destaque reveal">
+            <span class="artista-dia">Terça · Campeãs</span>
+            <span class="artista-data">13</span>
+            <span class="artista-mes">Fev 2027</span>
+            <span class="artista-nome artista-tba">A confirmar</span>
+            <span class="artista-tipo">✦ Grande Final · Noite das Campeãs</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- RESERVADOS -->
+<section id="reservados">
+  <div class="section-wrap">
+    <div class="res-layout">
+      <div class="res-text reveal">
+        <span class="eyebrow">Corporativo</span>
+        <h2>Traga sua empresa<br><strong>para a Avenida!</strong></h2>
+        <span class="res-italic">Sua marca no coração do Carnaval</span>
+        <p>Espaços privados para 20 pessoas com vista panorâmica dos desfiles, além de estrutura e montagem personalizadas para a sua marca.</p>
+        <p>Ao patrocinar o Camarote Atmosfera, sua empresa se conecta a um público altamente qualificado em um dos eventos mais assistidos do planeta.</p>
+
+        <a href="https://wa.me/5521999912221" target="_blank" class="btn-p gold">Solicitar proposta agora</a>
+      </div>
+      <div class="res-card reveal">
+        <span class="res-big-num">20</span>
+        <span class="res-big-label">pessoas por reservado</span>
+        <div class="res-divider"></div>
+        <ul class="res-list">
+          <li>Garçom, barman e segurança exclusivos</li>
+          <li>TV 42", Wi-Fi e chopeira privativa</li>
+          <li>Van exclusiva ida e volta</li>
+          <li>Pulseiras personalizadas para convidados</li>
+          <li>Estrutura com identidade da sua marca</li>
+          <li>Buffet e open bar exclusivos</li>
+          <li>Sofás, pufes e mesas privativos</li>
+        </ul>
+      </div>
+    </div>
+    <div class="res-features">
+      <div class="rf reveal"><span class="rf-icon">🎯</span><h4>Visibilidade de Marca</h4><p>Sua marca presente no maior espetáculo a céu aberto da Terra.</p></div>
+      <div class="rf reveal"><span class="rf-icon">🤝</span><h4>Networking VIP</h4><p>Conecte sua empresa a um público altamente qualificado e seleto.</p></div>
+      <div class="rf reveal"><span class="rf-icon">⭐</span><h4>Experiência Exclusiva</h4><p>Uma experiência personalizada que seus convidados jamais esquecerão.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- INGRESSOS -->
+<section id="ingressos">
+  <div class="section-wrap">
+    <div class="sec-header">
+      <span class="eyebrow">Ingressos</span>
+      <h2>Escolha sua<br><em>experiência</em></h2>
+      <div class="line"></div>
+    </div>
+    <div class="ing-cards">
+      <div class="ic reveal">
+        <div class="ic-night">Série Ouro</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.5rem;">
+          <div><div style="font-size:.6rem;color:var(--g);letter-spacing:.2em;text-transform:uppercase;">05/02 · Sexta</div><div style="font-family:var(--fd);font-size:2rem;font-weight:200;color:var(--g);">R$ 1.340</div></div>
+          <div><div style="font-size:.6rem;color:var(--g);letter-spacing:.2em;text-transform:uppercase;">06/02 · Sábado</div><div style="font-family:var(--fd);font-size:2rem;font-weight:200;color:var(--g);">R$ 1.540</div></div>
+        </div>
+        <ul class="ic-items">
+          <li>Open bar premium</li>
+          <li>Open food com curadoria gastronômica</li>
+          <li>Transfer Zona Sul / Barra</li>
+          <li>Acesso a todos os pisos</li>
+          <li>Espaço Beauty e Relax</li>
+        </ul>
+        <a href="https://www.ticketmaster.com.br/event/rio-carnaval-2027-camarote-atmosfera" target="_blank" class="ic-btn ghost">Comprar pelo WhatsApp</a>
+      </div>
+      <div class="ic ic--vip reveal">
+        <div class="ic-badge">Mais Vendido</div>
+        <div class="ic-night">Grupo Especial</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.5rem;">
+          <div><div style="font-size:.6rem;color:var(--g);letter-spacing:.2em;text-transform:uppercase;">07/02 · Dom</div><div style="font-family:var(--fd);font-size:2rem;font-weight:200;color:var(--g);">R$ 2.790</div></div>
+          <div><div style="font-size:.6rem;color:var(--g);letter-spacing:.2em;text-transform:uppercase;">08/02 · Seg</div><div style="font-family:var(--fd);font-size:2rem;font-weight:200;color:var(--g);">R$ 2.790</div></div>
+          <div><div style="font-size:.6rem;color:var(--g);letter-spacing:.2em;text-transform:uppercase;">09/02 · Ter</div><div style="font-family:var(--fd);font-size:2rem;font-weight:200;color:var(--g);">R$ 2.790</div></div>
+          <div><div style="font-size:.6rem;color:var(--g);letter-spacing:.2em;text-transform:uppercase;">13/02 · Campeãs</div><div style="font-family:var(--fd);font-size:2rem;font-weight:200;color:var(--g);">R$ 2.790</div></div>
+        </div>
+        <ul class="ic-items">
+          <li>Open bar premium</li>
+          <li>Open food com curadoria gastronômica</li>
+          <li>Transfer Zona Sul / Barra</li>
+          <li>Acesso a todos os pisos</li>
+          <li>Acesso à Boate Atmosfera</li>
+          <li>Espaço Beauty e Relax</li>
+        </ul>
+        <a href="https://www.ticketmaster.com.br/event/rio-carnaval-2027-camarote-atmosfera" target="_blank" class="ic-btn">Comprar pelo WhatsApp</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRANSPORTE -->
+<section id="transporte">
+  <div class="section-wrap">
+    <div class="sec-header">
+      <span class="eyebrow">Transfer VIP</span>
+      <h2>Chegue em estilo,<br><em>sem preocupações</em></h2>
+      <div class="line"></div>
+    </div>
+    <div class="tp-grid">
+      <div class="tp-card reveal">
+        <span class="tp-icon">🚌</span>
+        <h3>Zona Sul</h3>
+        <div class="tp-stop"><span class="tp-time" style="font-size:.85rem;color:var(--wd);">📍</span><span class="tp-name">Pontos de embarque a definir</span></div>
+        <div class="tp-stop arr"><span class="tp-time">—</span><span class="tp-name">Informações em breve</span></div>
+      </div>
+      <div class="tp-card reveal">
+        <span class="tp-icon">🚌</span>
+        <h3>Barra da Tijuca</h3>
+        <div class="tp-stop"><span class="tp-time" style="font-size:.85rem;color:var(--wd);">📍</span><span class="tp-name">Pontos de embarque a definir</span></div>
+        <div class="tp-stop arr"><span class="tp-time">—</span><span class="tp-name">Informações em breve</span></div>
+      </div>
+      <div class="tp-info reveal">
+        <h3>Retorno</h3>
+        <p>Transfer de retorno após o encerramento dos desfiles, retornando aos mesmos pontos de embarque.</p>
+        <p><strong>Incluso</strong> em todos os ingressos individuais.</p>
+        <p><strong>Van exclusiva</strong> para reservados corporativos.</p>
+        <div class="tp-note">📍 Confirme seu assento no momento da compra.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CREDENCIAMENTO -->
+<section id="credenciamento">
+  <div class="section-wrap">
+    <div class="sec-header">
+      <span class="eyebrow">Acesso & Credenciamento</span>
+      <h2>Informações para<br><em>entrada e acesso</em></h2>
+      <div class="line"></div>
+    </div>
+    <div class="cred-loc reveal">
+      <span class="cred-loc-icon">📍</span>
+      <div>
+        <div class="cred-loc-tag">Local do Credenciamento</div>
+        <div class="cred-loc-addr">Novotel Barra da Tijuca</div>
+        <div class="cred-loc-sub">Av. Embaixador Abelardo Bueno, 1.511 · Barra da Tijuca · Rio de Janeiro · CEP 22775-040</div>
+      </div>
+    </div>
+    <div style="max-width:900px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;">
+
+      <div style="background:rgba(12,12,16,.8);backdrop-filter:blur(20px);border:1px solid rgba(201,168,76,.15);border-top:2px solid var(--g);padding:2.5rem;">
+        <div style="font-size:.6rem;letter-spacing:.25em;color:var(--g);text-transform:uppercase;margin-bottom:1.2rem;">🥇 Série Ouro · Sexta e Sábado</div>
+        <div class="cc-day"><span class="cc-date">01/02/27 (Seg)</span><span class="cc-time">14h às 20h</span></div>
+        <div class="cc-day"><span class="cc-date">02/02/27 (Ter)</span><span class="cc-time">14h às 20h</span></div>
+        <div class="cc-day"><span class="cc-date">03/02/27 (Qua)</span><span class="cc-time">14h às 21h</span></div>
+        <div class="cc-day"><span class="cc-date">04/02/27 (Qui)</span><span class="cc-time">14h às 21h</span></div>
+        <div class="cc-day"><span class="cc-date">05/02/27 (Sex)</span><span class="cc-time">11h às 15h</span></div>
+        <div class="cc-day"><span class="cc-date">06/02/27 (Sáb)</span><span class="cc-time">11h às 15h</span></div>
+      </div>
+
+      <div style="background:rgba(12,12,16,.8);backdrop-filter:blur(20px);border:1px solid rgba(201,168,76,.15);border-top:2px solid var(--g);padding:2.5rem;">
+        <div style="font-size:.6rem;letter-spacing:.25em;color:var(--g);text-transform:uppercase;margin-bottom:1.2rem;">⭐ Grupo Especial · Dom a Campeãs</div>
+        <div class="cc-day"><span class="cc-date">02/02/27 (Ter)</span><span class="cc-time">14h às 20h</span></div>
+        <div class="cc-day"><span class="cc-date">03/02/27 (Qua)</span><span class="cc-time">14h às 21h</span></div>
+        <div class="cc-day"><span class="cc-date">04/02/27 (Qui)</span><span class="cc-time">14h às 21h</span></div>
+        <div class="cc-day"><span class="cc-date">05/02/27 (Sex)</span><span class="cc-time">11h às 15h</span></div>
+        <div class="cc-day"><span class="cc-date">06/02/27 (Sáb)</span><span class="cc-time">11h às 15h</span></div>
+        <div class="cc-day"><span class="cc-date">07/02/27 (Dom)</span><span class="cc-time">11h às 15h</span></div>
+        <div class="cc-day"><span class="cc-date">08/02/27 (Seg)</span><span class="cc-time">11h às 15h</span></div>
+        <div class="cc-day"><span class="cc-date">09/02/27 (Ter)</span><span class="cc-time">11h às 15h</span></div>
+        <div class="cc-day"><span class="cc-date">12/02/27 (Sex)</span><span class="cc-time">14h às 21h</span></div>
+        <div class="cc-day"><span class="cc-date">13/02/27 (Sáb)</span><span class="cc-time">11h às 15h</span></div>
+      </div>
+
+    </div>
+
+    <div style="max-width:900px;margin:1.5rem auto 0;padding:1.5rem 2rem;background:rgba(201,168,76,.04);border:1px solid rgba(201,168,76,.15);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;">
+      <div>
+        <div style="font-size:.6rem;letter-spacing:.2em;color:var(--g);text-transform:uppercase;margin-bottom:.3rem;">📋 Documentos necessários</div>
+        <div style="font-size:.78rem;color:var(--wd);">Ingresso + RG ou CNH obrigatórios</div>
+      </div>
+      <a href="https://wa.me/5521999912221?text=Olá! Tenho dúvidas sobre o credenciamento do Camarote Atmosfera 2027." target="_blank" style="display:inline-block;padding:.8rem 2rem;background:var(--g);color:var(--b);font-size:.68rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;white-space:nowrap;">Dúvidas pelo WhatsApp</a>
+    </div>
+  </div>
+</section>
+
+<!-- GALERIA -->
+<section id="galeria">
+  <div class="section-wrap">
+    <div class="sec-header">
+      <span class="eyebrow">Galeria</span>
+      <h2>Momentos que<br><em>ficam para sempre</em></h2>
+      <div class="line"></div>
+    </div>
+    <style>
+.gticker{overflow:hidden;border-top:1px solid rgba(201,168,76,.2);border-bottom:1px solid rgba(201,168,76,.2);padding:.7rem 0;margin-bottom:2.5rem;background:linear-gradient(90deg,rgba(6,6,8,0),rgba(201,168,76,.06),rgba(6,6,8,0));}
+.gticker-track{display:flex;gap:2.5rem;animation:gtick 25s linear infinite;white-space:nowrap;}
+.gticker-track span{font-size:.65rem;font-weight:600;letter-spacing:.2em;color:var(--g);text-transform:uppercase;flex-shrink:0;}
+.gticker-track span::before{content:"◆ ";opacity:.4;}
+@keyframes gtick{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.gfoto{position:relative;overflow:hidden;cursor:pointer;background:var(--b3);}
+.gfoto img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .7s cubic-bezier(.25,.46,.45,.94),filter .7s;}
+.gfoto:hover img{transform:scale(1.07);filter:brightness(1.1);}
+.gfoto:before{content:"";position:absolute;inset:0;background:linear-gradient(to bottom,transparent 45%,rgba(6,6,8,.85));opacity:0;transition:opacity .4s;z-index:1;}
+.gfoto:hover:before{opacity:1;}
+.gfoto:after{content:"";position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,#C9A84C,transparent);transform:scaleX(0);transition:transform .5s;z-index:2;}
+.gfoto:hover:after{transform:scaleX(1);}
+.gfoto-label{position:absolute;bottom:0;left:0;right:0;padding:1.2rem 1rem .7rem;transform:translateY(100%);transition:transform .4s;z-index:3;}
+.gfoto:hover .gfoto-label{transform:translateY(0);}
+.gfoto-label b{font-family:"Cormorant Garamond",serif;font-size:1rem;font-weight:300;color:#F5F0E8;display:block;}
+.gfoto-label small{font-size:.58rem;letter-spacing:.18em;color:#C9A84C;text-transform:uppercase;}
+.gfoto-badge{position:absolute;top:.7rem;right:.7rem;background:#C9A84C;color:#060608;font-size:.48rem;font-weight:800;letter-spacing:.12em;padding:.25rem .6rem;z-index:3;opacity:0;transform:scale(.8);transition:all .3s;}
+.gfoto:hover .gfoto-badge{opacity:1;transform:scale(1);}
+.grow-a{display:grid;grid-template-columns:2fr 1fr 1fr;gap:6px;margin-bottom:6px;}
+.grow-a .g-tall{grid-row:1/3;height:570px;}
+.grow-a .g-reg{height:282px;}
+.grow-b{display:grid;grid-template-columns:1fr 1fr 2fr;gap:6px;margin-bottom:6px;}
+.grow-b .g-reg{height:260px;}
+.grow-b .g-wide{height:260px;}
+@media(max-width:900px){
+  .grow-a{grid-template-columns:1fr 1fr;}
+  .grow-a .g-tall{grid-row:auto;height:220px;}
+  .grow-a .g-reg{height:200px;}
+  .grow-b{grid-template-columns:1fr 1fr;}
+  .grow-b .g-wide{height:200px;}
+  .grow-b .g-reg{height:200px;}
+}
+@media(max-width:600px){
+  .grow-a,.grow-b{grid-template-columns:1fr;}
+  .grow-a .g-tall,.grow-a .g-reg,.grow-b .g-wide,.grow-b .g-reg{height:220px;}
+}
+    </style>
+
+    <div style="max-width:1200px;margin:0 auto;">
+
+      <div class="gticker">
+        <div class="gticker-track">
+          <span>Carnaval 2027</span><span>Sapucaí</span><span>Open Bar Premium</span><span>Vista Panorâmica</span><span>Setor 8</span><span>Gastronomia VIP</span><span>Boate Atmosfera</span><span>Reservados Exclusivos</span><span>Entre Sinta Viva</span><span>Carnaval 2027</span><span>Sapucaí</span><span>Open Bar Premium</span><span>Vista Panorâmica</span><span>Setor 8</span><span>Gastronomia VIP</span><span>Boate Atmosfera</span><span>Reservados Exclusivos</span><span>Entre Sinta Viva</span>
+        </div>
+      </div>
+
+      <div class="grow-a">
+        <div class="gfoto g-tall reveal">
+          <img src="images/nova1.jpeg" alt="Reservado VIP">
+          
+          
+        </div>
+        <div class="gfoto g-reg reveal">
+          <img src="images/nova2.jpeg" alt="Vista Sapucaí">
+          
+        </div>
+        <div class="gfoto g-reg reveal">
+          <img src="images/nova3.jpeg" alt="Open Bar">
+          
+          
+        </div>
+        <div class="gfoto g-reg reveal">
+          <img src="images/nova4.jpeg" alt="Bar">
+          
+        </div>
+        <div class="gfoto g-reg reveal">
+          <img src="images/nova5.jpeg" alt="Open Bar 2">
+          
+        </div>
+      </div>
+
+      <div class="grow-b">
+        <div class="gfoto g-reg reveal">
+          <img src="images/nova6.jpeg" alt="Churrasco">
+          
+        </div>
+        <div class="gfoto g-reg reveal">
+          <img src="images/nova7.jpeg" alt="Gastronomia">
+          
+          
+        </div>
+        <div class="gfoto g-wide reveal">
+          <img src="images/nova8.jpeg" alt="Sushi Bar">
+          
+          
+        </div>
+      </div>
+
+    </div></section>
+
+<!-- MARKETING -->
+<section id="marketing">
+  <div class="section-wrap">
+    <div class="mkt-layout">
+      <div class="mkt-text reveal">
+        <span class="eyebrow">Oportunidades de Marketing</span>
+        <h2>Aqui a magia acontece.<br><em>Sua marca vista por milhares.</em></h2>
+        <p>Considerado o maior espetáculo a céu aberto da Terra, o Carnaval do Rio é um dos eventos mais assistidos do mundo, com ampla cobertura televisiva, digital e presencial.</p>
+        <div class="mkt-stat"><strong>200M+</strong><span>Audiência global do Carnaval do Rio</span></div>
+        <div class="mkt-stat"><strong>190+</strong><span>Países com cobertura televisiva</span></div>
+      </div>
+      <div class="mkt-quote reveal">
+        <blockquote>"Ao patrocinar o Camarote Atmosfera, sua empresa se conecta a um público altamente qualificado, em um ambiente de grande visibilidade."</blockquote>
+        <cite>Camarote Atmosfera · Sapucaí 2027</cite>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA FINAL -->
+<section id="cta-final">
+  <div class="cta-orb"></div>
+  <div class="cta-grid-bg"></div>
+  <div class="cta-content">
+    <div class="cta-ey"><span>Carnaval 2027</span></div>
+    <h2 class="cta-title">Entre. <em>Sinta.</em> Viva.</h2>
+    <p class="cta-sub">Não fique de fora do maior espetáculo da Terra.</p>
+    <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
+      <a href="https://www.ticketmaster.com.br/event/rio-carnaval-2027-camarote-atmosfera" target="_blank" rel="noopener" class="btn-p gold">Garantir meu ingresso</a>
+      <a href="https://wa.me/5521999912221" target="_blank" class="btn-p ghost">Falar no WhatsApp</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="ft-inner">
+    <div class="ft-brand">
+      <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MDAgMTEwIj4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iZyIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMCUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdHlsZT0ic3RvcC1jb2xvcjojOEI2OTE0Ii8+CiAgICAgIDxzdG9wIG9mZnNldD0iMjUlIiBzdHlsZT0ic3RvcC1jb2xvcjojRThDOTdBIi8+CiAgICAgIDxzdG9wIG9mZnNldD0iNTAlIiBzdHlsZT0ic3RvcC1jb2xvcjojQzlBODRDIi8+CiAgICAgIDxzdG9wIG9mZnNldD0iNzUlIiBzdHlsZT0ic3RvcC1jb2xvcjojRThDOTdBIi8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3R5bGU9InN0b3AtY29sb3I6IzhCNjkxNCIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICA8L2RlZnM+CiAgPHRleHQgeD0iMjUwIiB5PSIyOCIgZm9udC1mYW1pbHk9Ikdlb3JnaWEsc2VyaWYiIGZvbnQtc2l6ZT0iMTMiIGZpbGw9InVybCgjZykiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGxldHRlci1zcGFjaW5nPSIxMCI+Q0FNQVJPVEU8L3RleHQ+CiAgPHRleHQgeD0iMjUwIiB5PSI4OCIgZm9udC1mYW1pbHk9Ikdlb3JnaWEsc2VyaWYiIGZvbnQtc2l6ZT0iNTUiIGZvbnQtd2VpZ2h0PSIzMDAiIGZpbGw9InVybCgjZykiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGxldHRlci1zcGFjaW5nPSIzIj5BVE1PU0ZFUkE8L3RleHQ+Cjwvc3ZnPg==" alt="Camarote Atmosfera" style="height:55px;width:auto;margin-bottom:1rem;">
+      <p>A experiência premium no maior espetáculo a céu aberto do mundo. Sapucaí · Carnaval 2027.</p>
+    </div>
+    <div class="ft-nav">
+      <h4>Navegação</h4>
+      <ul>
+        <li><a href="#experiencias">Experiências</a></li>
+        <li><a href="#boate">Boate</a></li>
+        <li><a href="#reservados">Reservados</a></li>
+        <li><a href="https://www.ticketmaster.com.br/event/rio-carnaval-2027-camarote-atmosfera" target="_blank" rel="noopener">Ingressos</a></li>
+        <li><a href="#transporte">Transfer</a></li>
+        <li><a href="#credenciamento">Credenciamento</a></li>
+        <li><a href="#galeria">Galeria</a></li>
+        <li><a href="#marketing">Marketing</a></li>
+      </ul>
+    </div>
+    <div class="ft-ct">
+      <h4>Contato</h4>
+      <p>📧 <a href="mailto:contato@camaroteatmosfera.com.br">contato@camaroteatmosfera.com.br</a></p>
+      <p>📱 <a href="https://wa.me/5521999912221">(21) 99999-9999</a></p>
+      <p>📍 Sambódromo · Setor 8 · Rio de Janeiro</p>
+    </div>
+  </div>
+  <div class="ft-bottom">
+    <p>© 2025 Camarote Atmosfera. Todos os direitos reservados.</p>
+    <p>Sapucaí · Rio de Janeiro · Brasil</p>
+  </div>
+</footer>
+
+<script>
+// NAV
+const nav=document.getElementById('nav');
+window.addEventListener('scroll',()=>nav.classList.toggle('sc',scrollY>60));
+const hb=document.getElementById('hb'),nm=document.getElementById('nm');
+hb.addEventListener('click',()=>{nm.classList.toggle('open');hb.textContent=nm.classList.contains('open')?'✕':'☰';});
+nm.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{nm.classList.remove('open');hb.textContent='☰';}));
+
+// COUNTDOWN
+const D=new Date('2027-02-05T20:00:00-03:00');
+function tick(){
+  const d=D-new Date();if(d<0)return;
+  const p=n=>String(Math.floor(n)).padStart(2,'0');
+  document.getElementById('cd-d').textContent=p(d/86400000);
+  document.getElementById('cd-h').textContent=p((d%86400000)/3600000);
+  document.getElementById('cd-m').textContent=p((d%3600000)/60000);
+  document.getElementById('cd-s').textContent=p((d%60000)/1000);
+}
+tick();setInterval(tick,1000);
+
+// HERO CHAR ANIMATION
+const ht=document.getElementById('heroTitle');
+const txt=ht.textContent;
+ht.innerHTML=txt.split('').map((c,i)=>`<span class="char" style="animation-delay:${i*.08}s">${c}</span>`).join('');
+
+// STAGE LIGHTS
+const sl=document.getElementById('stageLights');
+const cols=['#4040ff','#ff4080','#ffcc00','#40ffcc','#ff8040'];
+for(let i=0;i<8;i++){
+  const l=document.createElement('div');
+  const ang=-30+i*10;
+  l.className='sl';
+  l.style.cssText=`left:${10+i*11}%;height:${60+Math.random()*30}%;background:linear-gradient(to bottom,${cols[i%cols.length]}80,transparent);--r:${ang}deg;animation-duration:${2+Math.random()*2}s;animation-delay:${Math.random()*2}s;`;
+  sl.appendChild(l);
+}
+
+// SCROLL REVEAL
+const ro=new IntersectionObserver(entries=>entries.forEach(e=>{
+  if(e.isIntersecting){e.target.classList.add('in');ro.unobserve(e.target);}
+}),{threshold:.08});
+document.querySelectorAll('.reveal').forEach(el=>ro.observe(el));
+</script>
+
+<style>
+/* ══ 3D TILT ══ */
+.tilt3d{transform-style:preserve-3d;transition:transform .15s ease,box-shadow .15s ease;}
+.tilt3d:hover{box-shadow:0 20px 60px rgba(201,168,76,.2);}
+
+/* ══ CARNAVAL HERO ══ */
+.carnaval-pluma{position:absolute;font-size:1.8rem;animation:plumaFloat linear infinite;pointer-events:none;z-index:1;opacity:0;}
+@keyframes plumaFloat{
+  0%{transform:translateY(100vh) rotate(0deg) translateX(0);opacity:0;}
+  5%{opacity:.6;}
+  95%{opacity:.4;}
+  100%{transform:translateY(-10vh) rotate(360deg) translateX(40px);opacity:0;}
+}
+
+/* ══ BRILHO NOS CARDS ══ */
+.exp-glass,.ic,.tp-card,.res-card{overflow:hidden;}
+.exp-glass::after,.ic::after,.tp-card::after{
+  content:'';position:absolute;top:-50%;left:-60%;
+  width:40%;height:200%;
+  background:linear-gradient(to right,transparent,rgba(201,168,76,.08),transparent);
+  transform:skewX(-20deg);
+  animation:cardShine 6s ease-in-out infinite;
+}
+@keyframes cardShine{
+  0%,100%{left:-60%;}
+  50%{left:120%;}
+}
+
+/* ══ NÚMEROS PULSANDO ══ */
+.stat-val{animation:statPulse 3s ease-in-out infinite;}
+@keyframes statPulse{0%,100%{text-shadow:0 0 20px rgba(201,168,76,.3);}50%{text-shadow:0 0 40px rgba(201,168,76,.7);}}
+
+/* ══ COUNTDOWN GLOW ══ */
+.cd-block{animation:cdGlow 2s ease-in-out infinite alternate;}
+@keyframes cdGlow{from{box-shadow:0 0 10px rgba(201,168,76,.1);}to{box-shadow:0 0 30px rgba(201,168,76,.3);}}
+
+/* ══ HERO TITLE SHIMMER ══ */
+#heroTitle{
+  color:#E8C97A;
+  text-shadow:0 0 80px rgba(201,168,76,.4),0 0 160px rgba(201,168,76,.15);
+  animation:titleGlow 3s ease-in-out infinite alternate;
+  display:block;
+}
+@keyframes titleGlow{
+  from{text-shadow:0 0 40px rgba(201,168,76,.3),0 0 80px rgba(201,168,76,.1);}
+  to{text-shadow:0 0 80px rgba(201,168,76,.6),0 0 160px rgba(201,168,76,.3);}
+}
+
+/* ══ SCROLL REVEAL MELHORADO ══ */
+.reveal-left{opacity:0;transform:translateX(-30px);transition:opacity .8s ease,transform .8s ease;}
+.reveal-left.in{opacity:1;transform:translateX(0);}
+.reveal-right{opacity:0;transform:translateX(30px);transition:opacity .8s ease,transform .8s ease;}
+.reveal-right.in{opacity:1;transform:translateX(0);}
+
+/* ══ LINHA DOURADA ANIMADA ══ */
+.gold-line{height:1px;background:linear-gradient(90deg,transparent,var(--g),transparent);animation:goldLine 3s ease-in-out infinite;}
+@keyframes goldLine{0%,100%{opacity:.3;}50%{opacity:1;}}
+
+/* ══ BOTÃO PULSE ══ */
+.btn-p.gold{animation:btnPulse 3s ease-in-out infinite;}
+@keyframes btnPulse{0%,100%{box-shadow:0 0 0 0 rgba(201,168,76,.4);}50%{box-shadow:0 0 0 12px rgba(201,168,76,0);}}
+</style>
+
+<script>
+// ══ 3D TILT NAS FOTOS ══
+document.querySelectorAll('.gfoto').forEach(el => {
+  el.classList.add('tilt3d');
+  el.addEventListener('mousemove', e => {
+    const r = el.getBoundingClientRect();
+    const x = (e.clientX - r.left) / r.width - .5;
+    const y = (e.clientY - r.top) / r.height - .5;
+    el.style.transform = `perspective(600px) rotateY(${x*10}deg) rotateX(${-y*10}deg) scale(1.02)`;
+  });
+  el.addEventListener('mouseleave', () => {
+    el.style.transform = 'perspective(600px) rotateY(0) rotateX(0) scale(1)';
+  });
+});
+
+// ══ 3D TILT NOS CARDS ══
+document.querySelectorAll('.exp-glass,.ic,.stat').forEach(el => {
+  el.classList.add('tilt3d');
+  el.addEventListener('mousemove', e => {
+    const r = el.getBoundingClientRect();
+    const x = (e.clientX - r.left) / r.width - .5;
+    const y = (e.clientY - r.top) / r.height - .5;
+    el.style.transform = `perspective(800px) rotateY(${x*6}deg) rotateX(${-y*6}deg) translateZ(8px)`;
+  });
+  el.addEventListener('mouseleave', () => {
+    el.style.transform = 'perspective(800px) rotateY(0) rotateX(0) translateZ(0)';
+  });
+});
+
+// ══ PLUMAS DE CARNAVAL NO HERO ══
+const hero = document.getElementById('hero');
+// Efeitos visuais removidos
+
+// ══ REVEAL LATERAL ══
+const obsLR = new IntersectionObserver(entries => entries.forEach(e => {
+  if(e.isIntersecting){e.target.classList.add('in');obsLR.unobserve(e.target);}
+}),{threshold:.1});
+
+document.querySelectorAll('.boate-text,.mkt-text,.res-text').forEach((el,i) => {
+  el.classList.add(i%2===0?'reveal-left':'reveal-right');
+  obsLR.observe(el);
+});
+document.querySelectorAll('.boate-viz,.mkt-quote,.res-card').forEach((el,i) => {
+  el.classList.add(i%2===0?'reveal-right':'reveal-left');
+  obsLR.observe(el);
+});
+</script>
+
+
+
+<script>
+window.addEventListener('load', function() {
+  try {
+    sbSite = supabase.createClient(SB_URL, SB_KEY);
+    sbSite.from('camarote_artistas').select('*').eq('ativo', true).order('data_evento')
+    .then(function(res) {
+      var data = res.data;
+      if(!data || !data.length) return;
+      var ouro = data.filter(function(a){ return a.grupo === 'serie_ouro'; });
+      var esp = data.filter(function(a){ return a.grupo === 'grupo_especial'; });
+
+      function renderCard(a) {
+        var img = a.imagem_url
+          ? '<img src="' + a.imagem_url + '" style="width:100%;height:180px;object-fit:cover;display:block;">'
+          : '<div style="width:100%;height:180px;background:rgba(201,168,76,.05);display:flex;align-items:center;justify-content:center;font-size:3rem;">🎤</div>';
+        return '<div class="artista-card ' + (a.grupo==='grupo_especial'?'destaque':'') + '">'
+          + img
+          + '<span class="artista-dia">' + a.dia + '</span>'
+          + '<span class="artista-data">' + a.data_evento.split('/')[0] + '</span>'
+          + '<span class="artista-mes">' + a.data_evento.split('/')[1] + '/2027</span>'
+          + '<span class="artista-nome ' + (a.nome_artista==='A confirmar'?'artista-tba':'') + '">' + a.nome_artista + '</span>'
+          + '<span class="artista-tipo">' + a.tipo + '</span>'
+          + '</div>';
+      }
+
+      var gridOuro = document.getElementById('grid-serie-ouro');
+      var gridEsp = document.getElementById('grid-grupo-especial');
+      if(gridOuro) gridOuro.innerHTML = ouro.map(renderCard).join('');
+      if(gridEsp) gridEsp.innerHTML = esp.map(renderCard).join('');
+    });
+  } catch(e) { console.error('Erro artistas:', e); }
+});
+</script>
+
+<!-- CHAT FLUTUANTE -->
+<style>
+#chat-btn{position:fixed;bottom:2rem;right:2rem;width:60px;height:60px;background:var(--g);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:9999;box-shadow:0 4px 20px rgba(201,168,76,.4);transition:.3s;border:none;}
+#chat-btn:hover{transform:scale(1.1);box-shadow:0 6px 30px rgba(201,168,76,.6);}
+#chat-btn svg{width:28px;height:28px;fill:var(--b);}
+#chat-window{position:fixed;bottom:5.5rem;right:2rem;width:360px;max-height:520px;background:#0f0f0f;border:1px solid rgba(201,168,76,.2);border-radius:4px;z-index:9998;display:none;flex-direction:column;box-shadow:0 10px 40px rgba(0,0,0,.6);}
+#chat-window.open{display:flex;}
+.chat-header{background:linear-gradient(135deg,#1a1000,#0f0f0f);border-bottom:1px solid rgba(201,168,76,.15);padding:1rem 1.2rem;display:flex;align-items:center;justify-content:space-between;}
+.chat-header-info{display:flex;align-items:center;gap:.8rem;}
+.chat-avatar{width:36px;height:36px;background:var(--g);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.2rem;}
+.chat-header-text p:first-child{font-size:.75rem;font-weight:600;color:var(--w);}
+.chat-header-text p:last-child{font-size:.6rem;color:#4caf50;display:flex;align-items:center;gap:.3rem;}
+.chat-header-text p:last-child::before{content:'';width:6px;height:6px;background:#4caf50;border-radius:50%;display:inline-block;}
+.chat-close{background:none;border:none;color:var(--wd);cursor:pointer;font-size:1.2rem;padding:.2rem;}
+.chat-msgs{flex:1;overflow-y:auto;padding:1rem;display:flex;flex-direction:column;gap:.8rem;min-height:200px;max-height:320px;}
+.chat-msgs::-webkit-scrollbar{width:4px;}
+.chat-msgs::-webkit-scrollbar-track{background:transparent;}
+.chat-msgs::-webkit-scrollbar-thumb{background:rgba(201,168,76,.3);border-radius:2px;}
+.msg{max-width:85%;padding:.7rem 1rem;border-radius:2px;font-size:.78rem;line-height:1.5;animation:msgIn .3s ease;}
+@keyframes msgIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+.msg.bot{background:rgba(201,168,76,.08);border:1px solid rgba(201,168,76,.12);color:var(--w);align-self:flex-start;border-radius:0 8px 8px 8px;}
+.msg.user{background:var(--g);color:var(--b);align-self:flex-end;font-weight:500;border-radius:8px 0 8px 8px;}
+.msg.typing{opacity:.6;}
+.chat-suggestions{padding:.5rem 1rem;display:flex;flex-wrap:wrap;gap:.4rem;border-top:1px solid rgba(201,168,76,.08);}
+.sugg-btn{background:rgba(201,168,76,.06);border:1px solid rgba(201,168,76,.15);color:var(--g);padding:.3rem .7rem;font-size:.62rem;letter-spacing:.05em;cursor:pointer;transition:.2s;border-radius:2px;}
+.sugg-btn:hover{background:rgba(201,168,76,.15);}
+.chat-input-wrap{padding:.8rem 1rem;border-top:1px solid rgba(201,168,76,.1);display:flex;gap:.5rem;}
+#chat-input{flex:1;background:rgba(255,255,255,.05);border:1px solid rgba(201,168,76,.15);color:var(--w);padding:.6rem .8rem;font-family:"Montserrat",sans-serif;font-size:.78rem;outline:none;border-radius:2px;}
+#chat-input:focus{border-color:rgba(201,168,76,.4);}
+#chat-input::placeholder{color:rgba(245,240,232,.3);}
+#chat-send{background:var(--g);border:none;color:var(--b);padding:.6rem .9rem;cursor:pointer;font-size:.9rem;border-radius:2px;transition:.2s;}
+#chat-send:hover{background:#E8C97A;}
+@media(max-width:480px){
+  #chat-window{width:calc(100vw - 2rem);right:1rem;bottom:5rem;}
+  #chat-btn{bottom:1.5rem;right:1.5rem;}
+}
+</style>
+
+<button id="chat-btn" onclick="toggleChat()" title="Fale conosco">
+  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <path d="M12 2C6.48 2 2 6.48 2 12c0 1.85.5 3.58 1.37 5.06L2 22l4.94-1.37C8.42 21.5 10.15 22 12 22c5.52 0 10-4.48 10-10S17.52 2 12 2zm0 18c-1.69 0-3.26-.49-4.58-1.33l-.32-.2-3.33.87.87-3.33-.2-.32C3.49 15.26 3 13.69 3 12c0-4.97 4.03-9 9-9s9 4.03 9 9-4.03 9-9 9zm4.5-5.5c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.12-.17.25-.64.81-.78.97-.14.17-.29.19-.54.06-.25-.12-1.05-.39-2-1.23-.74-.66-1.24-1.47-1.38-1.72-.14-.25-.02-.38.11-.51.11-.11.25-.29.37-.43.13-.14.17-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.41-.42-.56-.43-.14 0-.31-.01-.47-.01-.17 0-.43.06-.66.31-.22.25-.86.85-.86 2.07 0 1.22.89 2.4 1.01 2.56.12.17 1.75 2.67 4.23 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.47-.6 1.67-1.18.21-.58.21-1.07.14-1.18-.06-.11-.23-.17-.48-.29z"/>
+  </svg>
+</button>
+
+<div id="chat-window">
+  <div class="chat-header">
+    <div class="chat-header-info">
+      <div class="chat-avatar">🎭</div>
+      <div class="chat-header-text">
+        <p>Atmosfera Assistente</p>
+        <p>Online agora</p>
+      </div>
+    </div>
+    <button class="chat-close" onclick="toggleChat()">✕</button>
+  </div>
+  <div class="chat-msgs" id="chatMsgs"></div>
+  <div class="chat-suggestions" id="chatSugg">
+    <button class="sugg-btn" onclick="enviarSugg(this)">Como comprar?</button>
+    <button class="sugg-btn" onclick="enviarSugg(this)">Credenciamento</button>
+    <button class="sugg-btn" onclick="enviarSugg(this)">Valores</button>
+    <button class="sugg-btn" onclick="enviarSugg(this)">Transfer</button>
+    <button class="sugg-btn" onclick="enviarSugg(this)">Reservados</button>
+  </div>
+  <div class="chat-input-wrap">
+    <input type="text" id="chat-input" placeholder="Digite sua dúvida..." onkeydown="if(event.key==='Enter')enviarMsg()">
+    <button id="chat-send" onclick="enviarMsg()">➤</button>
+  </div>
+</div>
+
+<script>
+var chatAberto = false;
+var faqData = [];
+var chatIniciado = false;
+
+var SB_CHAT_URL = 'https://igeatakyqxndohaviwpm.supabase.co';
+var SB_CHAT_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlnZWF0YWt5cXhuZG9oYXZpd3BtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIyMzcwNzYsImV4cCI6MjA5NzgxMzA3Nn0.Tg3EOXlrdSFVozVZE0ofeQ3hj6rjfp7mJr0iU2Lta9Q';
+var sbChat = supabase.createClient(SB_CHAT_URL, SB_CHAT_KEY);
+
+// Carregar FAQ do Supabase
+sbChat.from('camarote_faq').select('*').eq('ativo', true).order('ordem').then(function(res){
+  if(res.data) faqData = res.data;
+});
+
+function toggleChat(){
+  chatAberto = !chatAberto;
+  var win = document.getElementById('chat-window');
+  win.classList.toggle('open', chatAberto);
+  if(chatAberto && !chatIniciado){
+    chatIniciado = true;
+    setTimeout(function(){
+      adicionarMsg('bot', 'Olá! 👋 Bem-vindo ao Camarote Atmosfera! Sou seu assistente virtual. Como posso te ajudar hoje?');
+      setTimeout(function(){
+        adicionarMsg('bot', 'Posso te ajudar com informações sobre ingressos, credenciamento, transfer, reservados corporativos e muito mais!');
+      }, 800);
+    }, 300);
+  }
+}
+
+function adicionarMsg(tipo, texto){
+  var msgs = document.getElementById('chatMsgs');
+  var div = document.createElement('div');
+  div.className = 'msg ' + tipo;
+  div.textContent = texto;
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function mostrarTyping(){
+  var msgs = document.getElementById('chatMsgs');
+  var div = document.createElement('div');
+  div.className = 'msg bot typing';
+  div.id = 'typing-indicator';
+  div.textContent = '✦ digitando...';
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function removerTyping(){
+  var el = document.getElementById('typing-indicator');
+  if(el) el.remove();
+}
+
+function buscarResposta(pergunta){
+  if(!faqData.length) return null;
+  var p = pergunta.toLowerCase();
+  var melhor = null;
+  var maxScore = 0;
+  
+  faqData.forEach(function(item){
+    var score = 0;
+    var palavras = (item.palavras_chave || '').toLowerCase().split(' ');
+    var perguntaFaq = item.pergunta.toLowerCase();
+    
+    // Verificar palavras-chave
+    palavras.forEach(function(palavra){
+      if(palavra.length > 2 && p.includes(palavra)) score += 2;
+    });
+    
+    // Verificar pergunta
+    var palavrasP = perguntaFaq.split(' ');
+    palavrasP.forEach(function(palavra){
+      if(palavra.length > 3 && p.includes(palavra)) score += 1;
+    });
+    
+    // Verificar categoria
+    if(p.includes(item.categoria.toLowerCase())) score += 1;
+    
+    if(score > maxScore){
+      maxScore = score;
+      melhor = item;
+    }
+  });
+  
+  return maxScore > 0 ? melhor : null;
+}
+
+function enviarMsg(){
+  var input = document.getElementById('chat-input');
+  var texto = input.value.trim();
+  if(!texto) return;
+  
+  adicionarMsg('user', texto);
+  input.value = '';
+  document.getElementById('chatSugg').style.display = 'none';
+  
+  mostrarTyping();
+  
+  // Usar IA do Groq se disponível
+  if(window.handleChatMessage) {
+    window.handleChatMessage(texto).then(function(resposta){
+      removerTyping();
+      adicionarMsg('bot', resposta);
+    }).catch(function(){
+      removerTyping();
+      adicionarMsg('bot', 'Desculpe, tive um problema técnico! Fale conosco pelo WhatsApp: (21) 99991-2221 📱');
+    });
+  } else {
+    // Fallback para FAQ do Supabase
+    setTimeout(function(){
+      removerTyping();
+      var resultado = buscarResposta(texto);
+      if(resultado){
+        adicionarMsg('bot', resultado.resposta);
+      } else {
+        adicionarMsg('bot', 'Não encontrei uma resposta específica. Fale com nossa equipe pelo WhatsApp: (21) 99991-2221 📱');
+      }
+    }, 1000);
+  }
+}
+
+function enviarSugg(btn){
+  document.getElementById('chat-input').value = btn.textContent;
+  enviarMsg();
+}
+</script>
+<script src="js/config.js"></script>
+<script src="js/chat-ia.js"></script>
+</body>
+</html>
