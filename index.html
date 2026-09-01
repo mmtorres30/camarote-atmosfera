@@ -903,11 +903,6 @@ function tick(){
 }
 tick();setInterval(tick,1000);
 
-// HERO CHAR ANIMATION
-const ht=document.getElementById('heroTitle');
-const txt=ht.textContent;
-ht.innerHTML=txt.split('').map((c,i)=>`<span class="char" style="animation-delay:${i*.08}s">${c}</span>`).join('');
-
 // STAGE LIGHTS
 const sl=document.getElementById('stageLights');
 const cols=['#4040ff','#ff4080','#ffcc00','#40ffcc','#ff8040'];
