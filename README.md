@@ -316,7 +316,7 @@ footer{background:#040405;border-top:1px solid rgba(201,168,76,.08);padding:5rem
 
 <!-- NAV -->
 <nav id="nav">
-  <a href="#hero"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MDAgMTEwIj4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iZyIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMCUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdHlsZT0ic3RvcC1jb2xvcjojOEI2OTE0Ii8+CiAgICAgIDxzdG9wIG9mZnNldD0iMjUlIiBzdHlsZT0ic3RvcC1jb2xvcjojRThDOTdBIi8+CiAgICAgIDxzdG9wIG9mZnNldD0iNTAlIiBzdHlsZT0ic3RvcC1jb2xvcjojQzlBODRDIi8+CiAgICAgIDxzdG9wIG9mZnNldD0iNzUlIiBzdHlsZT0ic3RvcC1jb2xvcjojRThDOTdBIi8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3R5bGU9InN0b3AtY29sb3I6IzhCNjkxNCIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICA8L2RlZnM+CiAgPHRleHQgeD0iMjUwIiB5PSIyOCIgZm9udC1mYW1pbHk9Ikdlb3JnaWEsc2VyaWYiIGZvbnQtc2l6ZT0iMTMiIGZpbGw9InVybCgjZykiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGxldHRlci1zcGFjaW5nPSIxMCI+Q0FNQVJPVEU8L3RleHQ+CiAgPHRleHQgeD0iMjUwIiB5PSI4OCIgZm9udC1mYW1pbHk9Ikdlb3JnaWEsc2VyaWYiIGZvbnQtc2l6ZT0iNTUiIGZvbnQtd2VpZ2h0PSIzMDAiIGZpbGw9InVybCgjZykiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGxldHRlci1zcGFjaW5nPSIzIj5BVE1PU0ZFUkE8L3RleHQ+Cjwvc3ZnPg==" alt="Camarote Atmosfera" style="height:55px;width:auto;"></a>
+  <a href="#hero"><img src="images/logoATMOSFERAdourado.png" alt="Camarote Atmosfera" style="height:55px;width:auto;"></a>
   <ul class="nm" id="nm">
     <li><a href="#experiencias">Experiências</a></li>
     <li><a href="#reservados">Reservados</a></li>
@@ -334,7 +334,7 @@ footer{background:#040405;border-top:1px solid rgba(201,168,76,.08);padding:5rem
   <div class="hero-vignette"></div>
   <div class="hero-content">
     <div class="hero-line"><span class="hero-eyebrow">Sapucaí · Carnaval 2027</span></div>
-    <h1 class="hero-title" id="heroTitle">ATMOSFERA</h1>
+    <img src="images/logoATMOSFERAdourado.png" alt="Camarote Atmosfera" style="max-width:480px;width:100%;height:auto;display:block;margin:0 auto;">
     <p class="hero-subtitle">O maior espetáculo da Terra. Viva por dentro.</p>
     <div class="hero-pill"><span>Setor 8 · Meio da Avenida · Vista Panorâmica</span></div>
     <div class="hero-btns">
@@ -435,8 +435,8 @@ footer{background:#040405;border-top:1px solid rgba(201,168,76,.08);padding:5rem
       </div>
       <div class="boate-text reveal">
         <span class="eyebrow">Novidade 2027</span>
-        <h2>A primeira boate da<br><em>Sapucaí com vista panorâmica</em></h2>
-        <p>O novo espaço de 400m² será a primeira boate da Sapucaí com vista panorâmica para os desfiles — uma experiência inédita no mundo.</p>
+        <h2>A primeira boate da<br><em>vista panorâmica para o palco</em></h2>
+        <p>O novo espaço de 400m² será a primeira boate da Sapucaí com vista panorâmica para o palco — uma experiência inédita no mundo.</p>
         <p>Shows de artistas e DJs nacionais e internacionais em um ambiente com isolamento acústico e produção de ponta.</p>
         <div class="boate-chips">
           <span class="chip">Isolamento acústico</span>
@@ -597,7 +597,7 @@ footer{background:#040405;border-top:1px solid rgba(201,168,76,.08);padding:5rem
         <div class="ic-night">Série Ouro</div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.5rem;">
           <div><div style="font-size:.6rem;color:var(--g);letter-spacing:.2em;text-transform:uppercase;">05/02 · Sexta</div><div style="font-family:var(--fd);font-size:2rem;font-weight:200;color:var(--g);">R$ 1.340</div></div>
-          <div><div style="font-size:.6rem;color:var(--g);letter-spacing:.2em;text-transform:uppercase;">06/02 · Sábado</div><div style="font-family:var(--fd);font-size:2rem;font-weight:200;color:var(--g);">R$ 1.540</div></div>
+          <div><div style="font-size:.6rem;color:var(--g);letter-spacing:.2em;text-transform:uppercase;">06/02 · Sábado</div><div style="font-family:var(--fd);font-size:2rem;font-weight:200;color:var(--g);">R$ 1.980</div></div>
         </div>
         <ul class="ic-items">
           <li>Open bar premium</li>
@@ -606,7 +606,7 @@ footer{background:#040405;border-top:1px solid rgba(201,168,76,.08);padding:5rem
           <li>Acesso a todos os pisos</li>
           <li>Espaço Beauty e Relax</li>
         </ul>
-        <a href="https://www.ticketmaster.com.br/event/rio-carnaval-2027-camarote-atmosfera" target="_blank" class="ic-btn ghost">Comprar pelo WhatsApp</a>
+        <a href="https://www.ticketmaster.com.br/event/rio-carnaval-2027-camarote-atmosfera" target="_blank" class="ic-btn ghost">Compre aqui</a>
       </div>
       <div class="ic ic--vip reveal">
         <div class="ic-badge">Mais Vendido</div>
@@ -625,7 +625,7 @@ footer{background:#040405;border-top:1px solid rgba(201,168,76,.08);padding:5rem
           <li>Acesso à Boate Atmosfera</li>
           <li>Espaço Beauty e Relax</li>
         </ul>
-        <a href="https://www.ticketmaster.com.br/event/rio-carnaval-2027-camarote-atmosfera" target="_blank" class="ic-btn">Comprar pelo WhatsApp</a>
+        <a href="https://www.ticketmaster.com.br/event/rio-carnaval-2027-camarote-atmosfera" target="_blank" class="ic-btn">Compre aqui</a>
       </div>
     </div>
   </div>
@@ -854,7 +854,7 @@ footer{background:#040405;border-top:1px solid rgba(201,168,76,.08);padding:5rem
 <footer>
   <div class="ft-inner">
     <div class="ft-brand">
-      <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MDAgMTEwIj4KICA8ZGVmcz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iZyIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMCUiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdHlsZT0ic3RvcC1jb2xvcjojOEI2OTE0Ii8+CiAgICAgIDxzdG9wIG9mZnNldD0iMjUlIiBzdHlsZT0ic3RvcC1jb2xvcjojRThDOTdBIi8+CiAgICAgIDxzdG9wIG9mZnNldD0iNTAlIiBzdHlsZT0ic3RvcC1jb2xvcjojQzlBODRDIi8+CiAgICAgIDxzdG9wIG9mZnNldD0iNzUlIiBzdHlsZT0ic3RvcC1jb2xvcjojRThDOTdBIi8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3R5bGU9InN0b3AtY29sb3I6IzhCNjkxNCIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICA8L2RlZnM+CiAgPHRleHQgeD0iMjUwIiB5PSIyOCIgZm9udC1mYW1pbHk9Ikdlb3JnaWEsc2VyaWYiIGZvbnQtc2l6ZT0iMTMiIGZpbGw9InVybCgjZykiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGxldHRlci1zcGFjaW5nPSIxMCI+Q0FNQVJPVEU8L3RleHQ+CiAgPHRleHQgeD0iMjUwIiB5PSI4OCIgZm9udC1mYW1pbHk9Ikdlb3JnaWEsc2VyaWYiIGZvbnQtc2l6ZT0iNTUiIGZvbnQtd2VpZ2h0PSIzMDAiIGZpbGw9InVybCgjZykiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGxldHRlci1zcGFjaW5nPSIzIj5BVE1PU0ZFUkE8L3RleHQ+Cjwvc3ZnPg==" alt="Camarote Atmosfera" style="height:55px;width:auto;margin-bottom:1rem;">
+      <img src="images/logoATMOSFERAdourado.png" alt="Camarote Atmosfera" style="height:55px;width:auto;margin-bottom:1rem;">
       <p>A experiência premium no maior espetáculo a céu aberto do mundo. Sapucaí · Carnaval 2027.</p>
     </div>
     <div class="ft-nav">
@@ -1270,5 +1270,37 @@ function enviarSugg(btn){
 </script>
 <script src="js/config.js"></script>
 <script src="js/chat-ia.js"></script>
+
+<div id="vipPopup" style="position:fixed;inset:0;z-index:9999;background:rgba(6,6,8,.85);display:flex;align-items:center;justify-content:center;padding:1.25rem;">
+  <div style="background:#0c0c0e;width:100%;max-width:340px;border-radius:16px;overflow:hidden;position:relative;box-shadow:0 0 0 1px rgba(201,168,76,.15);">
+    <button id="vipPopupClose" aria-label="Fechar" style="position:absolute;top:10px;right:10px;z-index:2;width:30px;height:30px;border-radius:50%;background:rgba(0,0,0,.55);border:none;color:#fff;font-size:16px;display:flex;align-items:center;justify-content:center;cursor:pointer;">&times;</button>
+    <video autoplay loop muted playsinline style="width:100%;display:block;background:#000;">
+      <source src="videos/atmosfera-vip.mp4" type="video/mp4">
+    </video>
+    <div style="padding:1.1rem 1.2rem 1.4rem;">
+      <p style="font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#C9A84C;margin:0 0 6px;">Camarote Atmosfera</p>
+      <p style="font-size:14px;color:#E5E1D6;margin:0 0 16px;line-height:1.5;">Sapucaí &middot; Carnaval 2027. O maior espetáculo da Terra.</p>
+      <a href="https://www.ticketmaster.com.br/event/rio-carnaval-2027-camarote-atmosfera" target="_blank" rel="noopener" style="display:block;text-align:center;width:100%;background:#C9A84C;color:#1a1206;border:none;border-radius:8px;padding:12px;font-size:14px;font-weight:600;text-decoration:none;">Garantir meu ingresso</a>
+    </div>
+  </div>
+</div>
+<script>
+(function(){
+  var popup = document.getElementById('vipPopup');
+  var closeBtn = document.getElementById('vipPopupClose');
+  if(localStorage.getItem('atmosferaVipPopupSeen')){
+    popup.style.display = 'none';
+  }
+  function closePopup(){
+    popup.style.display = 'none';
+    localStorage.setItem('atmosferaVipPopupSeen', '1');
+  }
+  closeBtn.addEventListener('click', closePopup);
+  popup.addEventListener('click', function(e){
+    if(e.target === popup){ closePopup(); }
+  });
+})();
+</script>
+
 </body>
 </html>
