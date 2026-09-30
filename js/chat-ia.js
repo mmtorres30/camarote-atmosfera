@@ -23,7 +23,7 @@ async function handleChatMessage(userMessage) {
 
     return reply;
   } catch (error) {
-    return "Desculpe, tive um problema! Fale conosco pelo WhatsApp: (21) 99991-2221 📱";
+    return "Desculpe, tive um problema! Fale conosco pelo WhatsApp: (21) 985530036 📱";
   }
 }
 
